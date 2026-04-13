@@ -1,1 +1,51 @@
 2026-04-13 19:11:24,067 INFO app.main request_id=- app_startup
+2026-04-13 19:20:00,999 INFO app.main request_id=- app_startup
+2026-04-13 19:20:10,421 INFO app.main request_id=5e75a075-f513-4fdc-abcd-abc42095037f http_request_started method=POST path=/query client=127.0.0.1
+2026-04-13 19:20:10,424 INFO app.api.query request_id=5e75a075-f513-4fdc-abcd-abc42095037f query_requested question_len=76 top_k=4 book_filter_count=1
+2026-04-13 19:20:10,424 INFO app.services.qa request_id=5e75a075-f513-4fdc-abcd-abc42095037f qa_answer_started question_len=76 top_k=4 book_filter_count=1 question_snippet=who are the authors and publishers of this book. Also give Table of content.
+2026-04-13 19:20:10,425 INFO app.services.retrieval request_id=5e75a075-f513-4fdc-abcd-abc42095037f vector_search_requested top_k=8 book_filter_count=1 question_len=76
+2026-04-13 19:20:10,425 INFO app.services.retrieval request_id=5e75a075-f513-4fdc-abcd-abc42095037f vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-13 19:20:10,425 INFO app.services.retrieval request_id=5e75a075-f513-4fdc-abcd-abc42095037f embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-13 19:20:15,659 INFO sentence_transformers.SentenceTransformer request_id=5e75a075-f513-4fdc-abcd-abc42095037f Use pytorch device_name: cuda
+2026-04-13 19:20:15,659 INFO sentence_transformers.SentenceTransformer request_id=5e75a075-f513-4fdc-abcd-abc42095037f Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-13 19:20:22,477 INFO app.services.retrieval request_id=5e75a075-f513-4fdc-abcd-abc42095037f vector_search_completed strategy=filtered results=8
+2026-04-13 19:20:22,478 INFO app.services.qa request_id=5e75a075-f513-4fdc-abcd-abc42095037f qa_retrieval_completed selected_docs=4
+2026-04-13 19:20:27,767 INFO app.services.qa request_id=5e75a075-f513-4fdc-abcd-abc42095037f qa_llm_invoke_completed duration_ms=5194
+2026-04-13 19:20:27,768 INFO app.services.qa request_id=5e75a075-f513-4fdc-abcd-abc42095037f qa_answer_completed grounded=True citations=4 duration_ms=17343 answer_snippet=The author of the book is Chip Huyen (Page 989).
+The publisher of the book is O'Reilly (Pages 27, 30, 989).
+
+The Table of Contents is not provided in the given context.
+2026-04-13 19:20:27,768 INFO app.api.query request_id=5e75a075-f513-4fdc-abcd-abc42095037f query_completed grounded=True citations=4 duration_ms=17343
+2026-04-13 19:20:27,770 INFO app.main request_id=5e75a075-f513-4fdc-abcd-abc42095037f http_request_finished method=POST path=/query status=200 duration_ms=17349
+2026-04-13 19:23:59,912 INFO app.main request_id=1361b331-4e1a-4980-80ae-7185e3600f51 http_request_started method=POST path=/query client=127.0.0.1
+2026-04-13 19:23:59,914 INFO app.api.query request_id=1361b331-4e1a-4980-80ae-7185e3600f51 query_requested question_len=76 top_k=10 book_filter_count=1
+2026-04-13 19:23:59,914 INFO app.services.qa request_id=1361b331-4e1a-4980-80ae-7185e3600f51 qa_answer_started question_len=76 top_k=10 book_filter_count=1 question_snippet=who are the authors and publishers of this book. Also give Table of content.
+2026-04-13 19:23:59,914 INFO app.services.retrieval request_id=1361b331-4e1a-4980-80ae-7185e3600f51 vector_search_requested top_k=20 book_filter_count=1 question_len=76
+2026-04-13 19:23:59,914 INFO app.services.retrieval request_id=1361b331-4e1a-4980-80ae-7185e3600f51 vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-13 19:23:59,915 INFO app.services.retrieval request_id=1361b331-4e1a-4980-80ae-7185e3600f51 embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-13 19:23:59,917 INFO sentence_transformers.SentenceTransformer request_id=1361b331-4e1a-4980-80ae-7185e3600f51 Use pytorch device_name: cuda
+2026-04-13 19:23:59,917 INFO sentence_transformers.SentenceTransformer request_id=1361b331-4e1a-4980-80ae-7185e3600f51 Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-13 19:24:03,475 INFO app.services.retrieval request_id=1361b331-4e1a-4980-80ae-7185e3600f51 vector_search_completed strategy=filtered results=20
+2026-04-13 19:24:03,475 INFO app.services.qa request_id=1361b331-4e1a-4980-80ae-7185e3600f51 qa_retrieval_completed selected_docs=10
+2026-04-13 19:24:07,807 INFO app.services.qa request_id=1361b331-4e1a-4980-80ae-7185e3600f51 qa_llm_invoke_completed duration_ms=4328
+2026-04-13 19:24:07,808 INFO app.services.qa request_id=1361b331-4e1a-4980-80ae-7185e3600f51 qa_answer_completed grounded=True citations=10 duration_ms=7893 answer_snippet=The author of the book "AI Engineering" is Chip Huyen (pages 25, 989).
+The publisher is O’Reilly (pages 25, 26, 30).
+
+The Table of Content is not provided in the given context.
+2026-04-13 19:24:07,809 INFO app.api.query request_id=1361b331-4e1a-4980-80ae-7185e3600f51 query_completed grounded=True citations=10 duration_ms=7895
+2026-04-13 19:24:07,810 INFO app.main request_id=1361b331-4e1a-4980-80ae-7185e3600f51 http_request_finished method=POST path=/query status=200 duration_ms=7898
+2026-04-13 19:25:37,876 INFO app.main request_id=625d186c-6274-4ebf-8b30-4fcc1469167e http_request_started method=POST path=/query client=127.0.0.1
+2026-04-13 19:25:37,877 INFO app.api.query request_id=625d186c-6274-4ebf-8b30-4fcc1469167e query_requested question_len=20 top_k=10 book_filter_count=1
+2026-04-13 19:25:37,878 INFO app.services.qa request_id=625d186c-6274-4ebf-8b30-4fcc1469167e qa_answer_started question_len=20 top_k=10 book_filter_count=1 question_snippet=Summarize this book.
+2026-04-13 19:25:37,878 INFO app.services.retrieval request_id=625d186c-6274-4ebf-8b30-4fcc1469167e vector_search_requested top_k=20 book_filter_count=1 question_len=20
+2026-04-13 19:25:37,878 INFO app.services.retrieval request_id=625d186c-6274-4ebf-8b30-4fcc1469167e vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-13 19:25:37,878 INFO app.services.retrieval request_id=625d186c-6274-4ebf-8b30-4fcc1469167e embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-13 19:25:37,879 INFO sentence_transformers.SentenceTransformer request_id=625d186c-6274-4ebf-8b30-4fcc1469167e Use pytorch device_name: cuda
+2026-04-13 19:25:37,879 INFO sentence_transformers.SentenceTransformer request_id=625d186c-6274-4ebf-8b30-4fcc1469167e Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-13 19:25:41,458 INFO app.services.retrieval request_id=625d186c-6274-4ebf-8b30-4fcc1469167e vector_search_completed strategy=filtered results=20
+2026-04-13 19:25:41,458 INFO app.services.qa request_id=625d186c-6274-4ebf-8b30-4fcc1469167e qa_retrieval_completed selected_docs=10
+2026-04-13 19:26:00,633 INFO app.services.qa request_id=625d186c-6274-4ebf-8b30-4fcc1469167e qa_llm_invoke_completed duration_ms=19171
+2026-04-13 19:26:00,634 INFO app.services.qa request_id=625d186c-6274-4ebf-8b30-4fcc1469167e qa_answer_completed grounded=True citations=10 duration_ms=22755 answer_snippet=This book draws on the author's experience helping major organizations and startups leverage AI for practical solutions (page 989).
+2026-04-13 19:26:00,634 INFO app.api.query request_id=625d186c-6274-4ebf-8b30-4fcc1469167e query_completed grounded=True citations=10 duration_ms=22756
+2026-04-13 19:26:00,635 INFO app.main request_id=625d186c-6274-4ebf-8b30-4fcc1469167e http_request_finished method=POST path=/query status=200 duration_ms=22758
+2026-04-13 19:28:25,212 INFO app.main request_id=- app_shutdown

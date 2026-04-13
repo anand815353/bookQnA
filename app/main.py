@@ -5,16 +5,21 @@ from pathlib import Path
 import time
 import uuid
 
+
 from fastapi import FastAPI
 from app.db import init_db
 from fastapi.staticfiles import StaticFiles
+
 from app.api.books import router as books_router
 from app.api.query import router as query_router
 from app.web.pages import router as pages_router
+
 from app.logging_config import clear_request_id, set_request_id, setup_logging
 from dotenv import load_dotenv
 
-load_dotenv()
+APP_DIR = Path(__file__).resolve().parent
+load_dotenv(APP_DIR / ".env")
+
 setup_logging()
 logger = logging.getLogger(__name__)
 APP_DIR = Path(__file__).resolve().parent

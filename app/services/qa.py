@@ -1,20 +1,21 @@
 # app/services/qa.py
 import logging
-import time
 import os
-from pathlib import Path
+import time
+
+
 
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from app.logging_config import sanitize_for_debug
 from app.services.retrieval import search_documents
 from app.settings import LOG_DEBUG_SNIPPET_CHARS
-from dotenv import load_dotenv
-
-load_dotenv()
-APP_DIR = Path(__file__).resolve().parent
-load_dotenv(APP_DIR / ".env")
-api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
+# from dotenv import load_dotenv
+#
+# load_dotenv()
+# APP_DIR = Path(__file__).resolve().parent
+# load_dotenv(APP_DIR / ".env")
+# api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
 
 
 ABSTAIN_MESSAGE = (
@@ -48,6 +49,7 @@ def answer_question(question: str, book_ids: list[str] | None = None, top_k: int
         len(book_ids or []),
         sanitize_for_debug(question, LOG_DEBUG_SNIPPET_CHARS),
     )
+
     retrieved = search_documents(question, max(top_k * 2, 8), book_ids=book_ids)
     retrieved = _select_parent_evidence(retrieved, top_k)
     logger.info("qa_retrieval_completed selected_docs=%s", len(retrieved))
@@ -104,9 +106,16 @@ def answer_question(question: str, book_ids: list[str] | None = None, top_k: int
         )
     ])
 
+    api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        raise RuntimeError(
+            "Missing Gemini API key. Set GOOGLE_API_KEY or GEMINI_API_KEY."
+        )
+
     llm = ChatGoogleGenerativeAI(
         model="gemini-2.5-flash",
-        temperature=0
+        temperature=0,
+        google_api_key=api_key,
     )
 
     chain = prompt | llm
@@ -122,11 +131,14 @@ def answer_question(question: str, book_ids: list[str] | None = None, top_k: int
             len(context),
         )
         raise
-    logger.info("qa_llm_invoke_completed duration_ms=%s", int((time.perf_counter() - llm_started) * 1000))
+
+    logger.info("qa_llm_invoke_completed duration_ms=%s",
+                int((time.perf_counter() - llm_started) * 1000))
 
     answer_text = response.content.strip()
     lowered = answer_text.lower()
     grounded = bool(citations) and "i do not know" not in lowered
+
     logger.info(
         "qa_answer_completed grounded=%s citations=%s duration_ms=%s answer_snippet=%s",
         grounded,
@@ -138,5 +150,5 @@ def answer_question(question: str, book_ids: list[str] | None = None, top_k: int
     return {
         "answer": answer_text,
         "citations": citations,
-        "grounded": grounded
+        "grounded": grounded,
     }

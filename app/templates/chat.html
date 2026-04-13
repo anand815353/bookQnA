@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Ask Questions</h1>
+    <p>Query your indexed books and inspect grounded citations.</p>
+</section>
+
+<section class="card">
+    <form id="query-form" class="form-stack">
+        <label>Question</label>
+        <textarea name="question" id="question" rows="4" required></textarea>
+
+        <label>Select Books (optional)</label>
+        <div class="checkbox-list">
+            {% for book in books %}
+                {% if book.status == "indexed" %}
+                    <label class="checkbox">
+                        <input type="checkbox" name="book_ids" value="{{ book.id }}">
+                        {{ book.title }}
+                    </label>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <label>Top K</label>
+        <input type="number" name="top_k" id="top_k" min="1" max="10" value="4">
+
+        <button type="submit" id="ask-btn">Ask</button>
+    </form>
+    <p id="query-feedback" class="muted hidden"></p>
+</section>
+
+<section id="result-section" class="card hidden">
+    <h2>Answer</h2>
+    <div id="answer-box"></div>
+
+    <h3>Citations</h3>
+    <div id="citations-box"></div>
+</section>
+
+<script>
+document.getElementById("query-form").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const askBtn = document.getElementById("ask-btn");
+    const feedback = document.getElementById("query-feedback");
+
+    const question = document.getElementById("question").value;
+    const topK = parseInt(document.getElementById("top_k").value, 10);
+    const selectedBooks = Array.from(document.querySelectorAll("input[name='book_ids']:checked"))
+        .map(el => el.value);
+
+    const payload = {
+        question: question,
+        book_ids: selectedBooks.length ? selectedBooks : null,
+        top_k: topK
+    };
+
+    askBtn.disabled = true;
+    askBtn.textContent = "Thinking...";
+    feedback.textContent = "Retrieving and generating answer...";
+    feedback.classList.remove("hidden");
+
+    const response = await fetch("/query", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        feedback.textContent = `Request failed: ${errorText}`;
+        feedback.classList.remove("hidden");
+        askBtn.disabled = false;
+        askBtn.textContent = "Ask";
+        return;
+    }
+
+    const data = await response.json();
+
+    document.getElementById("result-section").classList.remove("hidden");
+    const groundedBadge = data.grounded ? "Grounded" : "Not fully grounded";
+    document.getElementById("answer-box").innerHTML = `<p>${data.answer}</p><p><strong>Status:</strong> ${groundedBadge}</p>`;
+
+    const citationsHtml = (data.citations || []).map(c => `
+        <div class="citation-card">
+            <p><strong>Book:</strong> ${c.book_title}</p>
+            <p><strong>Pages:</strong> ${c.page_start}-${c.page_end}</p>
+            ${c.chapter_title ? `<p><strong>Chapter:</strong> ${c.chapter_title}</p>` : ""}
+            ${c.subchapter_title ? `<p><strong>Subchapter:</strong> ${c.subchapter_title}</p>` : ""}
+            <p><strong>Snippet:</strong> ${c.snippet}</p>
+        </div>
+    `).join("");
+
+    document.getElementById("citations-box").innerHTML =
+        citationsHtml || "<p>No citations returned.</p>";
+
+    feedback.textContent = "Done.";
+    askBtn.disabled = false;
+    askBtn.textContent = "Ask";
+});
+</script>
+{% endblock %}

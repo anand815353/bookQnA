@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="page-header">
+    <h1>Books Library</h1>
+    <p>Manage uploaded books and inspect their indexing status.</p>
+</section>
+
+{% if books %}
+    <section class="card">
+        <div class="toolbar">
+            <input type="text" id="searchBooks" placeholder="Search by title or file name...">
+            <select id="statusFilter">
+                <option value="all">All statuses</option>
+                <option value="indexed">Indexed</option>
+                <option value="parsing">Parsing</option>
+                <option value="structuring">Structuring</option>
+                <option value="chunking">Chunking</option>
+                <option value="embedding">Embedding</option>
+                <option value="uploaded">Uploaded</option>
+                <option value="failed">Failed</option>
+            </select>
+            <button type="button" class="secondary" onclick="resetFilters()">Reset</button>
+        </div>
+        <p class="muted" id="booksCount">Showing {{ books|length }} books</p>
+        <div id="actionMessage" class="hidden"></div>
+    </section>
+
+    <div class="books-grid">
+        {% for book in books %}
+            <div class="card book-card" data-title="{{ book.title|lower }}" data-file="{{ book.file_name|lower }}" data-status="{{ book.status }}">
+                <h3>{{ book.title }}</h3>
+                <p class="muted"><strong>File:</strong> {{ book.file_name }}</p>
+                <p><strong>Status:</strong> <span class="status status-{{ book.status }}">{{ book.status }}</span></p>
+                <p class="muted"><strong>Current step:</strong> {{ book.current_step if book.current_step else "—" }}</p>
+                <p class="muted"><strong>Total Pages:</strong> {{ book.total_pages if book.total_pages else "—" }}</p>
+                <p class="muted"><strong>Total Chunks:</strong> {{ book.total_chunks if book.total_chunks else "—" }}</p>
+                <p class="muted">
+                    <strong>Processed chunks:</strong>
+                    {{ book.processed_chunks if book.processed_chunks else 0 }} / {{ book.total_chunks if book.total_chunks else 0 }}
+                </p>
+                <p class="muted"><strong>Failed chunks:</strong> {{ book.failed_chunks if book.failed_chunks else 0 }}</p>
+                <p class="muted"><strong>Progress:</strong> {{ book.progress_percent if book.progress_percent else 0 }}%</p>
+                <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ book.progress_percent if book.progress_percent else 0 }}">
+                    <div class="progress-fill" data-progress="{{ book.progress_percent if book.progress_percent else 0 }}"></div>
+                </div>
+
+                {% if book.error_message %}
+                    <details class="error-details">
+                        <summary>View error details</summary>
+                        <p class="error-text">{{ book.error_message }}</p>
+                    </details>
+                {% endif %}
+
+                <div class="button-row">
+                    <button type="button" onclick="reindexBook('{{ book.id }}', this)">Reindex</button>
+                    <button type="button" class="secondary" onclick="refreshStatus('{{ book.id }}', this)">Refresh Status</button>
+                    <button type="button" class="danger" onclick="deleteBook('{{ book.id }}', this)">Delete</button>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No books uploaded yet.</p>
+{% endif %}
+<script>
+    const searchInput = document.getElementById("searchBooks");
+    const statusFilter = document.getElementById("statusFilter");
+    const cards = Array.from(document.querySelectorAll(".book-card"));
+    const progressBars = Array.from(document.querySelectorAll(".progress-fill"));
+    const booksCount = document.getElementById("booksCount");
+    const actionMessage = document.getElementById("actionMessage");
+
+    function setActionMessage(message, isError = false) {
+        actionMessage.textContent = message;
+        actionMessage.className = isError ? "toast error-toast" : "toast";
+    }
+
+    function applyFilters() {
+        const query = (searchInput.value || "").trim().toLowerCase();
+        const status = statusFilter.value;
+        let visible = 0;
+
+        cards.forEach((card) => {
+            const matchesSearch =
+                card.dataset.title.includes(query) || card.dataset.file.includes(query);
+            const matchesStatus = status === "all" || card.dataset.status === status;
+            const show = matchesSearch && matchesStatus;
+            card.classList.toggle("hidden", !show);
+            if (show) visible += 1;
+        });
+
+        booksCount.textContent = `Showing ${visible} books`;
+    }
+
+    function resetFilters() {
+        searchInput.value = "";
+        statusFilter.value = "all";
+        applyFilters();
+    }
+
+    searchInput?.addEventListener("input", applyFilters);
+    statusFilter?.addEventListener("change", applyFilters);
+    applyFilters();
+
+    progressBars.forEach((bar) => {
+        const value = Number(bar.dataset.progress || "0");
+        const clamped = Number.isFinite(value) ? Math.max(0, Math.min(100, value)) : 0;
+        bar.style.width = `${clamped}%`;
+    });
+
+    function setBusy(button, busy, label) {
+        if (!button) return;
+        button.disabled = busy;
+        if (busy) {
+            button.dataset.originalLabel = button.textContent;
+            button.textContent = label;
+        } else if (button.dataset.originalLabel) {
+            button.textContent = button.dataset.originalLabel;
+        }
+    }
+
+    async function reindexBook(bookId, button) {
+        setBusy(button, true, "Starting...");
+        const response = await fetch(`/books/${bookId}/ingest`, { method: "POST" });
+        if (response.ok) {
+            setActionMessage("Reindex started. Refreshing...");
+            window.location.reload();
+            return;
+        }
+        const error = await response.text();
+        setActionMessage(`Failed to start reindex: ${error}`, true);
+        setBusy(button, false);
+    }
+
+    async function refreshStatus(bookId, button) {
+        setBusy(button, true, "Checking...");
+        const response = await fetch(`/books/${bookId}/status`);
+        if (!response.ok) {
+            setActionMessage("Failed to fetch status.", true);
+            setBusy(button, false);
+            return;
+        }
+        const data = await response.json();
+        setActionMessage(
+            `Status: ${data.status} | Progress: ${data.progress_percent ?? 0}% | Processed: ${data.processed_chunks ?? 0}/${data.total_chunks ?? 0}${data.error_message ? ` | ${data.error_message}` : ""}`
+        );
+        window.location.reload();
+    }
+
+    async function deleteBook(bookId, button) {
+        const confirmed = confirm("Delete this book?");
+        if (!confirmed) return;
+        setBusy(button, true, "Deleting...");
+
+        const response = await fetch(`/books/${bookId}`, {
+            method: "DELETE"
+        });
+
+        if (response.ok) {
+            setActionMessage("Book deleted.");
+            window.location.reload();
+        } else {
+            setActionMessage("Failed to delete book.", true);
+            setBusy(button, false);
+        }
+    }
+</script>
+{% endblock %}

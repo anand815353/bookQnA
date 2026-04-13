@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <h1>Book Q&A System</h1>
+    <p>Upload books, index them, and ask grounded questions with page-level citations.</p>
+</section>
+
+<section class="stats-grid">
+    <div class="card">
+        <h3>Total Books</h3>
+        <p>{{ total_books }}</p>
+    </div>
+    <div class="card">
+        <h3>Indexed</h3>
+        <p>{{ indexed_books }}</p>
+    </div>
+    <div class="card">
+        <h3>Ingesting</h3>
+        <p>{{ ingesting_books }}</p>
+    </div>
+</section>
+
+<section class="card">
+    <h2>Upload a Book</h2>
+    <form action="/upload-book" method="post" enctype="multipart/form-data" class="form-stack">
+        <label>Book Title</label>
+        <input type="text" name="title" required>
+
+        <label>PDF File</label>
+        <input type="file" name="file" accept=".pdf" required>
+
+        <label class="checkbox">
+            <input type="hidden" name="auto_ingest" value="false">
+            <input type="checkbox" name="auto_ingest" value="true" checked>
+            Start ingestion immediately
+        </label>
+
+        <button type="submit">Upload Book</button>
+    </form>
+</section>
+
+<section class="card">
+    <h2>Recent Books</h2>
+    {% if books %}
+        <ul class="book-list">
+            {% for book in books[:5] %}
+                <li>
+                    <strong>{{ book.title }}</strong>
+                    <span class="status status-{{ book.status }}">{{ book.status }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No books uploaded yet.</p>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title if title else "Book Q&A" }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='styles.css') }}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container nav">
+            <a href="/" class="brand">Book Q&A</a>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/library">Books</a>
+                <a href="/chat">Chat</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container page-content">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

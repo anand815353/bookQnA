@@ -1,19 +1,64 @@
 # app/services/qa.py
+import logging
+import time
+import os
+from pathlib import Path
+
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
-from app.services.retrieval import get_vectorstore
+from app.logging_config import sanitize_for_debug
+from app.services.retrieval import search_documents
+from app.settings import LOG_DEBUG_SNIPPET_CHARS
+from dotenv import load_dotenv
+
+load_dotenv()
+APP_DIR = Path(__file__).resolve().parent
+load_dotenv(APP_DIR / ".env")
+api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
+
+
+ABSTAIN_MESSAGE = (
+    "I do not know based on the indexed books. "
+    "Please upload/reindex relevant content or ask a more specific question."
+)
+logger = logging.getLogger(__name__)
+
+
+def _select_parent_evidence(retrieved_docs, top_k: int):
+    selected = []
+    seen_parents = set()
+    for doc in retrieved_docs:
+        parent_id = doc.metadata.get("parent_section_id") or doc.metadata.get("section_id")
+        if parent_id and parent_id in seen_parents:
+            continue
+        if parent_id:
+            seen_parents.add(parent_id)
+        selected.append(doc)
+        if len(selected) >= top_k:
+            break
+    return selected
+
 
 def answer_question(question: str, book_ids: list[str] | None = None, top_k: int = 4):
-    vectorstore = get_vectorstore()
+    started = time.perf_counter()
+    logger.info(
+        "qa_answer_started question_len=%s top_k=%s book_filter_count=%s question_snippet=%s",
+        len(question or ""),
+        top_k,
+        len(book_ids or []),
+        sanitize_for_debug(question, LOG_DEBUG_SNIPPET_CHARS),
+    )
+    retrieved = search_documents(question, max(top_k * 2, 8), book_ids=book_ids)
+    retrieved = _select_parent_evidence(retrieved, top_k)
+    logger.info("qa_retrieval_completed selected_docs=%s", len(retrieved))
 
-    filter_dict = None
-    if book_ids:
-        # keep v1 simple: retrieve more and filter in Python if backend filter support varies
-        retrieved = vectorstore.similarity_search(question, k=max(top_k * 3, 10))
-        retrieved = [d for d in retrieved if d.metadata.get("book_id") in set(book_ids)]
-        retrieved = retrieved[:top_k]
-    else:
-        retrieved = vectorstore.similarity_search(question, k=top_k)
+    if not retrieved:
+        logger.info("qa_abstain_no_context")
+        return {
+            "answer": ABSTAIN_MESSAGE,
+            "citations": [],
+            "grounded": False,
+        }
 
     citations = []
     context_parts = []
@@ -30,7 +75,10 @@ def answer_question(question: str, book_ids: list[str] | None = None, top_k: int
             "book_title": book_title,
             "page_start": page_start,
             "page_end": page_end,
-            "snippet": snippet
+            "snippet": snippet,
+            "chapter_title": doc.metadata.get("chapter_title"),
+            "subchapter_title": doc.metadata.get("subchapter_title"),
+            "confidence": None,
         })
 
         context_parts.append(
@@ -62,13 +110,33 @@ def answer_question(question: str, book_ids: list[str] | None = None, top_k: int
     )
 
     chain = prompt | llm
-    response = chain.invoke({
-        "question": question,
-        "context": context
-    })
+    llm_started = time.perf_counter()
+    try:
+        response = chain.invoke({
+            "question": question,
+            "context": context
+        })
+    except Exception:
+        logger.exception(
+            "qa_llm_invoke_failed context_chars=%s",
+            len(context),
+        )
+        raise
+    logger.info("qa_llm_invoke_completed duration_ms=%s", int((time.perf_counter() - llm_started) * 1000))
+
+    answer_text = response.content.strip()
+    lowered = answer_text.lower()
+    grounded = bool(citations) and "i do not know" not in lowered
+    logger.info(
+        "qa_answer_completed grounded=%s citations=%s duration_ms=%s answer_snippet=%s",
+        grounded,
+        len(citations),
+        int((time.perf_counter() - started) * 1000),
+        sanitize_for_debug(answer_text, LOG_DEBUG_SNIPPET_CHARS),
+    )
 
     return {
-        "answer": response.content,
+        "answer": answer_text,
         "citations": citations,
-        "grounded": len(citations) > 0
+        "grounded": grounded
     }

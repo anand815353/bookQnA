@@ -1,9 +1,32 @@
 # app/settings.py
 from pathlib import Path
+import os
 
 DATA_DIR = Path("data")
 BOOKS_DIR = DATA_DIR / "books"
 CHROMA_DIR = DATA_DIR / "chroma"
+LOG_DIR = Path(os.getenv("LOG_DIR", str(DATA_DIR / "logs")))
 
 BOOKS_DIR.mkdir(parents=True, exist_ok=True)
 CHROMA_DIR.mkdir(parents=True, exist_ok=True)
+LOG_DIR.mkdir(parents=True, exist_ok=True)
+
+EMBEDDING_BATCH_SIZE = int(os.getenv("EMBEDDING_BATCH_SIZE", "5"))
+EMBEDDING_BATCH_SLEEP_SECONDS = float(os.getenv("EMBEDDING_BATCH_SLEEP_SECONDS", "5.0"))
+EMBEDDING_MAX_RETRIES = int(os.getenv("EMBEDDING_MAX_RETRIES", "6"))
+EMBEDDING_BACKOFF_BASE_SECONDS = float(os.getenv("EMBEDDING_BACKOFF_BASE_SECONDS", "3.0"))
+EMBEDDING_PROVIDER = os.getenv("EMBEDDING_PROVIDER", "huggingface").strip().lower()
+HF_EMBEDDING_MODEL = os.getenv(
+    "HF_EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2"
+)
+GEMINI_EMBEDDING_MODEL = os.getenv("GEMINI_EMBEDDING_MODEL", "models/gemini-embedding-001")
+VECTORSTORE_COLLECTION_PREFIX = os.getenv("VECTORSTORE_COLLECTION_PREFIX", "books").strip()
+VECTORSTORE_COLLECTION_NAME = (
+    f"{VECTORSTORE_COLLECTION_PREFIX}_{EMBEDDING_PROVIDER}"
+    if VECTORSTORE_COLLECTION_PREFIX
+    else EMBEDDING_PROVIDER
+)
+LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
+LOG_FILE_MAX_BYTES = int(os.getenv("LOG_FILE_MAX_BYTES", "2097152"))
+LOG_FILE_BACKUP_COUNT = int(os.getenv("LOG_FILE_BACKUP_COUNT", "5"))
+LOG_DEBUG_SNIPPET_CHARS = int(os.getenv("LOG_DEBUG_SNIPPET_CHARS", "280"))

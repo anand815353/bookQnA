@@ -250,6 +250,40 @@ button:disabled {
     background: var(--soft);
 }
 
+.debug-details {
+    margin-top: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    background: #0b1220;
+}
+
+.debug-details summary {
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.debug-box {
+    margin-top: 10px;
+}
+
+.debug-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+}
+
+.debug-box pre {
+    margin: 6px 0 12px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #020617;
+    color: #cbd5e1;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
 .error-text {
     color: #fca5a5;
     border: 1px solid rgba(239, 68, 68, 0.35);

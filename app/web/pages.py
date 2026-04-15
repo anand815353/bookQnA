@@ -8,6 +8,7 @@ from app.db import SessionLocal
 from app.models import Book
 from app.services.ingest import ingest_book
 from app.services.storage import save_uploaded_pdf
+from app.settings import QUERY_DEBUG_ENABLED
 
 router = APIRouter()
 APP_DIR = Path(__file__).resolve().parents[1]
@@ -96,7 +97,11 @@ def chat_page(request: Request):
         return templates.TemplateResponse(
             request=request,
             name="chat.html",
-            context={"books": books, "result": None},
+            context={
+                "books": books,
+                "result": None,
+                "query_debug_enabled": QUERY_DEBUG_ENABLED,
+            },
         )
     finally:
         db.close()

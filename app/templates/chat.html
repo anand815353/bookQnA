@@ -26,9 +26,18 @@
         <label>Top K</label>
         <input type="number" name="top_k" id="top_k" min="1" max="30" value="4">
 
+        {% if query_debug_enabled %}
+            <label class="checkbox">
+                <input type="checkbox" name="debug" id="debug_mode">
+                Include debug trace (development only)
+            </label>
+            <p class="muted">Shows retrieval trace, stage latency, and context preview for tuning.</p>
+        {% endif %}
+
         <button type="submit" id="ask-btn">Ask</button>
     </form>
     <p id="query-feedback" class="muted hidden"></p>
+    <p id="request-id" class="muted hidden"></p>
 </section>
 
 <section id="result-section" class="card hidden">
@@ -37,13 +46,58 @@
 
     <h3>Citations</h3>
     <div id="citations-box"></div>
+
+    <details id="debug-details" class="debug-details hidden">
+        <summary>Debug Trace</summary>
+        <div id="debug-box" class="debug-box"></div>
+    </details>
 </section>
 
 <script>
+function escapeHtml(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function renderDebug(data) {
+    const retrieval = data?.retrieval || {};
+    const stageLatency = data?.stage_latency_ms || {};
+    const retrievedChunkIds = retrieval.retrieved_child_chunk_ids || [];
+    const groupedSectionIds = retrieval.grouped_section_ids || [];
+    const chosenCitations = data?.chosen_citations || [];
+
+    const traceHtml = `
+        <div class="debug-grid">
+            <p><strong>Retrieval mode:</strong> ${escapeHtml(retrieval.retrieval_mode || "n/a")}</p>
+            <p><strong>Top K:</strong> ${escapeHtml(data?.top_k ?? "n/a")}</p>
+            <p><strong>Selected books:</strong> ${escapeHtml((data?.selected_books || []).join(", ") || "all")}</p>
+            <p><strong>Grounded:</strong> ${escapeHtml(String(!!data?.grounded))}</p>
+        </div>
+        <p><strong>Stage latency (ms):</strong> ${escapeHtml(JSON.stringify(stageLatency))}</p>
+        <p><strong>Retrieved child chunks:</strong></p>
+        <pre>${escapeHtml(retrievedChunkIds.join("\n") || "(none)")}</pre>
+        <p><strong>Grouped section IDs:</strong></p>
+        <pre>${escapeHtml(groupedSectionIds.join("\n") || "(none)")}</pre>
+        <p><strong>Chosen citations:</strong></p>
+        <pre>${escapeHtml(chosenCitations.join("\n") || "(none)")}</pre>
+        <p><strong>Context preview (${escapeHtml(data?.context?.chars ?? 0)} chars):</strong></p>
+        <pre>${escapeHtml(data?.context?.preview || "")}</pre>
+    `;
+    return traceHtml;
+}
+
 document.getElementById("query-form").addEventListener("submit", async function (e) {
     e.preventDefault();
     const askBtn = document.getElementById("ask-btn");
     const feedback = document.getElementById("query-feedback");
+    const requestIdLabel = document.getElementById("request-id");
+    const debugToggle = document.getElementById("debug_mode");
+    const debugDetails = document.getElementById("debug-details");
+    const debugBox = document.getElementById("debug-box");
 
     const question = document.getElementById("question").value;
     const topK = parseInt(document.getElementById("top_k").value, 10);
@@ -55,11 +109,17 @@ document.getElementById("query-form").addEventListener("submit", async function 
         book_ids: selectedBooks.length ? selectedBooks : null,
         top_k: topK
     };
+    if (debugToggle && debugToggle.checked) {
+        payload.debug = true;
+    }
 
     askBtn.disabled = true;
     askBtn.textContent = "Thinking...";
     feedback.textContent = "Retrieving and generating answer...";
     feedback.classList.remove("hidden");
+    requestIdLabel.classList.add("hidden");
+    debugDetails.classList.add("hidden");
+    debugBox.innerHTML = "";
 
     const response = await fetch("/query", {
         method: "POST",
@@ -68,6 +128,11 @@ document.getElementById("query-form").addEventListener("submit", async function 
         },
         body: JSON.stringify(payload)
     });
+    const requestId = response.headers.get("X-Request-ID");
+    if (requestId) {
+        requestIdLabel.textContent = `Request ID: ${requestId}`;
+        requestIdLabel.classList.remove("hidden");
+    }
 
     if (!response.ok) {
         const errorText = await response.text();
@@ -82,20 +147,26 @@ document.getElementById("query-form").addEventListener("submit", async function 
 
     document.getElementById("result-section").classList.remove("hidden");
     const groundedBadge = data.grounded ? "Grounded" : "Not fully grounded";
-    document.getElementById("answer-box").innerHTML = `<p>${data.answer}</p><p><strong>Status:</strong> ${groundedBadge}</p>`;
+    document.getElementById("answer-box").innerHTML =
+        `<p>${escapeHtml(data.answer)}</p><p><strong>Status:</strong> ${groundedBadge}</p>`;
 
     const citationsHtml = (data.citations || []).map(c => `
         <div class="citation-card">
-            <p><strong>Book:</strong> ${c.book_title}</p>
-            <p><strong>Pages:</strong> ${c.page_start}-${c.page_end}</p>
-            ${c.chapter_title ? `<p><strong>Chapter:</strong> ${c.chapter_title}</p>` : ""}
-            ${c.subchapter_title ? `<p><strong>Subchapter:</strong> ${c.subchapter_title}</p>` : ""}
-            <p><strong>Snippet:</strong> ${c.snippet}</p>
+            <p><strong>Book:</strong> ${escapeHtml(c.book_title)}</p>
+            <p><strong>Pages:</strong> ${escapeHtml(c.page_start)}-${escapeHtml(c.page_end)}</p>
+            ${c.chapter_title ? `<p><strong>Chapter:</strong> ${escapeHtml(c.chapter_title)}</p>` : ""}
+            ${c.subchapter_title ? `<p><strong>Subchapter:</strong> ${escapeHtml(c.subchapter_title)}</p>` : ""}
+            <p><strong>Snippet:</strong> ${escapeHtml(c.snippet)}</p>
         </div>
     `).join("");
 
     document.getElementById("citations-box").innerHTML =
         citationsHtml || "<p>No citations returned.</p>";
+
+    if (data.debug) {
+        debugBox.innerHTML = renderDebug(data.debug);
+        debugDetails.classList.remove("hidden");
+    }
 
     feedback.textContent = "Done.";
     askBtn.disabled = false;

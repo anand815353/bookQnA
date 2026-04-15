@@ -3,57 +3,89 @@
 {% block content %}
 <section class="page-header">
     <h1>Ask Questions</h1>
-    <p>Query your indexed books and inspect grounded citations.</p>
+    <p>Start or continue chats and review grounded answers with citations.</p>
 </section>
 
-<section class="card">
-    <form id="query-form" class="form-stack">
-        <label>Question</label>
-        <textarea name="question" id="question" rows="4" required></textarea>
-
-        <label>Select Books (optional)</label>
-        <div class="checkbox-list">
-            {% for book in books %}
-                {% if book.status == "indexed" %}
-                    <label class="checkbox">
-                        <input type="checkbox" name="book_ids" value="{{ book.id }}">
-                        {{ book.title }}
-                    </label>
-                {% endif %}
-            {% endfor %}
+<section class="chat-layout">
+    <aside class="card chat-sidebar">
+        <div class="button-row">
+            <button type="button" class="secondary" id="new-chat-btn">New Chat</button>
+            <button type="button" class="danger hidden" id="delete-chat-btn">Delete Chat</button>
         </div>
+        <p class="muted">Previous chats</p>
+        <div id="sessions-box" class="session-list">
+            <p class="muted">No chats yet.</p>
+        </div>
+    </aside>
 
-        <label>Top K</label>
-        <input type="number" name="top_k" id="top_k" min="1" max="30" value="4">
+    <div>
+        <section class="card">
+            <p id="active-session-label" class="muted">Active chat: New chat (unsaved)</p>
+            <form id="query-form" class="form-stack">
+                <label>Question</label>
+                <textarea name="question" id="question" rows="4" required></textarea>
 
-        {% if query_debug_enabled %}
-            <label class="checkbox">
-                <input type="checkbox" name="debug" id="debug_mode">
-                Include debug trace (development only)
-            </label>
-            <p class="muted">Shows retrieval trace, stage latency, and context preview for tuning.</p>
-        {% endif %}
+                <label>Select Books (optional)</label>
+                <div class="checkbox-list">
+                    {% for book in books %}
+                        {% if book.status == "indexed" %}
+                            <label class="checkbox">
+                                <input type="checkbox" name="book_ids" value="{{ book.id }}">
+                                {{ book.title }}
+                            </label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
 
-        <button type="submit" id="ask-btn">Ask</button>
-    </form>
-    <p id="query-feedback" class="muted hidden"></p>
-    <p id="request-id" class="muted hidden"></p>
-</section>
+                <label>Top K</label>
+                <input type="number" name="top_k" id="top_k" min="1" max="30" value="4">
 
-<section id="result-section" class="card hidden">
-    <h2>Answer</h2>
-    <div id="answer-box"></div>
+                {% if query_debug_enabled %}
+                    <label class="checkbox">
+                        <input type="checkbox" name="debug" id="debug_mode">
+                        Include debug trace (development only)
+                    </label>
+                    <p class="muted">Shows retrieval trace, stage latency, and context preview for tuning.</p>
+                {% endif %}
 
-    <h3>Citations</h3>
-    <div id="citations-box"></div>
+                <button type="submit" id="ask-btn">Ask</button>
+            </form>
+            <p id="query-feedback" class="muted hidden"></p>
+            <p id="request-id" class="muted hidden"></p>
+        </section>
 
-    <details id="debug-details" class="debug-details hidden">
-        <summary>Debug Trace</summary>
-        <div id="debug-box" class="debug-box"></div>
-    </details>
+        <section class="card">
+            <h2>Conversation</h2>
+            <div id="messages-box" class="message-list">
+                <p class="muted">Ask a question to start a chat.</p>
+            </div>
+        </section>
+
+        <section id="result-section" class="card hidden">
+            <h2>Latest Answer</h2>
+            <div id="answer-box"></div>
+
+            <h3>Citations</h3>
+            <div id="citations-box"></div>
+
+            <details id="debug-details" class="debug-details hidden">
+                <summary>Debug Trace</summary>
+                <div id="debug-box" class="debug-box"></div>
+            </details>
+        </section>
+    </div>
 </section>
 
 <script>
+let currentSessionId = {{ selected_session_id | tojson }};
+
+function setUrlForSession(sessionId) {
+    const nextPath = sessionId ? `/chat/${encodeURIComponent(sessionId)}` : "/chat";
+    if (window.location.pathname !== nextPath) {
+        window.history.replaceState({}, "", nextPath);
+    }
+}
+
 function escapeHtml(value) {
     return String(value ?? "")
         .replace(/&/g, "&amp;")
@@ -90,6 +122,120 @@ function renderDebug(data) {
     return traceHtml;
 }
 
+function formatTime(value) {
+    if (!value) return "";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "";
+    return date.toLocaleString();
+}
+
+function setActiveSessionLabel(title) {
+    const label = document.getElementById("active-session-label");
+    const deleteBtn = document.getElementById("delete-chat-btn");
+    if (title) {
+        label.textContent = `Active chat: ${title}`;
+        deleteBtn.classList.remove("hidden");
+    } else {
+        label.textContent = "Active chat: New chat (unsaved)";
+        deleteBtn.classList.add("hidden");
+    }
+}
+
+function renderSessions(sessions) {
+    const box = document.getElementById("sessions-box");
+    if (!sessions.length) {
+        box.innerHTML = "<p class='muted'>No chats yet.</p>";
+        return;
+    }
+
+    box.innerHTML = sessions.map(session => `
+        <a
+            href="/chat/${encodeURIComponent(session.id)}"
+            class="session-item ${session.id === currentSessionId ? "active" : ""}"
+            data-session-id="${escapeHtml(session.id)}"
+        >
+            <strong class="session-title">${escapeHtml(session.title || "Untitled")}</strong>
+            ${session.summary_text ? `<span class="session-summary">${escapeHtml(session.summary_text)}</span>` : ""}
+            ${
+                session.preview_text && session.preview_text !== session.summary_text
+                    ? `<span class="session-preview">${escapeHtml(session.preview_text)}</span>`
+                    : ""
+            }
+            <span class="muted">${escapeHtml(formatTime(session.last_message_at || session.updated_at || session.created_at))}</span>
+        </a>
+    `).join("");
+
+    Array.from(box.querySelectorAll("[data-session-id]")).forEach(el => {
+        el.addEventListener("click", async (event) => {
+            event.preventDefault();
+            await loadSession(el.getAttribute("data-session-id"));
+            await refreshSessions();
+        });
+    });
+}
+
+function renderCitations(citations) {
+    return (citations || []).map(c => `
+        <div class="citation-card compact">
+            <p><strong>Book:</strong> ${escapeHtml(c.book_title)}</p>
+            <p><strong>Pages:</strong> ${escapeHtml(c.page_start)}-${escapeHtml(c.page_end)}</p>
+            ${c.chapter_title ? `<p><strong>Chapter:</strong> ${escapeHtml(c.chapter_title)}</p>` : ""}
+            ${c.subchapter_title ? `<p><strong>Subchapter:</strong> ${escapeHtml(c.subchapter_title)}</p>` : ""}
+            <p><strong>Snippet:</strong> ${escapeHtml(c.snippet)}</p>
+        </div>
+    `).join("");
+}
+
+function renderMessages(messages) {
+    const box = document.getElementById("messages-box");
+    if (!messages.length) {
+        box.innerHTML = "<p class='muted'>No messages in this chat yet.</p>";
+        return;
+    }
+
+    box.innerHTML = messages.map(message => {
+        if (message.role === "user") {
+            return `
+                <div class="message user">
+                    <p class="message-meta">You - ${escapeHtml(formatTime(message.created_at))}</p>
+                    <p>${escapeHtml(message.question_text || "")}</p>
+                </div>
+            `;
+        }
+
+        const status = message.grounded ? "Grounded" : "Not fully grounded";
+        return `
+            <div class="message assistant">
+                <p class="message-meta">Assistant - ${escapeHtml(formatTime(message.created_at))}</p>
+                <p>${escapeHtml(message.answer_text || "")}</p>
+                <p><strong>Status:</strong> ${escapeHtml(status)}</p>
+                ${renderCitations(message.citations)}
+            </div>
+        `;
+    }).join("");
+}
+
+async function refreshSessions() {
+    const response = await fetch("/chats");
+    if (!response.ok) {
+        return;
+    }
+    const sessions = await response.json();
+    renderSessions(sessions);
+}
+
+async function loadSession(sessionId) {
+    const response = await fetch(`/chats/${encodeURIComponent(sessionId)}`);
+    if (!response.ok) {
+        return;
+    }
+    const data = await response.json();
+    currentSessionId = data.session.id;
+    setActiveSessionLabel(data.session.title);
+    setUrlForSession(currentSessionId);
+    renderMessages(data.messages || []);
+}
+
 document.getElementById("query-form").addEventListener("submit", async function (e) {
     e.preventDefault();
     const askBtn = document.getElementById("ask-btn");
@@ -107,7 +253,8 @@ document.getElementById("query-form").addEventListener("submit", async function 
     const payload = {
         question: question,
         book_ids: selectedBooks.length ? selectedBooks : null,
-        top_k: topK
+        top_k: topK,
+        session_id: currentSessionId
     };
     if (debugToggle && debugToggle.checked) {
         payload.debug = true;
@@ -144,6 +291,11 @@ document.getElementById("query-form").addEventListener("submit", async function 
     }
 
     const data = await response.json();
+    currentSessionId = data.session_id || currentSessionId;
+    if (currentSessionId) {
+        await loadSession(currentSessionId);
+        await refreshSessions();
+    }
 
     document.getElementById("result-section").classList.remove("hidden");
     const groundedBadge = data.grounded ? "Grounded" : "Not fully grounded";
@@ -172,5 +324,48 @@ document.getElementById("query-form").addEventListener("submit", async function 
     askBtn.disabled = false;
     askBtn.textContent = "Ask";
 });
+
+document.getElementById("new-chat-btn").addEventListener("click", () => {
+    currentSessionId = null;
+    setActiveSessionLabel(null);
+    setUrlForSession(null);
+    document.getElementById("messages-box").innerHTML = "<p class='muted'>Ask a question to start a chat.</p>";
+    document.getElementById("result-section").classList.add("hidden");
+    document.getElementById("query-feedback").classList.add("hidden");
+    document.getElementById("request-id").classList.add("hidden");
+    document.getElementById("question").focus();
+    refreshSessions();
+});
+
+document.getElementById("delete-chat-btn").addEventListener("click", async () => {
+    if (!currentSessionId) {
+        return;
+    }
+    const confirmed = window.confirm("Delete this chat thread?");
+    if (!confirmed) {
+        return;
+    }
+
+    const response = await fetch(`/chats/${encodeURIComponent(currentSessionId)}`, {
+        method: "DELETE",
+    });
+    if (!response.ok) {
+        return;
+    }
+
+    currentSessionId = null;
+    setActiveSessionLabel(null);
+    setUrlForSession(null);
+    document.getElementById("messages-box").innerHTML = "<p class='muted'>Ask a question to start a chat.</p>";
+    document.getElementById("result-section").classList.add("hidden");
+    await refreshSessions();
+});
+
+setActiveSessionLabel(null);
+if (currentSessionId) {
+    loadSession(currentSessionId).then(refreshSessions);
+} else {
+    refreshSessions();
+}
 </script>
 {% endblock %}

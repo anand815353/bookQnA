@@ -21,6 +21,10 @@ BOOKS_COLUMN_MIGRATIONS = [
     ("finished_at", "DATETIME"),
 ]
 
+CHAT_SESSIONS_COLUMN_MIGRATIONS = [
+    ("summary_text", "TEXT"),
+]
+
 
 def _ensure_books_columns() -> None:
     with engine.begin() as conn:
@@ -41,6 +45,26 @@ def _ensure_books_columns() -> None:
             conn.execute(text(f"ALTER TABLE books ADD COLUMN {column_name} {column_sql}"))
 
 
+def _ensure_chat_sessions_columns() -> None:
+    with engine.begin() as conn:
+        table_exists = conn.execute(
+            text("SELECT name FROM sqlite_master WHERE type='table' AND name='chat_sessions'")
+        ).fetchone()
+        if not table_exists:
+            return
+
+        existing_columns = {
+            row[1]
+            for row in conn.execute(text("PRAGMA table_info(chat_sessions)")).fetchall()
+        }
+
+        for column_name, column_sql in CHAT_SESSIONS_COLUMN_MIGRATIONS:
+            if column_name in existing_columns:
+                continue
+            conn.execute(text(f"ALTER TABLE chat_sessions ADD COLUMN {column_name} {column_sql}"))
+
+
 def init_db():
     Base.metadata.create_all(bind=engine)
     _ensure_books_columns()
+    _ensure_chat_sessions_columns()

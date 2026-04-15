@@ -11,6 +11,7 @@ from app.db import init_db
 from fastapi.staticfiles import StaticFiles
 
 from app.api.books import router as books_router
+from app.api.chats import router as chats_router
 from app.api.query import router as query_router
 from app.web.pages import router as pages_router
 
@@ -35,6 +36,7 @@ app = FastAPI(title="Book Q&A", lifespan=lifespan)
 app.mount("/static", StaticFiles(directory=str(APP_DIR / "static")), name="static")
 
 app.include_router(books_router)
+app.include_router(chats_router)
 app.include_router(query_router)
 app.include_router(pages_router)
 

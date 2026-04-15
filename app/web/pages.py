@@ -5,7 +5,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
 from app.db import SessionLocal
-from app.models import Book
+from app.models import Book, ChatSession
 from app.services.ingest import ingest_book
 from app.services.storage import save_uploaded_pdf
 from app.settings import QUERY_DEBUG_ENABLED
@@ -101,6 +101,29 @@ def chat_page(request: Request):
                 "books": books,
                 "result": None,
                 "query_debug_enabled": QUERY_DEBUG_ENABLED,
+                "selected_session_id": None,
+            },
+        )
+    finally:
+        db.close()
+
+
+@router.get("/chat/{session_id}", response_class=HTMLResponse)
+def chat_thread_page(request: Request, session_id: str):
+    db = SessionLocal()
+    try:
+        books = db.query(Book).order_by(Book.created_at.desc()).all()
+        session = db.get(ChatSession, session_id)
+        if not session:
+            raise HTTPException(status_code=404, detail="Chat session not found.")
+        return templates.TemplateResponse(
+            request=request,
+            name="chat.html",
+            context={
+                "books": books,
+                "result": None,
+                "query_debug_enabled": QUERY_DEBUG_ENABLED,
+                "selected_session_id": session_id,
             },
         )
     finally:

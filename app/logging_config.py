@@ -1,4 +1,5 @@
 import logging
+import json
 import re
 from contextvars import ContextVar
 from logging.handlers import RotatingFileHandler
@@ -49,6 +50,37 @@ def truncate_text(value: str, max_chars: int) -> str:
 
 def sanitize_for_debug(value: str, max_chars: int) -> str:
     return truncate_text(redact_text((value or "").strip()), max_chars)
+
+
+def _serialize_field(value: object) -> str:
+    if isinstance(value, (dict, list, tuple, set)):
+        try:
+            return json.dumps(value, ensure_ascii=True, default=str)
+        except Exception:
+            return str(value)
+    return str(value)
+
+
+def log_structured(
+    logger: logging.Logger,
+    event: str,
+    *,
+    level: int = logging.INFO,
+    max_value_chars: int = 300,
+    **fields: object,
+) -> None:
+    parts: list[str] = []
+    for key, value in fields.items():
+        if value is None:
+            continue
+        serialized = _serialize_field(value)
+        safe = sanitize_for_debug(serialized, max_value_chars)
+        parts.append(f"{key}={safe}")
+
+    if parts:
+        logger.log(level, "%s %s", event, " ".join(parts))
+    else:
+        logger.log(level, "%s", event)
 
 
 def setup_logging() -> None:

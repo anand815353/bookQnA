@@ -55,6 +55,7 @@ class QueryRequest(BaseModel):
     question: str
     book_ids: list[str] | None = None
     top_k: int = 4
+    debug: bool = False
 
 class QueryResponse(BaseModel):
     answer: str

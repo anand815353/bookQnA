@@ -3,6 +3,7 @@ import logging
 import math
 import os
 import re
+import time
 from collections import Counter, defaultdict
 
 from langchain_core.documents import Document
@@ -10,6 +11,7 @@ from langchain_core.documents import Document
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from app.logging_config import log_structured, sanitize_for_debug
 from app.settings import (
     CHROMA_DIR,
     EMBEDDING_PROVIDER,
@@ -17,8 +19,10 @@ from app.settings import (
     HF_EMBEDDING_MODEL,
     HYBRID_RRF_K,
     LEXICAL_MAX_DOCS,
+    LOG_DEBUG_SNIPPET_CHARS,
     RETRIEVAL_FETCH_K,
     RETRIEVAL_MODE,
+    RETRIEVAL_TRACE_MAX_ITEMS,
     VECTORSTORE_COLLECTION_NAME,
 )
 
@@ -150,6 +154,14 @@ def _doc_key(doc: Document) -> str:
     page_end = int(doc.metadata.get("page_end", page_start) or page_start)
     snippet = (doc.page_content or "")[:140].strip().lower()
     return f"{book_id}|{section_id}|{page_start}|{page_end}|{snippet}"
+
+
+def _chunk_trace_id(doc: Document) -> str:
+    book_id = str(doc.metadata.get("book_id", "") or "")
+    chunk_index = doc.metadata.get("chunk_index")
+    if chunk_index is not None:
+        return f"{book_id}::chunk::{chunk_index}"
+    return _doc_key(doc)
 
 
 def _parent_key(doc: Document) -> str:
@@ -340,28 +352,39 @@ def _retrieve_child_rank_state(
     *,
     book_ids: list[str] | None,
     top_k: int,
-) -> tuple[dict[str, Document], dict[str, float], str, int, int]:
+) -> tuple[dict[str, Document], dict[str, float], str, int, int, dict[str, int]]:
+    started = time.perf_counter()
     mode = RETRIEVAL_MODE if RETRIEVAL_MODE in VALID_RETRIEVAL_MODES else "hybrid"
     fetch_k = max(top_k * 4, RETRIEVAL_FETCH_K)
-    logger.info(
-        "retrieval_requested mode=%s top_k=%s fetch_k=%s book_filter_count=%s question_len=%s",
-        mode,
-        top_k,
-        fetch_k,
-        len(book_ids or []),
-        len(question or ""),
+    log_structured(
+        logger,
+        "retrieval_requested",
+        mode=mode,
+        top_k=top_k,
+        fetch_k=fetch_k,
+        selected_books=book_ids or [],
+        book_filter_count=len(book_ids or []),
+        question_len=len(question or ""),
+        question_snippet=sanitize_for_debug(question, LOG_DEBUG_SNIPPET_CHARS),
     )
 
     vectorstore = get_vectorstore()
 
     dense_docs: list[Document] = []
     lexical_docs: list[Document] = []
+    dense_ms = 0
+    lexical_ms = 0
     if mode in {"dense_only", "hybrid"}:
+        dense_started = time.perf_counter()
         dense_docs = _dense_search(vectorstore, question, fetch_k, book_ids)
+        dense_ms = int((time.perf_counter() - dense_started) * 1000)
     if mode in {"lexical_only", "hybrid"}:
+        lexical_started = time.perf_counter()
         lexical_corpus = _load_lexical_corpus(vectorstore, book_ids)
         lexical_docs = _bm25_rank(question, lexical_corpus, fetch_k)
+        lexical_ms = int((time.perf_counter() - lexical_started) * 1000)
 
+    merge_started = time.perf_counter()
     if mode == "dense_only":
         base_scores = _score_ranked_list(dense_docs, weight=1.0)
         combined_docs = dense_docs
@@ -380,14 +403,25 @@ def _retrieve_child_rank_state(
         key = _doc_key(doc)
         docs_by_key.setdefault(key, doc)
 
-    logger.info(
-        "retrieval_child_candidates mode=%s dense=%s lexical=%s unique=%s",
-        mode,
-        len(dense_docs),
-        len(lexical_docs),
-        len(docs_by_key),
+    merge_ms = int((time.perf_counter() - merge_started) * 1000)
+    total_ms = int((time.perf_counter() - started) * 1000)
+    stage_latencies_ms = {
+        "dense_search": dense_ms,
+        "lexical_search": lexical_ms,
+        "merge_rank": merge_ms,
+        "total": total_ms,
+    }
+
+    log_structured(
+        logger,
+        "retrieval_child_candidates",
+        mode=mode,
+        dense=len(dense_docs),
+        lexical=len(lexical_docs),
+        unique=len(docs_by_key),
+        stage_latency_ms=stage_latencies_ms,
     )
-    return docs_by_key, base_scores, mode, len(dense_docs), len(lexical_docs)
+    return docs_by_key, base_scores, mode, len(dense_docs), len(lexical_docs), stage_latencies_ms
 
 
 def _ranked_child_docs(docs_by_key: dict[str, Document], base_scores: dict[str, float]) -> list[Document]:
@@ -507,43 +541,106 @@ def delete_book_vectors(book_id: str) -> int:
 
 
 def search_documents(question: str, top_k: int, book_ids: list[str] | None = None):
-    docs_by_key, base_scores, mode, dense_count, lexical_count = _retrieve_child_rank_state(
+    docs_by_key, base_scores, mode, dense_count, lexical_count, stage_latencies_ms = _retrieve_child_rank_state(
         question,
         book_ids=book_ids,
         top_k=top_k,
     )
     ranked_children = _ranked_child_docs(docs_by_key, base_scores)
     results = _postprocess_ranked_docs(ranked_children, base_scores, top_k)
-    logger.info(
-        "retrieval_completed mode=%s dense=%s lexical=%s final=%s",
-        mode,
-        dense_count,
-        lexical_count,
-        len(results),
+    result_chunk_ids = [_chunk_trace_id(doc) for doc in results[:RETRIEVAL_TRACE_MAX_ITEMS]]
+    log_structured(
+        logger,
+        "retrieval_completed",
+        mode=mode,
+        dense=dense_count,
+        lexical=lexical_count,
+        final=len(results),
+        selected_chunk_ids=result_chunk_ids,
+        stage_latency_ms=stage_latencies_ms,
     )
     return results
 
 
-def search_parent_evidence(question: str, top_k: int, book_ids: list[str] | None = None) -> list[dict]:
-    docs_by_key, base_scores, mode, dense_count, lexical_count = _retrieve_child_rank_state(
+def search_parent_evidence(
+    question: str,
+    top_k: int,
+    book_ids: list[str] | None = None,
+    *,
+    debug_info: dict | None = None,
+) -> list[dict]:
+    started = time.perf_counter()
+    docs_by_key, base_scores, mode, dense_count, lexical_count, stage_latencies_ms = _retrieve_child_rank_state(
         question,
         book_ids=book_ids,
         top_k=max(top_k * 2, 8),
     )
+    rank_started = time.perf_counter()
     ranked_children = _ranked_child_docs(docs_by_key, base_scores)
+    child_rank_ms = int((time.perf_counter() - rank_started) * 1000)
     # Keep a wider candidate pool for grouping quality.
     candidate_children = ranked_children[: max(top_k * 10, RETRIEVAL_FETCH_K)]
+    group_started = time.perf_counter()
     parent_evidence = _build_parent_evidence(
         candidate_children,
         base_scores=base_scores,
         top_k=top_k,
     )
-    logger.info(
-        "parent_retrieval_completed mode=%s dense=%s lexical=%s parent_sections=%s candidates=%s",
-        mode,
-        dense_count,
-        lexical_count,
-        len(parent_evidence),
-        len(candidate_children),
+    group_ms = int((time.perf_counter() - group_started) * 1000)
+    total_ms = int((time.perf_counter() - started) * 1000)
+
+    child_chunk_ids = [
+        _chunk_trace_id(doc) for doc in candidate_children[:RETRIEVAL_TRACE_MAX_ITEMS]
+    ]
+    grouped_section_ids = [
+        str(item.get("parent_section_id", ""))
+        for item in parent_evidence[:RETRIEVAL_TRACE_MAX_ITEMS]
+    ]
+    grouped_section_ids = [value for value in grouped_section_ids if value]
+    top_group_child_chunk_ids = []
+    for parent in parent_evidence[:RETRIEVAL_TRACE_MAX_ITEMS]:
+        children = parent.get("children") or []
+        if not children:
+            continue
+        best_child = children[0].get("doc")
+        if best_child is None:
+            continue
+        top_group_child_chunk_ids.append(_chunk_trace_id(best_child))
+
+    stage_trace = {
+        **stage_latencies_ms,
+        "child_rank": child_rank_ms,
+        "parent_group": group_ms,
+        "search_parent_total": total_ms,
+    }
+    log_structured(
+        logger,
+        "parent_retrieval_completed",
+        mode=mode,
+        dense=dense_count,
+        lexical=lexical_count,
+        parent_sections=len(parent_evidence),
+        candidates=len(candidate_children),
+        retrieved_child_chunk_ids=child_chunk_ids,
+        grouped_section_ids=grouped_section_ids,
+        top_group_child_chunk_ids=top_group_child_chunk_ids,
+        stage_latency_ms=stage_trace,
     )
+
+    if debug_info is not None:
+        debug_info.update(
+            {
+                "retrieval_mode": mode,
+                "top_k": top_k,
+                "selected_books": list(book_ids or []),
+                "dense_candidates": dense_count,
+                "lexical_candidates": lexical_count,
+                "candidate_children_count": len(candidate_children),
+                "parent_sections_count": len(parent_evidence),
+                "retrieved_child_chunk_ids": child_chunk_ids,
+                "grouped_section_ids": grouped_section_ids,
+                "top_group_child_chunk_ids": top_group_child_chunk_ids,
+                "stage_latency_ms": stage_trace,
+            }
+        )
     return parent_evidence

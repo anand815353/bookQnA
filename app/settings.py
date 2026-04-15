@@ -2,6 +2,14 @@
 from pathlib import Path
 import os
 
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "y", "on"}
+
+
 DATA_DIR = Path("data")
 BOOKS_DIR = DATA_DIR / "books"
 CHROMA_DIR = DATA_DIR / "chroma"
@@ -34,3 +42,6 @@ RETRIEVAL_MODE = os.getenv("RETRIEVAL_MODE", "hybrid").strip().lower()
 RETRIEVAL_FETCH_K = int(os.getenv("RETRIEVAL_FETCH_K", "40"))
 LEXICAL_MAX_DOCS = int(os.getenv("LEXICAL_MAX_DOCS", "5000"))
 HYBRID_RRF_K = int(os.getenv("HYBRID_RRF_K", "60"))
+RETRIEVAL_TRACE_MAX_ITEMS = int(os.getenv("RETRIEVAL_TRACE_MAX_ITEMS", "30"))
+QUERY_DEBUG_ENABLED = _env_bool("QUERY_DEBUG_ENABLED", default=False)
+QUERY_DEBUG_CONTEXT_CHARS = int(os.getenv("QUERY_DEBUG_CONTEXT_CHARS", "1800"))

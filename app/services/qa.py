@@ -8,9 +8,9 @@ import time
 
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
-from app.logging_config import sanitize_for_debug
+from app.logging_config import log_structured, sanitize_for_debug
 from app.services.retrieval import search_parent_evidence
-from app.settings import LOG_DEBUG_SNIPPET_CHARS
+from app.settings import LOG_DEBUG_SNIPPET_CHARS, QUERY_DEBUG_CONTEXT_CHARS
 # from dotenv import load_dotenv
 #
 # load_dotenv()
@@ -35,30 +35,85 @@ def _compact_text(text: str, max_chars: int) -> str:
     return compacted[: max(0, max_chars - 3)].rstrip() + "..."
 
 
-def answer_question(question: str, book_ids: list[str] | None = None, top_k: int = 4):
-    started = time.perf_counter()
-    logger.info(
-        "qa_answer_started question_len=%s top_k=%s book_filter_count=%s question_snippet=%s",
-        len(question or ""),
-        top_k,
-        len(book_ids or []),
-        sanitize_for_debug(question, LOG_DEBUG_SNIPPET_CHARS),
+def _citation_trace_id(citation: dict) -> str:
+    return (
+        f"{citation.get('book_id', '')}:"
+        f"p{citation.get('page_start', 0)}-{citation.get('page_end', 0)}:"
+        f"{citation.get('section_title') or citation.get('chapter_title') or 'unknown'}"
     )
 
-    parent_evidence = search_parent_evidence(question, top_k, book_ids=book_ids)
-    logger.info("qa_retrieval_completed parent_sections=%s", len(parent_evidence))
+
+def answer_question(
+    question: str,
+    book_ids: list[str] | None = None,
+    top_k: int = 4,
+    *,
+    include_debug: bool = False,
+):
+    started = time.perf_counter()
+    log_structured(
+        logger,
+        "qa_answer_started",
+        question_len=len(question or ""),
+        question_snippet=sanitize_for_debug(question, LOG_DEBUG_SNIPPET_CHARS),
+        top_k=top_k,
+        selected_books=book_ids or [],
+        book_filter_count=len(book_ids or []),
+        include_debug=include_debug,
+    )
+
+    retrieval_started = time.perf_counter()
+    retrieval_debug: dict = {}
+    try:
+        parent_evidence = search_parent_evidence(
+            question,
+            top_k,
+            book_ids=book_ids,
+            debug_info=retrieval_debug,
+        )
+    except Exception:
+        logger.exception("qa_stage_failed stage=retrieval")
+        raise
+    retrieval_ms = int((time.perf_counter() - retrieval_started) * 1000)
+    log_structured(
+        logger,
+        "qa_retrieval_completed",
+        parent_sections=len(parent_evidence),
+        grouped_section_ids=retrieval_debug.get("grouped_section_ids", []),
+        retrieved_child_chunk_ids=retrieval_debug.get("retrieved_child_chunk_ids", []),
+        retrieval_latency_ms=retrieval_ms,
+    )
 
     if not parent_evidence:
-        logger.info("qa_abstain_no_context")
-        return {
+        log_structured(logger, "qa_abstain_no_context", retrieval_latency_ms=retrieval_ms)
+        response = {
             "answer": ABSTAIN_MESSAGE,
             "citations": [],
             "grounded": False,
         }
+        if include_debug:
+            response["debug"] = {
+                "question": sanitize_for_debug(question, LOG_DEBUG_SNIPPET_CHARS),
+                "selected_books": list(book_ids or []),
+                "top_k": top_k,
+                "retrieval": retrieval_debug,
+                "context": {"chars": 0, "preview": ""},
+                "chosen_citations": [],
+                "stage_latency_ms": {
+                    "retrieval": retrieval_ms,
+                    "context_build": 0,
+                    "llm_invoke": 0,
+                    "total": int((time.perf_counter() - started) * 1000),
+                },
+                "grounded": False,
+            }
+        return response
 
     citations = []
     context_parts = []
+    citation_ids: list[str] = []
 
+    context_started = time.perf_counter()
     for parent in parent_evidence:
         children = parent.get("children", [])
         if not children:
@@ -85,6 +140,17 @@ def answer_question(question: str, book_ids: list[str] | None = None, top_k: int
             "structure_source": parent.get("structure_source", best_child.metadata.get("structure_source")),
             "confidence": parent.get("confidence", best_child_score),
         })
+        citation_ids.append(
+            _citation_trace_id(
+                {
+                    "book_id": book_id,
+                    "page_start": page_start,
+                    "page_end": page_end,
+                    "section_title": parent.get("section_title"),
+                    "chapter_title": parent.get("chapter_title"),
+                }
+            )
+        )
 
         child_lines = []
         for child in children:
@@ -107,6 +173,15 @@ def answer_question(question: str, book_ids: list[str] | None = None, top_k: int
         )
 
     context = "\n\n".join(context_parts)
+    context_build_ms = int((time.perf_counter() - context_started) * 1000)
+    log_structured(
+        logger,
+        "qa_context_built",
+        context_chars=len(context),
+        citations=len(citations),
+        chosen_citations=citation_ids,
+        context_build_latency_ms=context_build_ms,
+    )
 
     prompt = ChatPromptTemplate.from_messages([
         (
@@ -125,6 +200,7 @@ def answer_question(question: str, book_ids: list[str] | None = None, top_k: int
 
     api_key = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
     if not api_key:
+        logger.error("qa_stage_failed stage=llm_setup reason=missing_api_key")
         raise RuntimeError(
             "Missing Gemini API key. Set GOOGLE_API_KEY or GEMINI_API_KEY."
         )
@@ -144,28 +220,52 @@ def answer_question(question: str, book_ids: list[str] | None = None, top_k: int
         })
     except Exception:
         logger.exception(
-            "qa_llm_invoke_failed context_chars=%s",
-            len(context),
+            "qa_stage_failed stage=llm_invoke context_chars=%s",
+            len(context)
         )
         raise
 
-    logger.info("qa_llm_invoke_completed duration_ms=%s",
-                int((time.perf_counter() - llm_started) * 1000))
+    llm_ms = int((time.perf_counter() - llm_started) * 1000)
+    log_structured(logger, "qa_llm_invoke_completed", llm_latency_ms=llm_ms)
 
     answer_text = response.content.strip()
     lowered = answer_text.lower()
     grounded = bool(citations) and "i do not know" not in lowered
 
-    logger.info(
-        "qa_answer_completed grounded=%s citations=%s duration_ms=%s answer_snippet=%s",
-        grounded,
-        len(citations),
-        int((time.perf_counter() - started) * 1000),
-        sanitize_for_debug(answer_text, LOG_DEBUG_SNIPPET_CHARS),
+    total_ms = int((time.perf_counter() - started) * 1000)
+    stage_latency = {
+        "retrieval": retrieval_ms,
+        "context_build": context_build_ms,
+        "llm_invoke": llm_ms,
+        "total": total_ms,
+    }
+    log_structured(
+        logger,
+        "qa_answer_completed",
+        grounded=grounded,
+        citations=len(citations),
+        chosen_citations=citation_ids,
+        stage_latency_ms=stage_latency,
+        answer_snippet=sanitize_for_debug(answer_text, LOG_DEBUG_SNIPPET_CHARS),
     )
 
-    return {
+    result = {
         "answer": answer_text,
         "citations": citations,
         "grounded": grounded,
     }
+    if include_debug:
+        result["debug"] = {
+            "question": sanitize_for_debug(question, LOG_DEBUG_SNIPPET_CHARS),
+            "selected_books": list(book_ids or []),
+            "top_k": top_k,
+            "retrieval": retrieval_debug,
+            "context": {
+                "chars": len(context),
+                "preview": sanitize_for_debug(context, QUERY_DEBUG_CONTEXT_CHARS),
+            },
+            "chosen_citations": citation_ids,
+            "stage_latency_ms": stage_latency,
+            "grounded": grounded,
+        }
+    return result

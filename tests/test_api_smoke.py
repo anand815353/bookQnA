@@ -54,10 +54,10 @@ def test_book_lifecycle_and_status(monkeypatch):
 def test_query_endpoint_with_and_without_book_filter(monkeypatch):
     client = TestClient(app)
 
-    def fake_answer_question(question: str, book_ids=None, top_k: int = 4):
-        return {
+    def fake_answer_question(question: str, book_ids=None, top_k: int = 4, include_debug: bool = False):
+        result = {
             "answer": f"Answer for: {question}",
-            "grounded": bool(book_ids is None or len(book_ids) >= 0),
+            "grounded": True,
             "citations": [
                 {
                     "book_id": "b1",
@@ -71,6 +71,9 @@ def test_query_endpoint_with_and_without_book_filter(monkeypatch):
                 }
             ],
         }
+        if include_debug:
+            result["debug"] = {"enabled": True, "stage_latency_ms": {"total": 1}}
+        return result
 
     monkeypatch.setattr("app.api.query.answer_question", fake_answer_question)
 
@@ -87,6 +90,46 @@ def test_query_endpoint_with_and_without_book_filter(monkeypatch):
     )
     assert filtered_response.status_code == 200
     assert filtered_response.json()["citations"][0]["book_id"] == "b1"
+
+
+def test_query_debug_payload_disabled_by_default(monkeypatch):
+    client = TestClient(app)
+    monkeypatch.setattr("app.api.query.QUERY_DEBUG_ENABLED", False)
+
+    def fake_answer_question(question: str, book_ids=None, top_k: int = 4, include_debug: bool = False):
+        result = {
+            "answer": f"Answer for: {question}",
+            "grounded": True,
+            "citations": [],
+        }
+        if include_debug:
+            result["debug"] = {"enabled": True}
+        return result
+
+    monkeypatch.setattr("app.api.query.answer_question", fake_answer_question)
+    response = client.post("/query", json={"question": "debug please", "debug": True})
+    assert response.status_code == 200
+    assert "debug" not in response.json()
+
+
+def test_query_debug_payload_returned_when_enabled(monkeypatch):
+    client = TestClient(app)
+    monkeypatch.setattr("app.api.query.QUERY_DEBUG_ENABLED", True)
+
+    def fake_answer_question(question: str, book_ids=None, top_k: int = 4, include_debug: bool = False):
+        result = {
+            "answer": f"Answer for: {question}",
+            "grounded": True,
+            "citations": [],
+        }
+        if include_debug:
+            result["debug"] = {"enabled": True, "retrieval": {"mode": "hybrid"}}
+        return result
+
+    monkeypatch.setattr("app.api.query.answer_question", fake_answer_question)
+    response = client.post("/query", json={"question": "debug please", "debug": True})
+    assert response.status_code == 200
+    assert response.json()["debug"]["enabled"] is True
 
 
 def test_request_id_header_is_propagated():

@@ -49,3 +49,717 @@ The Table of Content is not provided in the given context.
 2026-04-13 19:26:00,634 INFO app.api.query request_id=625d186c-6274-4ebf-8b30-4fcc1469167e query_completed grounded=True citations=10 duration_ms=22756
 2026-04-13 19:26:00,635 INFO app.main request_id=625d186c-6274-4ebf-8b30-4fcc1469167e http_request_finished method=POST path=/query status=200 duration_ms=22758
 2026-04-13 19:28:25,212 INFO app.main request_id=- app_shutdown
+2026-04-14 23:38:19,854 INFO app.main request_id=- app_startup
+2026-04-14 23:38:37,494 INFO app.main request_id=82ae9c95-c4d1-4077-b2a1-00a3fa15b817 http_request_started method=GET path=/ client=127.0.0.1
+2026-04-14 23:38:37,550 INFO app.main request_id=82ae9c95-c4d1-4077-b2a1-00a3fa15b817 http_request_finished method=GET path=/ status=200 duration_ms=55
+2026-04-14 23:38:37,586 INFO app.main request_id=cc67e832-23fb-40c5-b1a4-a90f98e2601b http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-14 23:38:37,846 INFO app.main request_id=cc67e832-23fb-40c5-b1a4-a90f98e2601b http_request_finished method=GET path=/static/styles.css status=200 duration_ms=259
+2026-04-14 23:38:40,211 INFO app.main request_id=8457be59-d439-4978-9427-5251c7352fda http_request_started method=GET path=/ client=127.0.0.1
+2026-04-14 23:38:40,219 INFO app.main request_id=8457be59-d439-4978-9427-5251c7352fda http_request_finished method=GET path=/ status=200 duration_ms=8
+2026-04-14 23:38:40,300 INFO app.main request_id=fdde9156-1210-477f-9b52-796d8d217579 http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-14 23:38:40,307 INFO app.main request_id=fdde9156-1210-477f-9b52-796d8d217579 http_request_finished method=GET path=/static/styles.css status=200 duration_ms=7
+2026-04-14 23:38:40,441 INFO app.main request_id=2d9d3dd5-4190-4ee7-a6ba-4e3112412491 http_request_started method=GET path=/favicon.ico client=127.0.0.1
+2026-04-14 23:38:40,450 INFO app.main request_id=2d9d3dd5-4190-4ee7-a6ba-4e3112412491 http_request_finished method=GET path=/favicon.ico status=404 duration_ms=8
+2026-04-14 23:38:44,031 INFO app.main request_id=9ca643fb-c0d8-4f58-92f6-bcea71793784 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-14 23:38:44,061 INFO app.main request_id=9ca643fb-c0d8-4f58-92f6-bcea71793784 http_request_finished method=GET path=/chat status=200 duration_ms=29
+2026-04-14 23:38:45,677 INFO app.main request_id=6a8195af-1a5e-4fd3-ae1e-b86fd4f50f78 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-14 23:38:45,727 INFO app.main request_id=6a8195af-1a5e-4fd3-ae1e-b86fd4f50f78 http_request_finished method=GET path=/library status=200 duration_ms=50
+2026-04-14 23:38:47,916 INFO app.main request_id=874e4e48-6d41-4e3d-9d56-90c34168bd13 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-14 23:38:47,919 INFO app.main request_id=874e4e48-6d41-4e3d-9d56-90c34168bd13 http_request_finished method=GET path=/chat status=200 duration_ms=3
+2026-04-14 23:39:06,372 INFO app.main request_id=cf97a443-1c6e-4ca5-90ab-554f517b2b82 http_request_started method=POST path=/query client=127.0.0.1
+2026-04-14 23:39:06,376 INFO app.api.query request_id=cf97a443-1c6e-4ca5-90ab-554f517b2b82 query_requested question_len=12 top_k=10 book_filter_count=1
+2026-04-14 23:39:06,376 INFO app.services.qa request_id=cf97a443-1c6e-4ca5-90ab-554f517b2b82 qa_answer_started question_len=12 top_k=10 book_filter_count=1 question_snippet=what is rag?
+2026-04-14 23:39:06,379 INFO app.services.retrieval request_id=cf97a443-1c6e-4ca5-90ab-554f517b2b82 vector_search_requested top_k=20 book_filter_count=1 question_len=12
+2026-04-14 23:39:06,379 INFO app.services.retrieval request_id=cf97a443-1c6e-4ca5-90ab-554f517b2b82 vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-14 23:39:06,380 INFO app.services.retrieval request_id=cf97a443-1c6e-4ca5-90ab-554f517b2b82 embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-14 23:39:27,481 INFO sentence_transformers.SentenceTransformer request_id=cf97a443-1c6e-4ca5-90ab-554f517b2b82 Use pytorch device_name: cuda
+2026-04-14 23:39:27,481 INFO sentence_transformers.SentenceTransformer request_id=cf97a443-1c6e-4ca5-90ab-554f517b2b82 Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-14 23:39:36,814 INFO app.services.retrieval request_id=cf97a443-1c6e-4ca5-90ab-554f517b2b82 vector_search_completed strategy=filtered results=20
+2026-04-14 23:39:36,815 INFO app.services.qa request_id=cf97a443-1c6e-4ca5-90ab-554f517b2b82 qa_retrieval_completed selected_docs=10
+2026-04-14 23:39:45,220 INFO app.services.qa request_id=cf97a443-1c6e-4ca5-90ab-554f517b2b82 qa_llm_invoke_completed duration_ms=8143
+2026-04-14 23:39:45,220 INFO app.services.qa request_id=cf97a443-1c6e-4ca5-90ab-554f517b2b82 qa_answer_completed grounded=True citations=10 duration_ms=38843 answer_snippet=RAG stands for retrieval-augmented generation (Page 978).
+
+It is a technique that enhances a model's generation by retrieving relevant information from external memory sources (Page 495). You can think of RAG as a method to construct context specific to each query, rather than us...<truncated>
+2026-04-14 23:39:45,221 INFO app.api.query request_id=cf97a443-1c6e-4ca5-90ab-554f517b2b82 query_completed grounded=True citations=10 duration_ms=38844
+2026-04-14 23:39:45,253 INFO app.main request_id=cf97a443-1c6e-4ca5-90ab-554f517b2b82 http_request_finished method=POST path=/query status=200 duration_ms=38880
+2026-04-14 23:42:17,727 INFO app.main request_id=ee463854-0cde-4346-8bb7-509b47786218 http_request_started method=GET path=/ client=127.0.0.1
+2026-04-14 23:42:17,730 INFO app.main request_id=ee463854-0cde-4346-8bb7-509b47786218 http_request_finished method=GET path=/ status=200 duration_ms=2
+2026-04-14 23:42:19,312 INFO app.main request_id=793fe0ac-d152-4d8e-9f6b-2de890fc7768 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-14 23:42:19,314 INFO app.main request_id=793fe0ac-d152-4d8e-9f6b-2de890fc7768 http_request_finished method=GET path=/library status=200 duration_ms=1
+2026-04-14 23:42:22,071 INFO app.main request_id=e7bb023d-de04-402f-8451-2cd252319ba5 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-14 23:42:22,074 INFO app.main request_id=e7bb023d-de04-402f-8451-2cd252319ba5 http_request_finished method=GET path=/chat status=200 duration_ms=2
+2026-04-14 23:42:45,448 INFO app.main request_id=92f1be96-f66c-4ee1-b288-b7d4deb5b9d2 http_request_started method=POST path=/query client=127.0.0.1
+2026-04-14 23:42:45,450 INFO app.api.query request_id=92f1be96-f66c-4ee1-b288-b7d4deb5b9d2 query_requested question_len=19 top_k=10 book_filter_count=1
+2026-04-14 23:42:45,450 INFO app.services.qa request_id=92f1be96-f66c-4ee1-b288-b7d4deb5b9d2 qa_answer_started question_len=19 top_k=10 book_filter_count=1 question_snippet=summarize chapter 1
+2026-04-14 23:42:45,451 INFO app.services.retrieval request_id=92f1be96-f66c-4ee1-b288-b7d4deb5b9d2 vector_search_requested top_k=20 book_filter_count=1 question_len=19
+2026-04-14 23:42:45,451 INFO app.services.retrieval request_id=92f1be96-f66c-4ee1-b288-b7d4deb5b9d2 vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-14 23:42:45,451 INFO app.services.retrieval request_id=92f1be96-f66c-4ee1-b288-b7d4deb5b9d2 embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-14 23:42:45,454 INFO sentence_transformers.SentenceTransformer request_id=92f1be96-f66c-4ee1-b288-b7d4deb5b9d2 Use pytorch device_name: cuda
+2026-04-14 23:42:45,454 INFO sentence_transformers.SentenceTransformer request_id=92f1be96-f66c-4ee1-b288-b7d4deb5b9d2 Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-14 23:42:49,268 INFO app.services.retrieval request_id=92f1be96-f66c-4ee1-b288-b7d4deb5b9d2 vector_search_completed strategy=filtered results=20
+2026-04-14 23:42:49,269 INFO app.services.qa request_id=92f1be96-f66c-4ee1-b288-b7d4deb5b9d2 qa_retrieval_completed selected_docs=10
+2026-04-14 23:42:58,485 INFO app.services.qa request_id=92f1be96-f66c-4ee1-b288-b7d4deb5b9d2 qa_llm_invoke_completed duration_ms=9212
+2026-04-14 23:42:58,485 INFO app.services.qa request_id=92f1be96-f66c-4ee1-b288-b7d4deb5b9d2 qa_answer_completed grounded=False citations=10 duration_ms=13035 answer_snippet=I do not know. The provided context does not contain a summary of Chapter 1.
+2026-04-14 23:42:58,486 INFO app.api.query request_id=92f1be96-f66c-4ee1-b288-b7d4deb5b9d2 query_completed grounded=False citations=10 duration_ms=13035
+2026-04-14 23:42:58,487 INFO app.main request_id=92f1be96-f66c-4ee1-b288-b7d4deb5b9d2 http_request_finished method=POST path=/query status=200 duration_ms=13039
+2026-04-14 23:43:45,882 INFO app.main request_id=00d06d5b-4d78-442b-98cc-5d18989688da http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-14 23:43:45,886 INFO app.main request_id=00d06d5b-4d78-442b-98cc-5d18989688da http_request_finished method=GET path=/chat status=200 duration_ms=3
+2026-04-14 23:46:05,700 INFO app.main request_id=e6654c3d-3d34-430c-83bc-f20859d5ffae http_request_started method=POST path=/query client=127.0.0.1
+2026-04-14 23:46:05,702 INFO app.api.query request_id=e6654c3d-3d34-430c-83bc-f20859d5ffae query_requested question_len=30 top_k=10 book_filter_count=1
+2026-04-14 23:46:05,702 INFO app.services.qa request_id=e6654c3d-3d34-430c-83bc-f20859d5ffae qa_answer_started question_len=30 top_k=10 book_filter_count=1 question_snippet=How to do Plan AI Applications
+2026-04-14 23:46:05,703 INFO app.services.retrieval request_id=e6654c3d-3d34-430c-83bc-f20859d5ffae vector_search_requested top_k=20 book_filter_count=1 question_len=30
+2026-04-14 23:46:05,703 INFO app.services.retrieval request_id=e6654c3d-3d34-430c-83bc-f20859d5ffae vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-14 23:46:05,703 INFO app.services.retrieval request_id=e6654c3d-3d34-430c-83bc-f20859d5ffae embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-14 23:46:05,705 INFO sentence_transformers.SentenceTransformer request_id=e6654c3d-3d34-430c-83bc-f20859d5ffae Use pytorch device_name: cuda
+2026-04-14 23:46:05,705 INFO sentence_transformers.SentenceTransformer request_id=e6654c3d-3d34-430c-83bc-f20859d5ffae Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-14 23:46:11,699 INFO app.services.retrieval request_id=e6654c3d-3d34-430c-83bc-f20859d5ffae vector_search_completed strategy=filtered results=20
+2026-04-14 23:46:11,701 INFO app.services.qa request_id=e6654c3d-3d34-430c-83bc-f20859d5ffae qa_retrieval_completed selected_docs=10
+2026-04-14 23:46:45,547 INFO app.services.qa request_id=e6654c3d-3d34-430c-83bc-f20859d5ffae qa_llm_invoke_completed duration_ms=33841
+2026-04-14 23:46:45,548 INFO app.services.qa request_id=e6654c3d-3d34-430c-83bc-f20859d5ffae qa_answer_completed grounded=True citations=10 duration_ms=39845 answer_snippet=The provided context states that when planning AI applications, especially if doing it for a living, it is worthwhile to "take a step back and consider why you’re building this and how you should go about it" (p. 78). The text also mentions that the section following this discuss...<truncated>
+2026-04-14 23:46:45,549 INFO app.api.query request_id=e6654c3d-3d34-430c-83bc-f20859d5ffae query_completed grounded=True citations=10 duration_ms=39846
+2026-04-14 23:46:45,550 INFO app.main request_id=e6654c3d-3d34-430c-83bc-f20859d5ffae http_request_finished method=POST path=/query status=200 duration_ms=39849
+2026-04-14 23:51:05,767 INFO app.main request_id=- app_shutdown
+2026-04-15 00:38:15,396 INFO app.main request_id=- app_startup
+2026-04-15 00:38:25,641 INFO app.main request_id=720aed5e-7f78-4070-8324-f8f5b2a75f87 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 00:38:25,671 INFO app.main request_id=720aed5e-7f78-4070-8324-f8f5b2a75f87 http_request_finished method=GET path=/chat status=200 duration_ms=29
+2026-04-15 00:39:37,233 INFO app.main request_id=f573dc77-a1e6-4c1c-80b4-b621fab5638a http_request_started method=POST path=/query client=127.0.0.1
+2026-04-15 00:39:37,237 INFO app.api.query request_id=f573dc77-a1e6-4c1c-80b4-b621fab5638a query_requested question_len=25 top_k=10 book_filter_count=1
+2026-04-15 00:39:37,238 INFO app.services.qa request_id=f573dc77-a1e6-4c1c-80b4-b621fab5638a qa_answer_started question_len=25 top_k=10 book_filter_count=1 question_snippet=give summary of Chapter 1
+2026-04-15 00:39:37,239 INFO app.services.retrieval request_id=f573dc77-a1e6-4c1c-80b4-b621fab5638a vector_search_requested top_k=20 book_filter_count=1 question_len=25
+2026-04-15 00:39:37,239 INFO app.services.retrieval request_id=f573dc77-a1e6-4c1c-80b4-b621fab5638a vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-15 00:39:37,239 INFO app.services.retrieval request_id=f573dc77-a1e6-4c1c-80b4-b621fab5638a embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 00:39:49,399 INFO sentence_transformers.SentenceTransformer request_id=f573dc77-a1e6-4c1c-80b4-b621fab5638a Use pytorch device_name: cuda
+2026-04-15 00:39:49,399 INFO sentence_transformers.SentenceTransformer request_id=f573dc77-a1e6-4c1c-80b4-b621fab5638a Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 00:39:56,773 INFO app.services.retrieval request_id=f573dc77-a1e6-4c1c-80b4-b621fab5638a vector_search_completed strategy=filtered results=20
+2026-04-15 00:39:56,773 INFO app.services.qa request_id=f573dc77-a1e6-4c1c-80b4-b621fab5638a qa_retrieval_completed selected_docs=10
+2026-04-15 00:40:02,277 INFO app.services.qa request_id=f573dc77-a1e6-4c1c-80b4-b621fab5638a qa_llm_invoke_completed duration_ms=5403
+2026-04-15 00:40:02,278 INFO app.services.qa request_id=f573dc77-a1e6-4c1c-80b4-b621fab5638a qa_answer_completed grounded=False citations=10 duration_ms=25039 answer_snippet=I do not know. The provided context mentions that "This chapter is the most technically challenging one for me to write, not because of the complexity of the concepts, but because of the broad scope these concepts cover. I suspect it might also be technically challenging to read....<truncated>
+2026-04-15 00:40:02,278 INFO app.api.query request_id=f573dc77-a1e6-4c1c-80b4-b621fab5638a query_completed grounded=False citations=10 duration_ms=25040
+2026-04-15 00:40:02,281 INFO app.main request_id=f573dc77-a1e6-4c1c-80b4-b621fab5638a http_request_finished method=POST path=/query status=200 duration_ms=25048
+2026-04-15 00:41:47,433 INFO app.main request_id=- app_shutdown
+2026-04-15 01:18:56,890 INFO app.main request_id=- app_startup
+2026-04-15 01:19:07,644 INFO app.main request_id=6a0daa59-dc31-47bb-923a-87f6654f5fea http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:19:07,672 INFO app.main request_id=6a0daa59-dc31-47bb-923a-87f6654f5fea http_request_finished method=GET path=/library status=200 duration_ms=27
+2026-04-15 01:19:13,040 INFO app.main request_id=61cf2830-689c-471a-a302-f7dd422e4859 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 01:19:13,047 INFO app.main request_id=61cf2830-689c-471a-a302-f7dd422e4859 http_request_finished method=GET path=/chat status=200 duration_ms=6
+2026-04-15 01:19:40,830 INFO app.main request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 http_request_started method=POST path=/query client=127.0.0.1
+2026-04-15 01:19:40,833 INFO app.api.query request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 query_requested question_len=25 top_k=20 book_filter_count=1
+2026-04-15 01:19:40,833 INFO app.services.qa request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 qa_answer_started question_len=25 top_k=20 book_filter_count=1 question_snippet=give summary of Chapter 1
+2026-04-15 01:19:40,833 INFO app.services.retrieval request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 retrieval_requested mode=hybrid top_k=40 fetch_k=160 book_filter_count=1 question_len=25
+2026-04-15 01:19:40,834 INFO app.services.retrieval request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-15 01:19:40,834 INFO app.services.retrieval request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 01:19:44,507 INFO sentence_transformers.SentenceTransformer request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 Use pytorch device_name: cuda
+2026-04-15 01:19:44,507 INFO sentence_transformers.SentenceTransformer request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 01:19:49,582 INFO app.services.retrieval request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 retrieval_child_candidates mode=hybrid dense=160 lexical=160 unique=286
+2026-04-15 01:19:49,629 INFO app.services.retrieval request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 parent_retrieval_completed mode=hybrid dense=160 lexical=160 parent_sections=20 candidates=200
+2026-04-15 01:19:49,630 INFO app.services.qa request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 qa_retrieval_completed parent_sections=20
+2026-04-15 01:19:54,687 INFO app.services.qa request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 qa_llm_invoke_completed duration_ms=5028
+2026-04-15 01:19:54,687 INFO app.services.qa request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 qa_answer_completed grounded=True citations=20 duration_ms=13854 answer_snippet=Chapter 1 discusses that a token can be a character, a word, or part of a word (p312-312).
+2026-04-15 01:19:54,688 INFO app.api.query request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 query_completed grounded=True citations=20 duration_ms=13855
+2026-04-15 01:19:54,689 INFO app.main request_id=095033c5-32cb-4e5d-bc84-7f87500f9371 http_request_finished method=POST path=/query status=200 duration_ms=13859
+2026-04-15 01:20:49,854 INFO app.main request_id=eaa284bb-ce30-42cd-9236-7749dea31273 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:20:49,856 INFO app.main request_id=eaa284bb-ce30-42cd-9236-7749dea31273 http_request_finished method=GET path=/library status=200 duration_ms=2
+2026-04-15 01:20:54,948 INFO app.main request_id=30214517-2d3a-4ce3-b434-210b5c81585c http_request_started method=DELETE path=/books/4b50d30a-581d-40ba-a634-643506093cf7 client=127.0.0.1
+2026-04-15 01:20:54,980 INFO app.services.retrieval request_id=30214517-2d3a-4ce3-b434-210b5c81585c vector_delete_requested book_id=4b50d30a-581d-40ba-a634-643506093cf7
+2026-04-15 01:20:54,980 INFO app.services.retrieval request_id=30214517-2d3a-4ce3-b434-210b5c81585c vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-15 01:20:54,981 INFO app.services.retrieval request_id=30214517-2d3a-4ce3-b434-210b5c81585c embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 01:20:54,982 INFO sentence_transformers.SentenceTransformer request_id=30214517-2d3a-4ce3-b434-210b5c81585c Use pytorch device_name: cuda
+2026-04-15 01:20:54,982 INFO sentence_transformers.SentenceTransformer request_id=30214517-2d3a-4ce3-b434-210b5c81585c Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 01:20:59,878 INFO app.services.retrieval request_id=30214517-2d3a-4ce3-b434-210b5c81585c vector_delete_completed book_id=4b50d30a-581d-40ba-a634-643506093cf7 deleted=1443
+2026-04-15 01:20:59,879 INFO app.api.books request_id=30214517-2d3a-4ce3-b434-210b5c81585c book_delete_vectors_removed book_id=4b50d30a-581d-40ba-a634-643506093cf7 vectors=1443
+2026-04-15 01:20:59,913 INFO app.api.books request_id=30214517-2d3a-4ce3-b434-210b5c81585c book_delete_success book_id=4b50d30a-581d-40ba-a634-643506093cf7
+2026-04-15 01:20:59,914 INFO app.main request_id=30214517-2d3a-4ce3-b434-210b5c81585c http_request_finished method=DELETE path=/books/4b50d30a-581d-40ba-a634-643506093cf7 status=200 duration_ms=4966
+2026-04-15 01:20:59,931 INFO app.main request_id=f227fe63-06ec-4af9-9349-8ad3584db90a http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:20:59,934 INFO app.main request_id=f227fe63-06ec-4af9-9349-8ad3584db90a http_request_finished method=GET path=/library status=200 duration_ms=3
+2026-04-15 01:21:01,864 INFO app.main request_id=555630c2-41ee-4bda-8648-38eb0d0b0af5 http_request_started method=GET path=/ client=127.0.0.1
+2026-04-15 01:21:01,871 INFO app.main request_id=555630c2-41ee-4bda-8648-38eb0d0b0af5 http_request_finished method=GET path=/ status=200 duration_ms=6
+2026-04-15 01:21:27,076 INFO app.main request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 http_request_started method=POST path=/upload-book client=127.0.0.1
+2026-04-15 01:21:27,632 INFO app.main request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 http_request_finished method=POST path=/upload-book status=303 duration_ms=556
+2026-04-15 01:21:27,634 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 ingestion_started book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering
+2026-04-15 01:21:27,636 INFO app.main request_id=6249a693-e666-455b-9fa8-e00edffaa37f http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:21:27,656 INFO app.services.retrieval request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 vector_delete_requested book_id=d8392407-1456-4a22-b115-a3420020c442
+2026-04-15 01:21:27,657 INFO app.services.retrieval request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-15 01:21:27,658 INFO app.main request_id=6249a693-e666-455b-9fa8-e00edffaa37f http_request_finished method=GET path=/library status=200 duration_ms=21
+2026-04-15 01:21:27,658 INFO app.services.retrieval request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 01:21:27,660 INFO sentence_transformers.SentenceTransformer request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 Use pytorch device_name: cuda
+2026-04-15 01:21:27,660 INFO sentence_transformers.SentenceTransformer request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 01:21:31,038 INFO app.services.retrieval request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 vector_delete_completed book_id=d8392407-1456-4a22-b115-a3420020c442 deleted=0
+2026-04-15 01:21:32,658 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 ingestion_parse_completed book_id=d8392407-1456-4a22-b115-a3420020c442 pages=991 duration_ms=1618
+2026-04-15 01:21:32,719 INFO app.services.structure request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 structure_source_selected source=toc entries=178
+2026-04-15 01:21:32,836 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 ingestion_structuring_completed book_id=d8392407-1456-4a22-b115-a3420020c442 sections=178 duration_ms=158
+2026-04-15 01:21:33,215 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 ingestion_chunking_completed book_id=d8392407-1456-4a22-b115-a3420020c442 chunks=1014 duration_ms=331
+2026-04-15 01:21:33,217 INFO app.services.retrieval request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-15 01:21:33,217 INFO app.services.retrieval request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 01:21:33,219 INFO sentence_transformers.SentenceTransformer request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 Use pytorch device_name: cuda
+2026-04-15 01:21:33,219 INFO sentence_transformers.SentenceTransformer request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 01:21:36,831 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_started book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering total_chunks=1014 batch_size=5
+2026-04-15 01:21:40,474 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=1/203 processed=5 total=1014
+2026-04-15 01:21:40,474 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=1/203 sleep_seconds=5.00
+2026-04-15 01:21:45,788 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=2/203 processed=10 total=1014
+2026-04-15 01:21:45,788 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=2/203 sleep_seconds=5.00
+2026-04-15 01:21:51,190 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=3/203 processed=15 total=1014
+2026-04-15 01:21:51,190 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=3/203 sleep_seconds=5.00
+2026-04-15 01:21:55,326 INFO app.main request_id=9e123444-11e8-45a1-a2ee-303eb21d4b11 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:21:55,328 INFO app.api.books request_id=9e123444-11e8-45a1-a2ee-303eb21d4b11 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=1
+2026-04-15 01:21:55,331 INFO app.main request_id=9e123444-11e8-45a1-a2ee-303eb21d4b11 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=5
+2026-04-15 01:21:55,350 INFO app.main request_id=00f64fa1-934e-443d-bdba-85620e3932d9 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:21:55,353 INFO app.main request_id=00f64fa1-934e-443d-bdba-85620e3932d9 http_request_finished method=GET path=/library status=200 duration_ms=3
+2026-04-15 01:21:56,396 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=4/203 processed=20 total=1014
+2026-04-15 01:21:56,397 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=4/203 sleep_seconds=5.00
+2026-04-15 01:22:01,610 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=5/203 processed=25 total=1014
+2026-04-15 01:22:01,610 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=5/203 sleep_seconds=5.00
+2026-04-15 01:22:06,834 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=6/203 processed=30 total=1014
+2026-04-15 01:22:06,834 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=6/203 sleep_seconds=5.00
+2026-04-15 01:22:12,032 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=7/203 processed=35 total=1014
+2026-04-15 01:22:12,032 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=7/203 sleep_seconds=5.00
+2026-04-15 01:22:17,285 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=8/203 processed=40 total=1014
+2026-04-15 01:22:17,286 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=8/203 sleep_seconds=5.00
+2026-04-15 01:22:22,482 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=9/203 processed=45 total=1014
+2026-04-15 01:22:22,482 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=9/203 sleep_seconds=5.00
+2026-04-15 01:22:27,708 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=10/203 processed=50 total=1014
+2026-04-15 01:22:27,708 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=10/203 sleep_seconds=5.00
+2026-04-15 01:22:32,962 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=11/203 processed=55 total=1014
+2026-04-15 01:22:32,962 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=11/203 sleep_seconds=5.00
+2026-04-15 01:22:38,763 INFO app.main request_id=e594471c-3b3f-4117-ac50-46fc57282d90 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:22:38,765 INFO app.api.books request_id=e594471c-3b3f-4117-ac50-46fc57282d90 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=5
+2026-04-15 01:22:38,766 INFO app.main request_id=e594471c-3b3f-4117-ac50-46fc57282d90 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=3
+2026-04-15 01:22:38,788 INFO app.main request_id=7fba42f1-ff71-46eb-afff-53282200a668 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:22:38,878 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=12/203 processed=60 total=1014
+2026-04-15 01:22:38,879 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=12/203 sleep_seconds=5.00
+2026-04-15 01:22:38,885 INFO app.main request_id=7fba42f1-ff71-46eb-afff-53282200a668 http_request_finished method=GET path=/library status=200 duration_ms=96
+2026-04-15 01:22:44,112 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=13/203 processed=65 total=1014
+2026-04-15 01:22:44,113 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=13/203 sleep_seconds=5.00
+2026-04-15 01:22:51,704 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=14/203 processed=70 total=1014
+2026-04-15 01:22:51,704 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=14/203 sleep_seconds=5.00
+2026-04-15 01:22:56,509 INFO app.main request_id=f253a922-d2fc-43db-86fb-bbc652d5db19 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:22:56,511 INFO app.api.books request_id=f253a922-d2fc-43db-86fb-bbc652d5db19 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=6
+2026-04-15 01:22:56,512 INFO app.main request_id=f253a922-d2fc-43db-86fb-bbc652d5db19 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=3
+2026-04-15 01:22:56,527 INFO app.main request_id=9ab4f4c7-2e73-44e0-a0d7-ad2667d08007 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:22:56,529 INFO app.main request_id=9ab4f4c7-2e73-44e0-a0d7-ad2667d08007 http_request_finished method=GET path=/library status=200 duration_ms=2
+2026-04-15 01:22:57,780 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=15/203 processed=75 total=1014
+2026-04-15 01:22:57,781 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=15/203 sleep_seconds=5.00
+2026-04-15 01:23:03,152 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=16/203 processed=80 total=1014
+2026-04-15 01:23:03,152 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=16/203 sleep_seconds=5.00
+2026-04-15 01:23:09,086 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=17/203 processed=85 total=1014
+2026-04-15 01:23:09,086 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=17/203 sleep_seconds=5.00
+2026-04-15 01:23:14,308 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=18/203 processed=90 total=1014
+2026-04-15 01:23:14,308 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=18/203 sleep_seconds=5.00
+2026-04-15 01:23:20,293 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=19/203 processed=95 total=1014
+2026-04-15 01:23:20,293 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=19/203 sleep_seconds=5.00
+2026-04-15 01:23:25,718 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=20/203 processed=100 total=1014
+2026-04-15 01:23:25,719 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=20/203 sleep_seconds=5.00
+2026-04-15 01:23:31,056 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=21/203 processed=105 total=1014
+2026-04-15 01:23:31,056 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=21/203 sleep_seconds=5.00
+2026-04-15 01:23:36,423 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=22/203 processed=110 total=1014
+2026-04-15 01:23:36,423 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=22/203 sleep_seconds=5.00
+2026-04-15 01:23:41,828 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=23/203 processed=115 total=1014
+2026-04-15 01:23:41,829 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=23/203 sleep_seconds=5.00
+2026-04-15 01:23:47,906 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=24/203 processed=120 total=1014
+2026-04-15 01:23:47,906 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=24/203 sleep_seconds=5.00
+2026-04-15 01:23:53,215 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=25/203 processed=125 total=1014
+2026-04-15 01:23:53,215 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=25/203 sleep_seconds=5.00
+2026-04-15 01:23:58,546 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=26/203 processed=130 total=1014
+2026-04-15 01:23:58,546 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=26/203 sleep_seconds=5.00
+2026-04-15 01:24:02,004 INFO app.main request_id=1fd0c59a-67cf-419d-805d-7d1bc3069afc http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:24:02,005 INFO app.api.books request_id=1fd0c59a-67cf-419d-805d-7d1bc3069afc book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=12
+2026-04-15 01:24:02,006 INFO app.main request_id=1fd0c59a-67cf-419d-805d-7d1bc3069afc http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=2
+2026-04-15 01:24:02,021 INFO app.main request_id=0394db15-31db-43c8-8343-ab4ad5ee664c http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:24:02,023 INFO app.main request_id=0394db15-31db-43c8-8343-ab4ad5ee664c http_request_finished method=GET path=/library status=200 duration_ms=2
+2026-04-15 01:24:03,849 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=27/203 processed=135 total=1014
+2026-04-15 01:24:03,849 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=27/203 sleep_seconds=5.00
+2026-04-15 01:24:09,174 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=28/203 processed=140 total=1014
+2026-04-15 01:24:09,174 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=28/203 sleep_seconds=5.00
+2026-04-15 01:24:14,418 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=29/203 processed=145 total=1014
+2026-04-15 01:24:14,418 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=29/203 sleep_seconds=5.00
+2026-04-15 01:24:20,023 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=30/203 processed=150 total=1014
+2026-04-15 01:24:20,024 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=30/203 sleep_seconds=5.00
+2026-04-15 01:24:25,414 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=31/203 processed=155 total=1014
+2026-04-15 01:24:25,414 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=31/203 sleep_seconds=5.00
+2026-04-15 01:24:30,752 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=32/203 processed=160 total=1014
+2026-04-15 01:24:30,753 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=32/203 sleep_seconds=5.00
+2026-04-15 01:24:36,418 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=33/203 processed=165 total=1014
+2026-04-15 01:24:36,419 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=33/203 sleep_seconds=5.00
+2026-04-15 01:24:41,674 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=34/203 processed=170 total=1014
+2026-04-15 01:24:41,675 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=34/203 sleep_seconds=5.00
+2026-04-15 01:24:47,239 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=35/203 processed=175 total=1014
+2026-04-15 01:24:47,239 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=35/203 sleep_seconds=5.00
+2026-04-15 01:24:52,986 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=36/203 processed=180 total=1014
+2026-04-15 01:24:52,987 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=36/203 sleep_seconds=5.00
+2026-04-15 01:24:58,370 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=37/203 processed=185 total=1014
+2026-04-15 01:24:58,370 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=37/203 sleep_seconds=5.00
+2026-04-15 01:25:03,817 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=38/203 processed=190 total=1014
+2026-04-15 01:25:03,817 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=38/203 sleep_seconds=5.00
+2026-04-15 01:25:09,231 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=39/203 processed=195 total=1014
+2026-04-15 01:25:09,231 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=39/203 sleep_seconds=5.00
+2026-04-15 01:25:14,799 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=40/203 processed=200 total=1014
+2026-04-15 01:25:14,799 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=40/203 sleep_seconds=5.00
+2026-04-15 01:25:20,159 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=41/203 processed=205 total=1014
+2026-04-15 01:25:20,160 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=41/203 sleep_seconds=5.00
+2026-04-15 01:25:20,192 INFO app.main request_id=81f218ac-2d68-49ae-9dff-757865031338 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:25:20,193 INFO app.api.books request_id=81f218ac-2d68-49ae-9dff-757865031338 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=20
+2026-04-15 01:25:20,195 INFO app.main request_id=81f218ac-2d68-49ae-9dff-757865031338 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=3
+2026-04-15 01:25:20,210 INFO app.main request_id=c9a25111-8394-4bb5-9c29-1ed3b7d9eb36 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:25:20,214 INFO app.main request_id=c9a25111-8394-4bb5-9c29-1ed3b7d9eb36 http_request_finished method=GET path=/library status=200 duration_ms=3
+2026-04-15 01:25:25,517 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=42/203 processed=210 total=1014
+2026-04-15 01:25:25,517 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=42/203 sleep_seconds=5.00
+2026-04-15 01:25:31,014 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=43/203 processed=215 total=1014
+2026-04-15 01:25:31,015 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=43/203 sleep_seconds=5.00
+2026-04-15 01:25:34,710 INFO app.main request_id=84a13fe6-e52d-4a27-b0c0-ddd90af704a9 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:25:34,712 INFO app.api.books request_id=84a13fe6-e52d-4a27-b0c0-ddd90af704a9 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=21
+2026-04-15 01:25:34,713 INFO app.main request_id=84a13fe6-e52d-4a27-b0c0-ddd90af704a9 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=3
+2026-04-15 01:25:34,732 INFO app.main request_id=fd2ca09c-d0cd-4e19-94ac-d9b832c533a0 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:25:34,734 INFO app.main request_id=fd2ca09c-d0cd-4e19-94ac-d9b832c533a0 http_request_finished method=GET path=/library status=200 duration_ms=2
+2026-04-15 01:25:36,556 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=44/203 processed=220 total=1014
+2026-04-15 01:25:36,556 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=44/203 sleep_seconds=5.00
+2026-04-15 01:25:41,929 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=45/203 processed=225 total=1014
+2026-04-15 01:25:41,930 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=45/203 sleep_seconds=5.00
+2026-04-15 01:25:46,723 INFO app.main request_id=c581e956-43b1-4d56-8038-7bbb4ee6ee88 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:25:46,725 INFO app.api.books request_id=c581e956-43b1-4d56-8038-7bbb4ee6ee88 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=22
+2026-04-15 01:25:46,726 INFO app.main request_id=c581e956-43b1-4d56-8038-7bbb4ee6ee88 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=2
+2026-04-15 01:25:46,741 INFO app.main request_id=7ef694d8-716c-4cf4-a55d-02df7a3b4721 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:25:46,744 INFO app.main request_id=7ef694d8-716c-4cf4-a55d-02df7a3b4721 http_request_finished method=GET path=/library status=200 duration_ms=2
+2026-04-15 01:25:47,310 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=46/203 processed=230 total=1014
+2026-04-15 01:25:47,310 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=46/203 sleep_seconds=5.00
+2026-04-15 01:25:52,660 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=47/203 processed=235 total=1014
+2026-04-15 01:25:52,661 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=47/203 sleep_seconds=5.00
+2026-04-15 01:25:58,024 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=48/203 processed=240 total=1014
+2026-04-15 01:25:58,024 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=48/203 sleep_seconds=5.00
+2026-04-15 01:26:04,870 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=49/203 processed=245 total=1014
+2026-04-15 01:26:04,870 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=49/203 sleep_seconds=5.00
+2026-04-15 01:26:10,720 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=50/203 processed=250 total=1014
+2026-04-15 01:26:10,720 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=50/203 sleep_seconds=5.00
+2026-04-15 01:26:16,128 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=51/203 processed=255 total=1014
+2026-04-15 01:26:16,129 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=51/203 sleep_seconds=5.00
+2026-04-15 01:26:21,478 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=52/203 processed=260 total=1014
+2026-04-15 01:26:21,479 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=52/203 sleep_seconds=5.00
+2026-04-15 01:26:28,484 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=53/203 processed=265 total=1014
+2026-04-15 01:26:28,484 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=53/203 sleep_seconds=5.00
+2026-04-15 01:26:33,798 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=54/203 processed=270 total=1014
+2026-04-15 01:26:33,798 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=54/203 sleep_seconds=5.00
+2026-04-15 01:26:39,238 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=55/203 processed=275 total=1014
+2026-04-15 01:26:39,239 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=55/203 sleep_seconds=5.00
+2026-04-15 01:26:46,019 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=56/203 processed=280 total=1014
+2026-04-15 01:26:46,020 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=56/203 sleep_seconds=5.00
+2026-04-15 01:26:51,325 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=57/203 processed=285 total=1014
+2026-04-15 01:26:51,325 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=57/203 sleep_seconds=5.00
+2026-04-15 01:26:57,223 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=58/203 processed=290 total=1014
+2026-04-15 01:26:57,224 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=58/203 sleep_seconds=5.00
+2026-04-15 01:27:03,832 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=59/203 processed=295 total=1014
+2026-04-15 01:27:03,832 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=59/203 sleep_seconds=5.00
+2026-04-15 01:27:10,257 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=60/203 processed=300 total=1014
+2026-04-15 01:27:10,258 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=60/203 sleep_seconds=5.00
+2026-04-15 01:27:15,554 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=61/203 processed=305 total=1014
+2026-04-15 01:27:15,554 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=61/203 sleep_seconds=5.00
+2026-04-15 01:27:21,076 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=62/203 processed=310 total=1014
+2026-04-15 01:27:21,076 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=62/203 sleep_seconds=5.00
+2026-04-15 01:27:27,916 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=63/203 processed=315 total=1014
+2026-04-15 01:27:27,916 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=63/203 sleep_seconds=5.00
+2026-04-15 01:27:34,746 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=64/203 processed=320 total=1014
+2026-04-15 01:27:34,746 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=64/203 sleep_seconds=5.00
+2026-04-15 01:27:40,177 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=65/203 processed=325 total=1014
+2026-04-15 01:27:40,178 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=65/203 sleep_seconds=5.00
+2026-04-15 01:27:45,776 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=66/203 processed=330 total=1014
+2026-04-15 01:27:45,777 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=66/203 sleep_seconds=5.00
+2026-04-15 01:27:52,525 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=67/203 processed=335 total=1014
+2026-04-15 01:27:52,525 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=67/203 sleep_seconds=5.00
+2026-04-15 01:27:58,033 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=68/203 processed=340 total=1014
+2026-04-15 01:27:58,034 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=68/203 sleep_seconds=5.00
+2026-04-15 01:28:03,536 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=69/203 processed=345 total=1014
+2026-04-15 01:28:03,536 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=69/203 sleep_seconds=5.00
+2026-04-15 01:28:06,224 INFO app.main request_id=2f304f16-eb6b-4e01-95a6-435ae5ef646f http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:28:06,225 INFO app.api.books request_id=2f304f16-eb6b-4e01-95a6-435ae5ef646f book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=34
+2026-04-15 01:28:06,226 INFO app.main request_id=2f304f16-eb6b-4e01-95a6-435ae5ef646f http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=2
+2026-04-15 01:28:06,241 INFO app.main request_id=7987778e-107c-48f1-90cf-c61d8e14cf3d http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:28:06,243 INFO app.main request_id=7987778e-107c-48f1-90cf-c61d8e14cf3d http_request_finished method=GET path=/library status=200 duration_ms=2
+2026-04-15 01:28:10,395 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=70/203 processed=350 total=1014
+2026-04-15 01:28:10,396 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=70/203 sleep_seconds=5.00
+2026-04-15 01:28:17,118 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=71/203 processed=355 total=1014
+2026-04-15 01:28:17,118 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=71/203 sleep_seconds=5.00
+2026-04-15 01:28:17,893 INFO app.main request_id=d27ed08b-0850-4788-9e41-b8e88ab53244 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:28:17,894 INFO app.api.books request_id=d27ed08b-0850-4788-9e41-b8e88ab53244 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=35
+2026-04-15 01:28:17,895 INFO app.main request_id=d27ed08b-0850-4788-9e41-b8e88ab53244 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=2
+2026-04-15 01:28:17,910 INFO app.main request_id=b57c1d41-5e4a-43e6-b44c-b1baff7a7c1e http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:28:17,914 INFO app.main request_id=b57c1d41-5e4a-43e6-b44c-b1baff7a7c1e http_request_finished method=GET path=/library status=200 duration_ms=3
+2026-04-15 01:28:22,830 INFO app.main request_id=5c57f6f5-df08-4c06-a881-c8543d649f40 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:28:23,277 INFO app.api.books request_id=5c57f6f5-df08-4c06-a881-c8543d649f40 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=35
+2026-04-15 01:28:23,279 INFO app.main request_id=5c57f6f5-df08-4c06-a881-c8543d649f40 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=448
+2026-04-15 01:28:23,298 INFO app.main request_id=318aedb1-d2fb-4fd6-bcd4-efc42b285c7c http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:28:23,427 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=72/203 processed=360 total=1014
+2026-04-15 01:28:23,429 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=72/203 sleep_seconds=5.00
+2026-04-15 01:28:23,430 INFO app.main request_id=318aedb1-d2fb-4fd6-bcd4-efc42b285c7c http_request_finished method=GET path=/library status=200 duration_ms=132
+2026-04-15 01:28:29,336 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=73/203 processed=365 total=1014
+2026-04-15 01:28:29,336 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=73/203 sleep_seconds=5.00
+2026-04-15 01:28:34,770 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=74/203 processed=370 total=1014
+2026-04-15 01:28:34,771 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=74/203 sleep_seconds=5.00
+2026-04-15 01:28:41,135 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=75/203 processed=375 total=1014
+2026-04-15 01:28:41,135 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=75/203 sleep_seconds=5.00
+2026-04-15 01:28:46,632 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=76/203 processed=380 total=1014
+2026-04-15 01:28:46,633 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=76/203 sleep_seconds=5.00
+2026-04-15 01:28:52,236 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=77/203 processed=385 total=1014
+2026-04-15 01:28:52,237 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=77/203 sleep_seconds=5.00
+2026-04-15 01:28:58,504 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=78/203 processed=390 total=1014
+2026-04-15 01:28:58,504 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=78/203 sleep_seconds=5.00
+2026-04-15 01:29:04,777 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=79/203 processed=395 total=1014
+2026-04-15 01:29:04,778 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=79/203 sleep_seconds=5.00
+2026-04-15 01:29:10,506 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=80/203 processed=400 total=1014
+2026-04-15 01:29:10,507 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=80/203 sleep_seconds=5.00
+2026-04-15 01:29:16,070 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=81/203 processed=405 total=1014
+2026-04-15 01:29:16,071 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=81/203 sleep_seconds=5.00
+2026-04-15 01:29:21,660 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=82/203 processed=410 total=1014
+2026-04-15 01:29:21,661 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=82/203 sleep_seconds=5.00
+2026-04-15 01:29:27,270 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=83/203 processed=415 total=1014
+2026-04-15 01:29:27,270 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=83/203 sleep_seconds=5.00
+2026-04-15 01:29:34,234 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=84/203 processed=420 total=1014
+2026-04-15 01:29:34,234 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=84/203 sleep_seconds=5.00
+2026-04-15 01:29:39,795 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=85/203 processed=425 total=1014
+2026-04-15 01:29:39,795 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=85/203 sleep_seconds=5.00
+2026-04-15 01:29:46,315 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=86/203 processed=430 total=1014
+2026-04-15 01:29:46,315 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=86/203 sleep_seconds=5.00
+2026-04-15 01:29:52,082 INFO app.main request_id=33c61552-344b-44c8-9249-99470e3c04a8 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:29:52,086 INFO app.api.books request_id=33c61552-344b-44c8-9249-99470e3c04a8 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=42
+2026-04-15 01:29:52,087 INFO app.main request_id=33c61552-344b-44c8-9249-99470e3c04a8 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=5
+2026-04-15 01:29:52,104 INFO app.main request_id=164f1ca1-70bf-470d-9be8-e1afe8b9a521 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:29:52,702 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=87/203 processed=435 total=1014
+2026-04-15 01:29:52,702 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=87/203 sleep_seconds=5.00
+2026-04-15 01:29:52,715 INFO app.main request_id=164f1ca1-70bf-470d-9be8-e1afe8b9a521 http_request_finished method=GET path=/library status=200 duration_ms=611
+2026-04-15 01:29:58,120 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=88/203 processed=440 total=1014
+2026-04-15 01:29:58,120 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=88/203 sleep_seconds=5.00
+2026-04-15 01:30:03,661 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=89/203 processed=445 total=1014
+2026-04-15 01:30:03,662 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=89/203 sleep_seconds=5.00
+2026-04-15 01:30:10,072 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=90/203 processed=450 total=1014
+2026-04-15 01:30:10,072 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=90/203 sleep_seconds=5.00
+2026-04-15 01:30:15,481 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=91/203 processed=455 total=1014
+2026-04-15 01:30:15,482 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=91/203 sleep_seconds=5.00
+2026-04-15 01:30:20,154 INFO app.main request_id=367a57f6-0537-41dd-86e5-9427faf3e533 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:30:20,155 INFO app.api.books request_id=367a57f6-0537-41dd-86e5-9427faf3e533 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=44
+2026-04-15 01:30:20,156 INFO app.main request_id=367a57f6-0537-41dd-86e5-9427faf3e533 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=2
+2026-04-15 01:30:20,173 INFO app.main request_id=47f19830-c1bb-470a-b90e-2c4a1041395a http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:30:20,176 INFO app.main request_id=47f19830-c1bb-470a-b90e-2c4a1041395a http_request_finished method=GET path=/library status=200 duration_ms=2
+2026-04-15 01:30:21,049 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=92/203 processed=460 total=1014
+2026-04-15 01:30:21,050 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=92/203 sleep_seconds=5.00
+2026-04-15 01:30:27,210 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=93/203 processed=465 total=1014
+2026-04-15 01:30:27,210 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=93/203 sleep_seconds=5.00
+2026-04-15 01:30:34,012 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=94/203 processed=470 total=1014
+2026-04-15 01:30:34,012 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=94/203 sleep_seconds=5.00
+2026-04-15 01:30:39,643 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=95/203 processed=475 total=1014
+2026-04-15 01:30:39,643 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=95/203 sleep_seconds=5.00
+2026-04-15 01:30:45,112 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=96/203 processed=480 total=1014
+2026-04-15 01:30:45,112 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=96/203 sleep_seconds=5.00
+2026-04-15 01:30:50,643 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=97/203 processed=485 total=1014
+2026-04-15 01:30:50,643 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=97/203 sleep_seconds=5.00
+2026-04-15 01:30:56,012 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=98/203 processed=490 total=1014
+2026-04-15 01:30:56,012 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=98/203 sleep_seconds=5.00
+2026-04-15 01:31:02,201 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=99/203 processed=495 total=1014
+2026-04-15 01:31:02,201 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=99/203 sleep_seconds=5.00
+2026-04-15 01:31:07,929 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=100/203 processed=500 total=1014
+2026-04-15 01:31:07,930 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=100/203 sleep_seconds=5.00
+2026-04-15 01:31:13,269 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=101/203 processed=505 total=1014
+2026-04-15 01:31:13,270 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=101/203 sleep_seconds=5.00
+2026-04-15 01:31:19,112 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=102/203 processed=510 total=1014
+2026-04-15 01:31:19,112 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=102/203 sleep_seconds=5.00
+2026-04-15 01:31:25,766 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=103/203 processed=515 total=1014
+2026-04-15 01:31:25,766 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=103/203 sleep_seconds=5.00
+2026-04-15 01:31:32,745 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=104/203 processed=520 total=1014
+2026-04-15 01:31:32,745 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=104/203 sleep_seconds=5.00
+2026-04-15 01:31:39,557 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=105/203 processed=525 total=1014
+2026-04-15 01:31:39,557 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=105/203 sleep_seconds=5.00
+2026-04-15 01:31:45,380 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=106/203 processed=530 total=1014
+2026-04-15 01:31:45,380 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=106/203 sleep_seconds=5.00
+2026-04-15 01:31:50,922 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=107/203 processed=535 total=1014
+2026-04-15 01:31:50,922 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=107/203 sleep_seconds=5.00
+2026-04-15 01:31:57,735 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=108/203 processed=540 total=1014
+2026-04-15 01:31:57,735 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=108/203 sleep_seconds=5.00
+2026-04-15 01:32:03,219 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=109/203 processed=545 total=1014
+2026-04-15 01:32:03,219 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=109/203 sleep_seconds=5.00
+2026-04-15 01:32:08,993 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=110/203 processed=550 total=1014
+2026-04-15 01:32:08,993 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=110/203 sleep_seconds=5.00
+2026-04-15 01:32:14,602 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=111/203 processed=555 total=1014
+2026-04-15 01:32:14,602 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=111/203 sleep_seconds=5.00
+2026-04-15 01:32:21,279 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=112/203 processed=560 total=1014
+2026-04-15 01:32:21,280 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=112/203 sleep_seconds=5.00
+2026-04-15 01:32:26,940 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=113/203 processed=565 total=1014
+2026-04-15 01:32:26,940 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=113/203 sleep_seconds=5.00
+2026-04-15 01:32:33,771 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=114/203 processed=570 total=1014
+2026-04-15 01:32:33,771 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=114/203 sleep_seconds=5.00
+2026-04-15 01:32:39,784 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=115/203 processed=575 total=1014
+2026-04-15 01:32:39,785 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=115/203 sleep_seconds=5.00
+2026-04-15 01:32:46,671 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=116/203 processed=580 total=1014
+2026-04-15 01:32:46,671 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=116/203 sleep_seconds=5.00
+2026-04-15 01:32:52,289 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=117/203 processed=585 total=1014
+2026-04-15 01:32:52,289 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=117/203 sleep_seconds=5.00
+2026-04-15 01:32:57,947 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=118/203 processed=590 total=1014
+2026-04-15 01:32:57,948 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=118/203 sleep_seconds=5.00
+2026-04-15 01:33:04,625 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=119/203 processed=595 total=1014
+2026-04-15 01:33:04,625 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=119/203 sleep_seconds=5.00
+2026-04-15 01:33:10,270 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=120/203 processed=600 total=1014
+2026-04-15 01:33:10,271 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=120/203 sleep_seconds=5.00
+2026-04-15 01:33:15,929 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=121/203 processed=605 total=1014
+2026-04-15 01:33:15,929 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=121/203 sleep_seconds=5.00
+2026-04-15 01:33:22,879 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=122/203 processed=610 total=1014
+2026-04-15 01:33:22,879 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=122/203 sleep_seconds=5.00
+2026-04-15 01:33:28,224 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=123/203 processed=615 total=1014
+2026-04-15 01:33:28,224 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=123/203 sleep_seconds=5.00
+2026-04-15 01:33:35,298 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=124/203 processed=620 total=1014
+2026-04-15 01:33:35,298 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=124/203 sleep_seconds=5.00
+2026-04-15 01:33:42,419 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=125/203 processed=625 total=1014
+2026-04-15 01:33:42,419 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=125/203 sleep_seconds=5.00
+2026-04-15 01:33:44,071 INFO app.main request_id=a28c7d2b-cd8f-4b67-85d7-a54f7eefd4cf http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:33:44,073 INFO app.api.books request_id=a28c7d2b-cd8f-4b67-85d7-a54f7eefd4cf book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=61
+2026-04-15 01:33:44,074 INFO app.main request_id=a28c7d2b-cd8f-4b67-85d7-a54f7eefd4cf http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=2
+2026-04-15 01:33:44,088 INFO app.main request_id=58a0f0da-75af-4377-a5eb-2b5e52bf9394 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:33:44,091 INFO app.main request_id=58a0f0da-75af-4377-a5eb-2b5e52bf9394 http_request_finished method=GET path=/library status=200 duration_ms=2
+2026-04-15 01:33:48,973 INFO app.main request_id=2303eea9-d61e-41ad-9af0-1639246a469d http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:33:48,976 INFO app.api.books request_id=2303eea9-d61e-41ad-9af0-1639246a469d book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=61
+2026-04-15 01:33:48,977 INFO app.main request_id=2303eea9-d61e-41ad-9af0-1639246a469d http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=4
+2026-04-15 01:33:48,992 INFO app.main request_id=71334fa5-93f5-4503-b413-5003fdd7828c http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:33:49,171 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=126/203 processed=630 total=1014
+2026-04-15 01:33:49,172 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=126/203 sleep_seconds=5.00
+2026-04-15 01:33:49,181 INFO app.main request_id=71334fa5-93f5-4503-b413-5003fdd7828c http_request_finished method=GET path=/library status=200 duration_ms=189
+2026-04-15 01:33:54,560 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=127/203 processed=635 total=1014
+2026-04-15 01:33:54,560 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=127/203 sleep_seconds=5.00
+2026-04-15 01:33:57,807 INFO app.main request_id=5c8c159e-e6a2-45a2-897e-db9a8e593f11 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:33:57,809 INFO app.api.books request_id=5c8c159e-e6a2-45a2-897e-db9a8e593f11 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=62
+2026-04-15 01:33:57,810 INFO app.main request_id=5c8c159e-e6a2-45a2-897e-db9a8e593f11 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=2
+2026-04-15 01:33:57,825 INFO app.main request_id=3ddaad62-1d0f-4906-8e39-f10e413afbac http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:33:57,827 INFO app.main request_id=3ddaad62-1d0f-4906-8e39-f10e413afbac http_request_finished method=GET path=/library status=200 duration_ms=2
+2026-04-15 01:34:01,390 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=128/203 processed=640 total=1014
+2026-04-15 01:34:01,390 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=128/203 sleep_seconds=5.00
+2026-04-15 01:34:08,051 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=129/203 processed=645 total=1014
+2026-04-15 01:34:08,051 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=129/203 sleep_seconds=5.00
+2026-04-15 01:34:13,638 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=130/203 processed=650 total=1014
+2026-04-15 01:34:13,639 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=130/203 sleep_seconds=5.00
+2026-04-15 01:34:16,436 INFO app.main request_id=53a47232-5cc2-49f3-9a0c-bb06c4191def http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:34:16,439 INFO app.api.books request_id=53a47232-5cc2-49f3-9a0c-bb06c4191def book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=64
+2026-04-15 01:34:16,440 INFO app.main request_id=53a47232-5cc2-49f3-9a0c-bb06c4191def http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=3
+2026-04-15 01:34:16,455 INFO app.main request_id=621678f2-2331-4380-be31-47c35c732347 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:34:16,459 INFO app.main request_id=621678f2-2331-4380-be31-47c35c732347 http_request_finished method=GET path=/library status=200 duration_ms=4
+2026-04-15 01:34:20,140 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=131/203 processed=655 total=1014
+2026-04-15 01:34:20,140 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=131/203 sleep_seconds=5.00
+2026-04-15 01:34:25,817 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=132/203 processed=660 total=1014
+2026-04-15 01:34:25,817 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=132/203 sleep_seconds=5.00
+2026-04-15 01:34:30,253 INFO app.main request_id=ded8dfdc-25c0-4c82-b2f6-46ed6e5f2d8e http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:34:30,254 INFO app.api.books request_id=ded8dfdc-25c0-4c82-b2f6-46ed6e5f2d8e book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=65
+2026-04-15 01:34:30,256 INFO app.main request_id=ded8dfdc-25c0-4c82-b2f6-46ed6e5f2d8e http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=2
+2026-04-15 01:34:30,273 INFO app.main request_id=f0e45aec-0967-4fb6-b6d5-140fb1f94d6a http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:34:30,276 INFO app.main request_id=f0e45aec-0967-4fb6-b6d5-140fb1f94d6a http_request_finished method=GET path=/library status=200 duration_ms=2
+2026-04-15 01:34:32,640 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=133/203 processed=665 total=1014
+2026-04-15 01:34:32,641 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=133/203 sleep_seconds=5.00
+2026-04-15 01:34:38,185 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=134/203 processed=670 total=1014
+2026-04-15 01:34:38,185 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=134/203 sleep_seconds=5.00
+2026-04-15 01:34:44,543 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=135/203 processed=675 total=1014
+2026-04-15 01:34:44,544 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=135/203 sleep_seconds=5.00
+2026-04-15 01:34:50,393 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=136/203 processed=680 total=1014
+2026-04-15 01:34:50,393 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=136/203 sleep_seconds=5.00
+2026-04-15 01:34:55,977 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=137/203 processed=685 total=1014
+2026-04-15 01:34:55,978 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=137/203 sleep_seconds=5.00
+2026-04-15 01:35:03,071 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=138/203 processed=690 total=1014
+2026-04-15 01:35:03,071 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=138/203 sleep_seconds=5.00
+2026-04-15 01:35:09,184 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=139/203 processed=695 total=1014
+2026-04-15 01:35:09,184 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=139/203 sleep_seconds=5.00
+2026-04-15 01:35:16,326 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=140/203 processed=700 total=1014
+2026-04-15 01:35:16,326 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=140/203 sleep_seconds=5.00
+2026-04-15 01:35:22,789 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=141/203 processed=705 total=1014
+2026-04-15 01:35:22,789 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=141/203 sleep_seconds=5.00
+2026-04-15 01:35:29,250 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=142/203 processed=710 total=1014
+2026-04-15 01:35:29,251 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=142/203 sleep_seconds=5.00
+2026-04-15 01:35:34,943 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=143/203 processed=715 total=1014
+2026-04-15 01:35:34,943 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=143/203 sleep_seconds=5.00
+2026-04-15 01:35:40,728 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=144/203 processed=720 total=1014
+2026-04-15 01:35:40,728 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=144/203 sleep_seconds=5.00
+2026-04-15 01:35:47,006 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=145/203 processed=725 total=1014
+2026-04-15 01:35:47,007 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=145/203 sleep_seconds=5.00
+2026-04-15 01:35:52,387 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=146/203 processed=730 total=1014
+2026-04-15 01:35:52,387 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=146/203 sleep_seconds=5.00
+2026-04-15 01:35:58,074 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=147/203 processed=735 total=1014
+2026-04-15 01:35:58,074 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=147/203 sleep_seconds=5.00
+2026-04-15 01:36:03,727 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=148/203 processed=740 total=1014
+2026-04-15 01:36:03,727 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=148/203 sleep_seconds=5.00
+2026-04-15 01:36:09,222 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=149/203 processed=745 total=1014
+2026-04-15 01:36:09,222 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=149/203 sleep_seconds=5.00
+2026-04-15 01:36:14,641 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=150/203 processed=750 total=1014
+2026-04-15 01:36:14,641 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=150/203 sleep_seconds=5.00
+2026-04-15 01:36:20,008 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=151/203 processed=755 total=1014
+2026-04-15 01:36:20,008 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=151/203 sleep_seconds=5.00
+2026-04-15 01:36:25,328 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=152/203 processed=760 total=1014
+2026-04-15 01:36:25,328 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=152/203 sleep_seconds=5.00
+2026-04-15 01:36:30,645 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=153/203 processed=765 total=1014
+2026-04-15 01:36:30,645 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=153/203 sleep_seconds=5.00
+2026-04-15 01:36:37,436 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=154/203 processed=770 total=1014
+2026-04-15 01:36:37,436 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=154/203 sleep_seconds=5.00
+2026-04-15 01:36:45,268 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=155/203 processed=775 total=1014
+2026-04-15 01:36:45,269 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=155/203 sleep_seconds=5.00
+2026-04-15 01:36:51,333 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=156/203 processed=780 total=1014
+2026-04-15 01:36:51,333 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=156/203 sleep_seconds=5.00
+2026-04-15 01:36:56,689 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=157/203 processed=785 total=1014
+2026-04-15 01:36:56,689 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=157/203 sleep_seconds=5.00
+2026-04-15 01:37:02,341 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=158/203 processed=790 total=1014
+2026-04-15 01:37:02,342 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=158/203 sleep_seconds=5.00
+2026-04-15 01:37:09,305 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=159/203 processed=795 total=1014
+2026-04-15 01:37:09,306 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=159/203 sleep_seconds=5.00
+2026-04-15 01:37:16,027 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=160/203 processed=800 total=1014
+2026-04-15 01:37:16,027 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=160/203 sleep_seconds=5.00
+2026-04-15 01:37:21,656 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=161/203 processed=805 total=1014
+2026-04-15 01:37:21,657 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=161/203 sleep_seconds=5.00
+2026-04-15 01:37:25,925 INFO app.main request_id=3701c365-1690-4480-a2ee-42364a74f106 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:37:25,927 INFO app.api.books request_id=3701c365-1690-4480-a2ee-42364a74f106 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=79
+2026-04-15 01:37:25,928 INFO app.main request_id=3701c365-1690-4480-a2ee-42364a74f106 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=2
+2026-04-15 01:37:25,944 INFO app.main request_id=060bfe88-ab79-4309-8c31-fb58a27b7ccd http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:37:25,946 INFO app.main request_id=060bfe88-ab79-4309-8c31-fb58a27b7ccd http_request_finished method=GET path=/library status=200 duration_ms=2
+2026-04-15 01:37:28,473 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=162/203 processed=810 total=1014
+2026-04-15 01:37:28,474 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=162/203 sleep_seconds=5.00
+2026-04-15 01:37:29,596 INFO app.main request_id=d39019a8-3d30-42ab-b96c-e97488e35213 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:37:29,598 INFO app.api.books request_id=d39019a8-3d30-42ab-b96c-e97488e35213 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=embedding progress=79
+2026-04-15 01:37:29,600 INFO app.main request_id=d39019a8-3d30-42ab-b96c-e97488e35213 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=4
+2026-04-15 01:37:29,614 INFO app.main request_id=0e2a2fa1-2ef3-4cba-aff8-e43da8f3cf0f http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:37:29,618 INFO app.main request_id=0e2a2fa1-2ef3-4cba-aff8-e43da8f3cf0f http_request_finished method=GET path=/library status=200 duration_ms=3
+2026-04-15 01:37:35,366 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=163/203 processed=815 total=1014
+2026-04-15 01:37:35,366 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=163/203 sleep_seconds=5.00
+2026-04-15 01:37:41,580 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=164/203 processed=820 total=1014
+2026-04-15 01:37:41,581 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=164/203 sleep_seconds=5.00
+2026-04-15 01:37:48,487 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=165/203 processed=825 total=1014
+2026-04-15 01:37:48,488 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=165/203 sleep_seconds=5.00
+2026-04-15 01:37:54,565 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=166/203 processed=830 total=1014
+2026-04-15 01:37:54,565 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=166/203 sleep_seconds=5.00
+2026-04-15 01:38:01,343 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=167/203 processed=835 total=1014
+2026-04-15 01:38:01,343 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=167/203 sleep_seconds=5.00
+2026-04-15 01:38:08,187 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=168/203 processed=840 total=1014
+2026-04-15 01:38:08,187 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=168/203 sleep_seconds=5.00
+2026-04-15 01:38:14,873 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=169/203 processed=845 total=1014
+2026-04-15 01:38:14,873 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=169/203 sleep_seconds=5.00
+2026-04-15 01:38:21,767 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=170/203 processed=850 total=1014
+2026-04-15 01:38:21,768 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=170/203 sleep_seconds=5.00
+2026-04-15 01:38:29,087 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=171/203 processed=855 total=1014
+2026-04-15 01:38:29,087 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=171/203 sleep_seconds=5.00
+2026-04-15 01:38:34,948 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=172/203 processed=860 total=1014
+2026-04-15 01:38:34,949 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=172/203 sleep_seconds=5.00
+2026-04-15 01:38:40,500 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=173/203 processed=865 total=1014
+2026-04-15 01:38:40,500 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=173/203 sleep_seconds=5.00
+2026-04-15 01:38:46,780 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=174/203 processed=870 total=1014
+2026-04-15 01:38:46,781 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=174/203 sleep_seconds=5.00
+2026-04-15 01:38:53,940 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=175/203 processed=875 total=1014
+2026-04-15 01:38:53,940 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=175/203 sleep_seconds=5.00
+2026-04-15 01:38:59,496 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=176/203 processed=880 total=1014
+2026-04-15 01:38:59,497 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=176/203 sleep_seconds=5.00
+2026-04-15 01:39:06,642 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=177/203 processed=885 total=1014
+2026-04-15 01:39:06,642 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=177/203 sleep_seconds=5.00
+2026-04-15 01:39:12,370 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=178/203 processed=890 total=1014
+2026-04-15 01:39:12,370 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=178/203 sleep_seconds=5.00
+2026-04-15 01:39:19,137 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=179/203 processed=895 total=1014
+2026-04-15 01:39:19,138 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=179/203 sleep_seconds=5.00
+2026-04-15 01:39:24,570 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=180/203 processed=900 total=1014
+2026-04-15 01:39:24,570 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=180/203 sleep_seconds=5.00
+2026-04-15 01:39:30,216 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=181/203 processed=905 total=1014
+2026-04-15 01:39:30,217 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=181/203 sleep_seconds=5.00
+2026-04-15 01:39:35,731 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=182/203 processed=910 total=1014
+2026-04-15 01:39:35,732 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=182/203 sleep_seconds=5.00
+2026-04-15 01:39:41,119 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=183/203 processed=915 total=1014
+2026-04-15 01:39:41,120 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=183/203 sleep_seconds=5.00
+2026-04-15 01:39:47,337 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=184/203 processed=920 total=1014
+2026-04-15 01:39:47,338 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=184/203 sleep_seconds=5.00
+2026-04-15 01:39:53,240 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=185/203 processed=925 total=1014
+2026-04-15 01:39:53,240 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=185/203 sleep_seconds=5.00
+2026-04-15 01:39:58,855 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=186/203 processed=930 total=1014
+2026-04-15 01:39:58,855 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=186/203 sleep_seconds=5.00
+2026-04-15 01:40:05,845 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=187/203 processed=935 total=1014
+2026-04-15 01:40:05,846 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=187/203 sleep_seconds=5.00
+2026-04-15 01:40:11,345 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=188/203 processed=940 total=1014
+2026-04-15 01:40:11,345 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=188/203 sleep_seconds=5.00
+2026-04-15 01:40:16,725 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=189/203 processed=945 total=1014
+2026-04-15 01:40:16,725 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=189/203 sleep_seconds=5.00
+2026-04-15 01:40:22,822 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=190/203 processed=950 total=1014
+2026-04-15 01:40:22,822 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=190/203 sleep_seconds=5.00
+2026-04-15 01:40:28,198 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=191/203 processed=955 total=1014
+2026-04-15 01:40:28,199 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=191/203 sleep_seconds=5.00
+2026-04-15 01:40:33,618 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=192/203 processed=960 total=1014
+2026-04-15 01:40:33,618 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=192/203 sleep_seconds=5.00
+2026-04-15 01:40:40,234 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=193/203 processed=965 total=1014
+2026-04-15 01:40:40,234 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=193/203 sleep_seconds=5.00
+2026-04-15 01:40:45,960 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=194/203 processed=970 total=1014
+2026-04-15 01:40:45,960 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=194/203 sleep_seconds=5.00
+2026-04-15 01:40:51,953 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=195/203 processed=975 total=1014
+2026-04-15 01:40:51,953 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=195/203 sleep_seconds=5.00
+2026-04-15 01:40:57,740 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=196/203 processed=980 total=1014
+2026-04-15 01:40:57,741 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=196/203 sleep_seconds=5.00
+2026-04-15 01:41:03,195 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=197/203 processed=985 total=1014
+2026-04-15 01:41:03,195 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=197/203 sleep_seconds=5.00
+2026-04-15 01:41:08,610 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=198/203 processed=990 total=1014
+2026-04-15 01:41:08,610 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=198/203 sleep_seconds=5.00
+2026-04-15 01:41:15,003 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=199/203 processed=995 total=1014
+2026-04-15 01:41:15,003 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=199/203 sleep_seconds=5.00
+2026-04-15 01:41:20,618 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=200/203 processed=1000 total=1014
+2026-04-15 01:41:20,618 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=200/203 sleep_seconds=5.00
+2026-04-15 01:41:26,254 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=201/203 processed=1005 total=1014
+2026-04-15 01:41:26,254 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=201/203 sleep_seconds=5.00
+2026-04-15 01:41:33,148 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=202/203 processed=1010 total=1014
+2026-04-15 01:41:33,148 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_throttle book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=202/203 sleep_seconds=5.00
+2026-04-15 01:41:39,863 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 embedding_batch_success book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering batch=203/203 processed=1014 total=1014
+2026-04-15 01:41:39,878 INFO app.services.ingest request_id=fce9dec2-8396-4001-aebb-76e4c6dde731 ingestion_completed book_id=d8392407-1456-4a22-b115-a3420020c442 title=Ai Engineering total_chunks=1014 processed=1014 failed=0 duration_ms=1212244
+2026-04-15 01:45:43,574 INFO app.main request_id=a2950713-99aa-4353-b0e1-90860e451fd6 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-15 01:45:43,577 INFO app.api.books request_id=a2950713-99aa-4353-b0e1-90860e451fd6 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=indexed progress=100
+2026-04-15 01:45:43,578 INFO app.main request_id=a2950713-99aa-4353-b0e1-90860e451fd6 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=4
+2026-04-15 01:45:43,591 INFO app.main request_id=f88c5e4e-e991-4877-a23a-6603565ffeac http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:45:43,595 INFO app.main request_id=f88c5e4e-e991-4877-a23a-6603565ffeac http_request_finished method=GET path=/library status=200 duration_ms=3
+2026-04-15 01:45:46,210 INFO app.main request_id=857d5628-32a6-42a1-a668-ea8975b0a854 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 01:45:46,212 INFO app.main request_id=857d5628-32a6-42a1-a668-ea8975b0a854 http_request_finished method=GET path=/chat status=200 duration_ms=2
+2026-04-15 01:45:50,330 INFO app.main request_id=e70cdb1f-edc6-4e5a-a573-68cb6e41601c http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 01:45:50,332 INFO app.main request_id=e70cdb1f-edc6-4e5a-a573-68cb6e41601c http_request_finished method=GET path=/library status=200 duration_ms=2
+2026-04-15 01:45:57,094 INFO app.main request_id=654a0af7-64dc-4a83-8112-690ad0364850 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 01:45:57,096 INFO app.main request_id=654a0af7-64dc-4a83-8112-690ad0364850 http_request_finished method=GET path=/chat status=200 duration_ms=2
+2026-04-15 01:46:35,315 INFO app.main request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 http_request_started method=POST path=/query client=127.0.0.1
+2026-04-15 01:46:35,317 INFO app.api.query request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 query_requested question_len=25 top_k=25 book_filter_count=1
+2026-04-15 01:46:35,317 INFO app.services.qa request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 qa_answer_started question_len=25 top_k=25 book_filter_count=1 question_snippet=Give summary of Chapter 1
+2026-04-15 01:46:35,317 INFO app.services.retrieval request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 retrieval_requested mode=hybrid top_k=50 fetch_k=200 book_filter_count=1 question_len=25
+2026-04-15 01:46:35,317 INFO app.services.retrieval request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-15 01:46:35,318 INFO app.services.retrieval request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 01:46:35,321 INFO sentence_transformers.SentenceTransformer request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 Use pytorch device_name: cuda
+2026-04-15 01:46:35,321 INFO sentence_transformers.SentenceTransformer request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 01:46:39,827 INFO app.services.retrieval request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 retrieval_child_candidates mode=hybrid dense=200 lexical=200 unique=355
+2026-04-15 01:46:39,873 INFO app.services.retrieval request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 parent_retrieval_completed mode=hybrid dense=200 lexical=200 parent_sections=25 candidates=250
+2026-04-15 01:46:39,874 INFO app.services.qa request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 qa_retrieval_completed parent_sections=25
+2026-04-15 01:46:44,712 INFO app.services.qa request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 qa_llm_invoke_completed duration_ms=4829
+2026-04-15 01:46:44,712 INFO app.services.qa request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 qa_answer_completed grounded=True citations=25 duration_ms=9395 answer_snippet=Chapter 1, "Introduction to Building AI Applications with Foundation Models," highlights the advantage of full-stack engineers over traditional ML engineers in their ability to quickly turn ideas into demos, get feedback, and iterate. Unlike traditional ML engineering, which star...<truncated>
+2026-04-15 01:46:44,713 INFO app.api.query request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 query_completed grounded=True citations=25 duration_ms=9396
+2026-04-15 01:46:44,714 INFO app.main request_id=6ac08a9a-0d50-485f-b515-d5e288e665c7 http_request_finished method=POST path=/query status=200 duration_ms=9399
+2026-04-15 01:50:34,227 INFO app.main request_id=221dda73-b75e-43a3-b426-496e380ad2db http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 01:50:34,229 INFO app.main request_id=221dda73-b75e-43a3-b426-496e380ad2db http_request_finished method=GET path=/chat status=200 duration_ms=2
+2026-04-15 01:56:56,171 INFO app.main request_id=- app_shutdown
+2026-04-15 01:57:07,622 INFO app.main request_id=- app_startup
+2026-04-15 01:57:23,430 INFO app.main request_id=- app_startup
+2026-04-15 01:57:38,329 INFO app.main request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa http_request_started method=POST path=/query client=127.0.0.1
+2026-04-15 01:57:38,332 INFO app.api.query request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa query_requested question_len=25 top_k=30 book_filter_count=1
+2026-04-15 01:57:38,332 INFO app.services.qa request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa qa_answer_started question_len=25 top_k=30 book_filter_count=1 question_snippet=Give summary of Chapter 1
+2026-04-15 01:57:38,332 INFO app.services.retrieval request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa retrieval_requested mode=hybrid top_k=60 fetch_k=240 book_filter_count=1 question_len=25
+2026-04-15 01:57:38,333 INFO app.services.retrieval request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-15 01:57:38,333 INFO app.services.retrieval request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 01:57:41,976 INFO sentence_transformers.SentenceTransformer request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa Use pytorch device_name: cuda
+2026-04-15 01:57:41,976 INFO sentence_transformers.SentenceTransformer request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 01:57:46,550 INFO app.services.retrieval request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa retrieval_child_candidates mode=hybrid dense=240 lexical=240 unique=420
+2026-04-15 01:57:46,602 INFO app.services.retrieval request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa parent_retrieval_completed mode=hybrid dense=240 lexical=240 parent_sections=30 candidates=300
+2026-04-15 01:57:46,603 INFO app.services.qa request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa qa_retrieval_completed parent_sections=30
+2026-04-15 01:58:00,306 INFO app.services.qa request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa qa_llm_invoke_completed duration_ms=13671
+2026-04-15 01:58:00,307 INFO app.services.qa request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa qa_answer_completed grounded=True citations=30 duration_ms=21974 answer_snippet=Chapter 1, "Introduction to Building AI Applications with Foundation Models," introduces AI engineering as a new workflow that rewards fast iteration and a product-first approach, contrasting it with traditional ML engineering where model training and data gathering come first (p...<truncated>
+2026-04-15 01:58:00,308 INFO app.api.query request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa query_completed grounded=True citations=30 duration_ms=21975
+2026-04-15 01:58:00,310 INFO app.main request_id=37f23b04-bb43-43ee-b6af-6b92984c30aa http_request_finished method=POST path=/query status=200 duration_ms=21980
+2026-04-15 02:01:22,872 INFO app.main request_id=a5d2a669-0a82-48f8-8050-832d18325667 http_request_started method=POST path=/query client=127.0.0.1
+2026-04-15 02:01:22,873 INFO app.api.query request_id=a5d2a669-0a82-48f8-8050-832d18325667 query_requested question_len=21 top_k=30 book_filter_count=1
+2026-04-15 02:01:22,874 INFO app.services.qa request_id=a5d2a669-0a82-48f8-8050-832d18325667 qa_answer_started question_len=21 top_k=30 book_filter_count=1 question_snippet=list out all chapters
+2026-04-15 02:01:22,874 INFO app.services.retrieval request_id=a5d2a669-0a82-48f8-8050-832d18325667 retrieval_requested mode=hybrid top_k=60 fetch_k=240 book_filter_count=1 question_len=21
+2026-04-15 02:01:22,874 INFO app.services.retrieval request_id=a5d2a669-0a82-48f8-8050-832d18325667 vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-15 02:01:22,874 INFO app.services.retrieval request_id=a5d2a669-0a82-48f8-8050-832d18325667 embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 02:01:22,876 INFO sentence_transformers.SentenceTransformer request_id=a5d2a669-0a82-48f8-8050-832d18325667 Use pytorch device_name: cuda
+2026-04-15 02:01:22,876 INFO sentence_transformers.SentenceTransformer request_id=a5d2a669-0a82-48f8-8050-832d18325667 Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 02:01:26,695 INFO app.services.retrieval request_id=a5d2a669-0a82-48f8-8050-832d18325667 retrieval_child_candidates mode=hybrid dense=240 lexical=240 unique=420
+2026-04-15 02:01:26,750 INFO app.services.retrieval request_id=a5d2a669-0a82-48f8-8050-832d18325667 parent_retrieval_completed mode=hybrid dense=240 lexical=240 parent_sections=30 candidates=300
+2026-04-15 02:01:26,751 INFO app.services.qa request_id=a5d2a669-0a82-48f8-8050-832d18325667 qa_retrieval_completed parent_sections=30
+2026-04-15 02:01:31,311 INFO app.services.qa request_id=a5d2a669-0a82-48f8-8050-832d18325667 qa_llm_invoke_completed duration_ms=4546
+2026-04-15 02:01:31,312 INFO app.services.qa request_id=a5d2a669-0a82-48f8-8050-832d18325667 qa_answer_completed grounded=True citations=30 duration_ms=8438 answer_snippet=Here are the chapters from the book "Ai Engineering" mentioned in the context:
+
+*   1. Introduction to Building AI Applications with Foundation Models
+*   2. Understanding Foundation Models
+*   3. Evaluation Methodology
+*   4. Evaluate AI Systems
+*   5. Prompt Engineering
+*   6. ...<truncated>
+2026-04-15 02:01:31,312 INFO app.api.query request_id=a5d2a669-0a82-48f8-8050-832d18325667 query_completed grounded=True citations=30 duration_ms=8439
+2026-04-15 02:01:31,314 INFO app.main request_id=a5d2a669-0a82-48f8-8050-832d18325667 http_request_finished method=POST path=/query status=200 duration_ms=8442
+2026-04-15 02:03:54,474 INFO app.main request_id=- app_shutdown

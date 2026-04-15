@@ -1,6 +1,5 @@
 # app/services/ingest.py
 import logging
-import re
 import time
 from datetime import datetime
 from pathlib import Path
@@ -8,8 +7,12 @@ from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sqlalchemy.orm.exc import StaleDataError
 from app.db import SessionLocal
-from app.models import Book
+from app.models import Book, BookSection
 from app.services.retrieval import get_vectorstore, delete_book_vectors
+from app.services.structure import (
+    build_parent_sections,
+    split_parent_sections_into_child_chunks,
+)
 from app.settings import (
     EMBEDDING_BACKOFF_BASE_SECONDS,
     EMBEDDING_BATCH_SIZE,
@@ -20,17 +23,9 @@ from app.settings import (
 logger = logging.getLogger(__name__)
 
 
-def _extract_heading(text: str) -> str | None:
-    for raw_line in text.splitlines():
-        line = raw_line.strip()
-        if len(line) < 8 or len(line) > 90:
-            continue
-        if line.isupper() or line.lower().startswith(("chapter ", "section ")):
-            return line.title()
-    return None
-
-
 def _extract_retry_seconds(message: str, default: int = 60) -> int:
+    import re
+
     match = re.search(r"retry in\s+(\d+(?:\.\d+)?)s", message, flags=re.IGNORECASE)
     if match:
         return max(1, int(float(match.group(1))))
@@ -78,6 +73,12 @@ def _refresh_ingest_target(db, book_id: str) -> Book | None:
         logger.info("ingestion_cancelled_delete_requested book_id=%s", book_id)
         return None
     return book
+
+
+def _replace_book_sections(db, *, book_id: str, sections) -> None:
+    db.query(BookSection).filter(BookSection.book_id == book_id).delete(synchronize_session=False)
+    for section in sections:
+        db.add(BookSection(**section.to_record()))
 
 
 def update_ingestion_progress(
@@ -273,6 +274,8 @@ def ingest_book(book_id: str):
 
         # Reindex should replace stale vectors for the same book.
         delete_book_vectors(book.id)
+        db.query(BookSection).filter(BookSection.book_id == book.id).delete(synchronize_session=False)
+        db.commit()
 
         book = _refresh_ingest_target(db, book_id)
         if not book:
@@ -312,13 +315,11 @@ def ingest_book(book_id: str):
             return
 
         # enrich metadata
-        current_section = "Document Start"
-        section_names = {current_section}
         update_ingestion_progress(
             db, book, status="structuring", current_step="structuring page metadata"
         )
         struct_started = time.perf_counter()
-        for page_index, doc in enumerate(pages):
+        for doc in pages:
             doc.metadata["book_id"] = book.id
             doc.metadata["book_title"] = book.title
             # page is often 0-indexed in loaders; normalize to 1-indexed for UI/citation
@@ -326,23 +327,28 @@ def ingest_book(book_id: str):
             doc.metadata["page_start"] = page_no
             doc.metadata["page_end"] = page_no
             doc.metadata["source_file"] = book.file_name
-            heading = _extract_heading(doc.page_content)
-            if heading:
-                current_section = heading
-                section_names.add(heading)
-            doc.metadata["chapter_title"] = current_section
-            doc.metadata["section_id"] = (
-                f"{book.id}::section::{current_section}::{page_index + 1}"
-            )
+
+        update_ingestion_progress(
+            db,
+            book,
+            status="structuring",
+            current_step="building parent sections",
+        )
+        parent_sections = build_parent_sections(
+            book_id=book.id,
+            file_path=file_path,
+            pages=pages,
+        )
+        _replace_book_sections(db, book_id=book.id, sections=parent_sections)
 
         book.total_pages = len(pages)
-        book.total_sections = len(section_names)
+        book.total_sections = len(parent_sections)
         book.updated_at = datetime.utcnow()
         db.commit()
         logger.info(
             "ingestion_structuring_completed book_id=%s sections=%s duration_ms=%s",
             book.id,
-            len(section_names),
+            len(parent_sections),
             int((time.perf_counter() - struct_started) * 1000),
         )
 
@@ -352,8 +358,12 @@ def ingest_book(book_id: str):
 
         update_ingestion_progress(db, book, status="chunking", current_step="creating chunks")
         chunk_started = time.perf_counter()
-        splitter = RecursiveCharacterTextSplitter(chunk_size=1200, chunk_overlap=150)
-        chunks = splitter.split_documents(pages)
+        splitter = RecursiveCharacterTextSplitter(chunk_size=1600, chunk_overlap=200)
+        chunks = split_parent_sections_into_child_chunks(
+            pages=pages,
+            parent_sections=parent_sections,
+            splitter=splitter,
+        )
         book.total_chunks = len(chunks)
         book.processed_chunks = 0
         book.failed_chunks = 0

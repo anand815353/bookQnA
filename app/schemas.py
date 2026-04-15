@@ -46,6 +46,9 @@ class Citation(BaseModel):
     snippet: str
     chapter_title: str | None = None
     subchapter_title: str | None = None
+    section_title: str | None = None
+    page_category: str | None = None
+    structure_source: str | None = None
     confidence: float | None = None
 
 class QueryRequest(BaseModel):

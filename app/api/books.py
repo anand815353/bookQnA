@@ -3,7 +3,7 @@ import logging
 
 from fastapi import APIRouter, UploadFile, File, Form, BackgroundTasks, HTTPException
 from app.db import SessionLocal
-from app.models import Book
+from app.models import Book, BookSection
 from app.schemas import BookOut, BookStatusOut
 from app.services.storage import save_uploaded_pdf, delete_book_files
 from app.services.ingest import ingest_book
@@ -184,6 +184,7 @@ def delete_book(book_id: str):
         deleted_vectors = delete_book_vectors(book_id)
         logger.info("book_delete_vectors_removed book_id=%s vectors=%s", book_id, deleted_vectors)
         delete_book_files(book_id)
+        db.query(BookSection).filter(BookSection.book_id == book_id).delete(synchronize_session=False)
         db.delete(book)
         db.commit()
         logger.info("book_delete_success book_id=%s", book_id)

@@ -1,6 +1,6 @@
 # app/models.py
 from datetime import datetime
-from sqlalchemy import String, Integer, DateTime, Text
+from sqlalchemy import String, Integer, DateTime, Text, Float
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 class Base(DeclarativeBase):
@@ -27,3 +27,21 @@ class Book(Base):
     finished_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class BookSection(Base):
+    __tablename__ = "book_sections"
+
+    section_id: Mapped[str] = mapped_column(String, primary_key=True)
+    book_id: Mapped[str] = mapped_column(String, nullable=False, index=True)
+    level: Mapped[int] = mapped_column(Integer, nullable=False, default=1)
+    title: Mapped[str] = mapped_column(String, nullable=False)
+    chapter_title: Mapped[str | None] = mapped_column(String, nullable=True)
+    subchapter_title: Mapped[str | None] = mapped_column(String, nullable=True)
+    section_title: Mapped[str | None] = mapped_column(String, nullable=True)
+    page_start: Mapped[int] = mapped_column(Integer, nullable=False)
+    page_end: Mapped[int] = mapped_column(Integer, nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    parent_section_id: Mapped[str | None] = mapped_column(String, nullable=True)
+    confidence: Mapped[float | None] = mapped_column(Float, nullable=True)
+    source_of_structure: Mapped[str | None] = mapped_column(String, nullable=True)

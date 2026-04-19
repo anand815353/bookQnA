@@ -12,10 +12,12 @@ from app.schemas import QueryRequest, QueryResponse
 from app.services.chat_history import get_chat_session, get_recent_session_context, save_query_exchange
 from app.services.qa import answer_question
 from app.settings import (
+    ENABLE_QUERY_PLANNER,
     ENABLE_QUERY_REFORMULATION,
     LOG_DEBUG_SNIPPET_CHARS,
     MAX_HISTORY_TURNS,
     QUERY_DEBUG_ENABLED,
+    QUERY_PLANNER_FORCE_IN_DEBUG,
     RETRIEVAL_MODE,
 )
 
@@ -53,6 +55,8 @@ def query_books(request: QueryRequest):
         retrieval_mode=RETRIEVAL_MODE,
         debug_requested=bool(request.debug),
         debug_enabled=debug_enabled,
+        planner_enabled=ENABLE_QUERY_PLANNER,
+        planner_force_in_debug=QUERY_PLANNER_FORCE_IN_DEBUG,
     )
     answer_signature = inspect.signature(answer_question).parameters
     answer_kwargs = {
@@ -66,6 +70,10 @@ def query_books(request: QueryRequest):
         answer_kwargs["recent_history"] = recent_history
     if request.session_id and "enable_query_reformulation" in answer_signature:
         answer_kwargs["enable_query_reformulation"] = ENABLE_QUERY_REFORMULATION
+    if "enable_query_planner" in answer_signature:
+        answer_kwargs["enable_query_planner"] = ENABLE_QUERY_PLANNER
+    if "force_query_planner" in answer_signature:
+        answer_kwargs["force_query_planner"] = bool(debug_enabled and QUERY_PLANNER_FORCE_IN_DEBUG)
 
     try:
         result = answer_question(**answer_kwargs)

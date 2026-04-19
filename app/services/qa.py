@@ -9,6 +9,13 @@ import time
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from app.logging_config import log_structured, sanitize_for_debug
+from app.schemas import QueryPlannerPlan
+from app.services.query_planner import (
+    QueryPlannerUsageDecision,
+    plan_retrieval_query,
+    serialize_query_planner_usage_decision,
+    should_use_query_planner,
+)
 from app.services.retrieval import search_parent_evidence
 from app.settings import LOG_DEBUG_SNIPPET_CHARS, MAX_HISTORY_CHARS, QUERY_DEBUG_CONTEXT_CHARS
 # from dotenv import load_dotenv
@@ -44,6 +51,35 @@ def _citation_trace_id(citation: dict) -> str:
         f"p{citation.get('page_start', 0)}-{citation.get('page_end', 0)}:"
         f"{citation.get('section_title') or citation.get('chapter_title') or 'unknown'}"
     )
+
+
+def _planner_is_noop_failure(plan: QueryPlannerPlan | None) -> bool:
+    if plan is None:
+        return False
+    return str(plan.reason or "").startswith("planner_") and str(plan.reason or "").endswith("_noop")
+
+
+def _serialize_query_plan(plan: QueryPlannerPlan | None) -> dict | None:
+    if plan is None:
+        return None
+    return plan.model_dump()
+
+
+def _serialize_planner_decision(decision: QueryPlannerUsageDecision | None) -> dict | None:
+    return serialize_query_planner_usage_decision(decision)
+
+
+def _allow_legacy_rewrite(
+    *,
+    enable_query_reformulation: bool,
+    recent_history_text: str,
+    planner_decision: QueryPlannerUsageDecision | None,
+) -> bool:
+    if not enable_query_reformulation or not recent_history_text:
+        return False
+    if planner_decision is None:
+        return True
+    return planner_decision.allow_legacy_rewrite
 
 
 def _resolve_api_key() -> str | None:
@@ -141,17 +177,63 @@ def answer_question(
     include_debug: bool = False,
     recent_history: list[dict[str, str]] | None = None,
     enable_query_reformulation: bool = False,
+    enable_query_planner: bool = False,
+    force_query_planner: bool = False,
 ):
     started = time.perf_counter()
     recent_history_text, history_turns_used = _build_recent_history_text(recent_history)
     effective_question = question
+    planner_plan: QueryPlannerPlan | None = None
+    planner_decision: QueryPlannerUsageDecision | None = None
+    planner_used = False
+    planner_applied = False
+    planner_ms = 0
     reformulation_used = False
     reformulation_ms = 0
-    if enable_query_reformulation and recent_history_text:
+    retrieval_question = question
+    legacy_rewrite_allowed = False
+    if enable_query_planner or force_query_planner:
+        planner_decision = should_use_query_planner(
+            question,
+            recent_history=recent_history,
+            planner_enabled=enable_query_planner,
+            force_planner=force_query_planner,
+        )
+    legacy_rewrite_allowed = _allow_legacy_rewrite(
+        enable_query_reformulation=enable_query_reformulation,
+        recent_history_text=recent_history_text,
+        planner_decision=planner_decision,
+    )
+    if planner_decision is not None and planner_decision.should_use:
+        planner_started = time.perf_counter()
+        planner_plan = plan_retrieval_query(
+            question,
+            recent_history=recent_history,
+            planner_enabled=True,
+        )
+        planner_ms = int((time.perf_counter() - planner_started) * 1000)
+        planner_used = True
+        if not _planner_is_noop_failure(planner_plan):
+            effective_question = planner_plan.standalone_question or question
+            reformulation_used = effective_question.strip() != (question or "").strip()
+            planner_applied = True
+            retrieval_question = question
+        elif legacy_rewrite_allowed:
+            effective_question, reformulation_used, reformulation_ms = _build_standalone_question(
+                question=question,
+                recent_history_text=recent_history_text,
+            )
+            retrieval_question = effective_question
+        else:
+            retrieval_question = question
+    elif legacy_rewrite_allowed:
         effective_question, reformulation_used, reformulation_ms = _build_standalone_question(
             question=question,
             recent_history_text=recent_history_text,
         )
+        retrieval_question = effective_question
+    else:
+        retrieval_question = effective_question
 
     log_structured(
         logger,
@@ -164,6 +246,16 @@ def answer_question(
         book_filter_count=len(book_ids or []),
         include_debug=include_debug,
         recent_history_turns=history_turns_used,
+        planner_enabled=enable_query_planner,
+        planner_forced=force_query_planner,
+        planner_used=planner_used,
+        planner_applied=planner_applied,
+        planner_gate_reason=planner_decision.reason if planner_decision is not None else None,
+        planner_gate_signals=list(planner_decision.signals) if planner_decision is not None else None,
+        planner_gate_suppressions=list(planner_decision.suppressions) if planner_decision is not None else None,
+        planner_allow_legacy_rewrite=planner_decision.allow_legacy_rewrite if planner_decision is not None else None,
+        legacy_rewrite_allowed=legacy_rewrite_allowed,
+        planner_query_type=planner_plan.query_type if planner_plan is not None else None,
         reformulation_used=reformulation_used,
     )
 
@@ -171,9 +263,10 @@ def answer_question(
     retrieval_debug: dict = {}
     try:
         parent_evidence = search_parent_evidence(
-            effective_question,
+            retrieval_question,
             top_k,
             book_ids=book_ids,
+            query_plan=planner_plan,
             debug_info=retrieval_debug,
         )
     except Exception:
@@ -199,15 +292,24 @@ def answer_question(
         if include_debug:
             response["debug"] = {
                 "question": sanitize_for_debug(question, LOG_DEBUG_SNIPPET_CHARS),
+                "retrieval_question": sanitize_for_debug(retrieval_question, LOG_DEBUG_SNIPPET_CHARS),
                 "effective_question": sanitize_for_debug(effective_question, LOG_DEBUG_SNIPPET_CHARS),
                 "selected_books": list(book_ids or []),
                 "top_k": top_k,
                 "recent_history_turns": history_turns_used,
+                "planner_enabled": enable_query_planner,
+                "planner_forced": force_query_planner,
+                "planner_used": planner_used,
+                "planner_applied": planner_applied,
+                "planner_decision": _serialize_planner_decision(planner_decision),
+                "planner": _serialize_query_plan(planner_plan),
+                "legacy_rewrite_allowed": legacy_rewrite_allowed,
                 "reformulation_used": reformulation_used,
                 "retrieval": retrieval_debug,
                 "context": {"chars": 0, "preview": ""},
                 "chosen_citations": [],
                 "stage_latency_ms": {
+                    "planner": planner_ms,
                     "reformulation": reformulation_ms,
                     "retrieval": retrieval_ms,
                     "context_build": 0,
@@ -347,6 +449,7 @@ def answer_question(
 
     total_ms = int((time.perf_counter() - started) * 1000)
     stage_latency = {
+        "planner": planner_ms,
         "reformulation": reformulation_ms,
         "retrieval": retrieval_ms,
         "context_build": context_build_ms,
@@ -371,10 +474,18 @@ def answer_question(
     if include_debug:
         result["debug"] = {
             "question": sanitize_for_debug(question, LOG_DEBUG_SNIPPET_CHARS),
+            "retrieval_question": sanitize_for_debug(retrieval_question, LOG_DEBUG_SNIPPET_CHARS),
             "effective_question": sanitize_for_debug(effective_question, LOG_DEBUG_SNIPPET_CHARS),
             "selected_books": list(book_ids or []),
             "top_k": top_k,
             "recent_history_turns": history_turns_used,
+            "planner_enabled": enable_query_planner,
+            "planner_forced": force_query_planner,
+            "planner_used": planner_used,
+            "planner_applied": planner_applied,
+            "planner_decision": _serialize_planner_decision(planner_decision),
+            "planner": _serialize_query_plan(planner_plan),
+            "legacy_rewrite_allowed": legacy_rewrite_allowed,
             "reformulation_used": reformulation_used,
             "retrieval": retrieval_debug,
             "context": {

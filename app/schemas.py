@@ -1,6 +1,8 @@
 # app/schemas.py
 from datetime import datetime
-from pydantic import BaseModel, Field
+from typing import Literal
+
+from pydantic import BaseModel, ConfigDict, Field
 
 class BookOut(BaseModel):
     id: str
@@ -63,6 +65,51 @@ class QueryResponse(BaseModel):
     citations: list[Citation]
     grounded: bool
     session_id: str | None = None
+
+
+class QueryPlannerPlan(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    query_type: Literal[
+        "original",
+        "follow_up",
+        "ambiguous",
+        "keyword_lookup",
+        "chapter_lookup",
+    ] = Field(
+        default="original",
+        description="Planner classification for retrieval handling only.",
+    )
+    standalone_question: str = Field(
+        min_length=1,
+        description="Standalone retrieval question. Must not answer the user.",
+    )
+    search_queries: list[str] = Field(
+        default_factory=list,
+        max_length=3,
+        description="Short alternate retrieval queries for dense or lexical search.",
+    )
+    keywords: list[str] = Field(
+        default_factory=list,
+        max_length=8,
+        description="High-value lexical retrieval keywords only.",
+    )
+    should_expand: bool = Field(
+        default=False,
+        description="Whether retrieval should broaden slightly for ambiguity or follow-up context.",
+    )
+    needs_exact_phrase_bias: bool = Field(
+        default=False,
+        description="Whether retrieval should prefer exact phrase or quoted-term matches.",
+    )
+    needs_chapter_lookup: bool = Field(
+        default=False,
+        description="Whether the question likely needs chapter or section targeting.",
+    )
+    reason: str = Field(
+        min_length=1,
+        description="Brief retrieval-planning rationale, not an answer.",
+    )
 
 
 class ChatSessionCreateRequest(BaseModel):

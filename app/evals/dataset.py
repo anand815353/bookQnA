@@ -83,6 +83,27 @@ def _normalize_expected_pages(value: Any) -> list[int]:
     return sorted(pages)
 
 
+def _normalize_recent_history(value: Any) -> list[dict[str, str]] | None:
+    if not isinstance(value, list):
+        return None
+
+    turns: list[dict[str, str]] = []
+    for item in value:
+        if not isinstance(item, dict):
+            continue
+        question = str(item.get("question", "") or "").strip()
+        answer = str(item.get("answer", "") or "").strip()
+        if not question and not answer:
+            continue
+        turns.append(
+            {
+                "question": question,
+                "answer": answer,
+            }
+        )
+    return turns or None
+
+
 def _load_rows(dataset_path: Path) -> list[dict[str, Any]]:
     suffix = dataset_path.suffix.lower()
     if suffix == ".jsonl":
@@ -158,6 +179,7 @@ def load_eval_cases(dataset_path: str | Path) -> list[EvalCase]:
             answerable=_normalize_bool(row.get("answerable"), default=True),
             test_type=normalize_test_type(row.get("test_type")),
             query_book_ids=_normalize_str_list(row.get("query_book_ids")) or None,
+            recent_history=_normalize_recent_history(row.get("recent_history")),
             citation_usefulness_score_manual=manual_score,
             notes=str(row.get("notes", "")).strip() or None,
             metadata={
@@ -175,6 +197,7 @@ def load_eval_cases(dataset_path: str | Path) -> list[EvalCase]:
                     "answerable",
                     "test_type",
                     "query_book_ids",
+                    "recent_history",
                     "citation_usefulness_score_manual",
                     "citation_usefulness_score",
                     "notes",

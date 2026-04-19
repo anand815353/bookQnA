@@ -105,7 +105,7 @@
                                     <input type="checkbox" name="debug" id="debug_mode">
                                     Include debug trace (development only)
                                 </label>
-                                <p class="muted">Shows retrieval trace, stage latency, and context preview for tuning.</p>
+                                <p class="muted">Shows planner output, retrieval trace, stage latency, and context preview for tuning.</p>
                             {% endif %}
                         </div>
                     </details>
@@ -220,18 +220,49 @@ function appendPendingTurn(questionText) {
 
 function renderDebug(data) {
     const retrieval = data?.retrieval || {};
+    const planner = data?.planner || retrieval?.query_plan || {};
+    const plannerDecision = data?.planner_decision || {};
     const stageLatency = data?.stage_latency_ms || {};
     const retrievedChunkIds = retrieval.retrieved_child_chunk_ids || [];
     const groupedSectionIds = retrieval.grouped_section_ids || [];
     const chosenCitations = data?.chosen_citations || [];
+    const plannerSearchQueries = planner?.search_queries || [];
+    const plannerKeywords = planner?.keywords || [];
+    const plannerSignals = plannerDecision?.signals || [];
+    const plannerSuppressions = plannerDecision?.suppressions || [];
+    const plannerFlags = {
+        should_expand: !!planner?.should_expand,
+        needs_exact_phrase_bias: !!planner?.needs_exact_phrase_bias,
+        needs_chapter_lookup: !!planner?.needs_chapter_lookup,
+    };
 
     const traceHtml = `
         <div class="debug-grid">
+            <p><strong>Planner enabled:</strong> ${escapeHtml(String(!!data?.planner_enabled))}</p>
+            <p><strong>Planner forced:</strong> ${escapeHtml(String(!!data?.planner_forced))}</p>
+            <p><strong>Planner used:</strong> ${escapeHtml(String(!!data?.planner_used))}</p>
+            <p><strong>Planner applied:</strong> ${escapeHtml(String(!!data?.planner_applied))}</p>
+            <p><strong>Planner query type:</strong> ${escapeHtml(planner?.query_type || "n/a")}</p>
             <p><strong>Retrieval mode:</strong> ${escapeHtml(retrieval.retrieval_mode || "n/a")}</p>
             <p><strong>Top K:</strong> ${escapeHtml(data?.top_k ?? "n/a")}</p>
             <p><strong>Selected books:</strong> ${escapeHtml((data?.selected_books || []).join(", ") || "all")}</p>
             <p><strong>Grounded:</strong> ${escapeHtml(String(!!data?.grounded))}</p>
         </div>
+        <p><strong>Original question:</strong> ${escapeHtml(data?.question || "")}</p>
+        <p><strong>Retrieval question:</strong> ${escapeHtml(data?.retrieval_question || data?.question || "")}</p>
+        <p><strong>Effective question:</strong> ${escapeHtml(data?.effective_question || "")}</p>
+        <p><strong>Planner gate reason:</strong> ${escapeHtml(plannerDecision?.reason || "(none)")}</p>
+        <p><strong>Planner gate signals:</strong></p>
+        <pre>${escapeHtml(plannerSignals.join("\n") || "(none)")}</pre>
+        <p><strong>Planner gate suppressions:</strong></p>
+        <pre>${escapeHtml(plannerSuppressions.join("\n") || "(none)")}</pre>
+        <p><strong>Planner standalone question:</strong> ${escapeHtml(planner?.standalone_question || "(none)")}</p>
+        <p><strong>Planner reason:</strong> ${escapeHtml(planner?.reason || "(none)")}</p>
+        <p><strong>Planner flags:</strong> ${escapeHtml(JSON.stringify(plannerFlags))}</p>
+        <p><strong>Planner search queries:</strong></p>
+        <pre>${escapeHtml(plannerSearchQueries.join("\n") || "(none)")}</pre>
+        <p><strong>Planner keywords:</strong></p>
+        <pre>${escapeHtml(plannerKeywords.join("\n") || "(none)")}</pre>
         <p><strong>Stage latency (ms):</strong> ${escapeHtml(JSON.stringify(stageLatency))}</p>
         <p><strong>Retrieved child chunks:</strong></p>
         <pre>${escapeHtml(retrievedChunkIds.join("\n") || "(none)")}</pre>

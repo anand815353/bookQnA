@@ -3,6 +3,8 @@ from typing import Any
 
 DEFAULT_TEST_TYPE = "concept_lookup"
 KNOWN_TEST_TYPES = {
+    "follow_up",
+    "ambiguous_short",
     "concept_lookup",
     "chapter_summary",
     "locate_section_page",
@@ -30,6 +32,7 @@ class EvalCase:
     answerable: bool = True
     test_type: str = DEFAULT_TEST_TYPE
     query_book_ids: list[str] | None = None
+    recent_history: list[dict[str, str]] | None = None
     citation_usefulness_score_manual: float | None = None
     notes: str | None = None
     metadata: dict[str, Any] = field(default_factory=dict)

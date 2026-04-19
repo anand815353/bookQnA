@@ -1,8 +1,11 @@
 from langchain_core.documents import Document
 
+from app.schemas import QueryPlannerPlan
 from app.services.retrieval import (
     _bm25_rank,
+    _build_dense_query_specs,
     _build_parent_evidence,
+    _build_lexical_query_specs,
     _postprocess_ranked_docs,
     _score_ranked_list,
 )
@@ -142,3 +145,90 @@ def test_parent_evidence_groups_child_hits_by_section():
     assert evidence[0]["page_start"] == 19
     assert evidence[0]["page_end"] == 24
     assert len(evidence[0]["children"]) == 2
+
+
+def test_dense_query_specs_keep_original_question_as_primary_anchor():
+    plan = QueryPlannerPlan(
+        query_type="follow_up",
+        standalone_question="What does the next chapter say about BM25 retrieval?",
+        search_queries=["BM25 retrieval next chapter"],
+        keywords=["BM25", "retrieval"],
+        should_expand=True,
+        needs_exact_phrase_bias=False,
+        needs_chapter_lookup=False,
+        reason="planner_applied",
+    )
+
+    specs = _build_dense_query_specs("What about the next chapter?", plan)
+
+    assert [spec.text for spec in specs] == [
+        "What about the next chapter?",
+        "What does the next chapter say about BM25 retrieval?",
+    ]
+    assert specs[0].weight > specs[1].weight
+
+
+def test_lexical_query_specs_use_planner_queries_and_keywords_cautiously():
+    plan = QueryPlannerPlan(
+        query_type="chapter_lookup",
+        standalone_question="Which chapter covers BM25 ranking?",
+        search_queries=[
+            "chapter BM25 ranking",
+            "BM25 ranking chapter title",
+        ],
+        keywords=["bm25", "ranking", "inverted index"],
+        should_expand=True,
+        needs_exact_phrase_bias=False,
+        needs_chapter_lookup=True,
+        reason="planner_applied",
+    )
+
+    specs = _build_lexical_query_specs("Which chapter covers BM25?", plan)
+
+    assert [spec.text for spec in specs] == [
+        "Which chapter covers BM25?",
+        "Which chapter covers BM25 ranking?",
+        "chapter BM25 ranking",
+        "BM25 ranking chapter title",
+        "bm25 ranking inverted index",
+    ]
+
+
+def test_lexical_query_specs_do_not_broaden_exact_phrase_queries():
+    plan = QueryPlannerPlan(
+        query_type="original",
+        standalone_question="Where is gradient descent defined?",
+        search_queries=["gradient descent definition chapter"],
+        keywords=["gradient", "descent", "definition"],
+        should_expand=True,
+        needs_exact_phrase_bias=True,
+        needs_chapter_lookup=False,
+        reason="planner_applied",
+    )
+
+    specs = _build_lexical_query_specs('Where is "gradient descent" defined?', plan)
+
+    assert [spec.source for spec in specs] == [
+        "original_question",
+        "standalone_question",
+    ]
+    assert "gradient descent definition chapter" not in [spec.text for spec in specs]
+
+
+def test_noop_planner_plan_does_not_change_dense_or_lexical_queries():
+    plan = QueryPlannerPlan(
+        query_type="original",
+        standalone_question="Resolved standalone question that should be ignored",
+        search_queries=["unused planner query"],
+        keywords=["unused", "keywords"],
+        should_expand=True,
+        needs_exact_phrase_bias=True,
+        needs_chapter_lookup=True,
+        reason="planner_parse_failed_noop",
+    )
+
+    dense_specs = _build_dense_query_specs("Original user question", plan)
+    lexical_specs = _build_lexical_query_specs("Original user question", plan)
+
+    assert [spec.text for spec in dense_specs] == ["Original user question"]
+    assert [spec.text for spec in lexical_specs] == ["Original user question"]

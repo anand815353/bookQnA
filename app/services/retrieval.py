@@ -5,6 +5,7 @@ import os
 import re
 import time
 from collections import Counter, defaultdict
+from dataclasses import dataclass
 
 from langchain_core.documents import Document
 
@@ -12,6 +13,7 @@ from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from app.logging_config import log_structured, sanitize_for_debug
+from app.schemas import QueryPlannerPlan
 from app.settings import (
     CHROMA_DIR,
     EMBEDDING_PROVIDER,
@@ -40,6 +42,155 @@ NOISY_PAGE_PENALTIES = {
 MAX_CHILDREN_PER_PARENT_CONTEXT = 5
 SNIPPET_CHARS = 420
 PARENT_CONTEXT_CHARS = 2300
+
+
+@dataclass(frozen=True)
+class RetrievalQuerySpec:
+    source: str
+    text: str
+    weight: float
+
+
+def _query_plan_is_noop(query_plan: QueryPlannerPlan | None) -> bool:
+    if query_plan is None:
+        return True
+    reason = str(query_plan.reason or "")
+    return reason.startswith("planner_") and reason.endswith("_noop")
+
+
+def _serialize_query_plan(query_plan: QueryPlannerPlan | None) -> dict | None:
+    if query_plan is None:
+        return None
+    return query_plan.model_dump()
+
+
+def _serialize_query_specs(specs: list[RetrievalQuerySpec]) -> list[dict[str, float | str]]:
+    return [
+        {
+            "source": spec.source,
+            "text": spec.text,
+            "weight": spec.weight,
+        }
+        for spec in specs
+    ]
+
+
+def _normalize_query_text(text: str) -> str:
+    return re.sub(r"\s+", " ", (text or "").strip())
+
+
+def _append_query_spec(
+    specs: list[RetrievalQuerySpec],
+    *,
+    seen: set[str],
+    source: str,
+    text: str,
+    weight: float,
+) -> None:
+    cleaned = _normalize_query_text(text)
+    if not cleaned:
+        return
+    key = cleaned.lower()
+    if key in seen:
+        return
+    specs.append(RetrievalQuerySpec(source=source, text=cleaned, weight=weight))
+    seen.add(key)
+
+
+def _build_dense_query_specs(
+    question: str,
+    query_plan: QueryPlannerPlan | None,
+) -> list[RetrievalQuerySpec]:
+    specs: list[RetrievalQuerySpec] = []
+    seen: set[str] = set()
+    _append_query_spec(
+        specs,
+        seen=seen,
+        source="original_question",
+        text=question,
+        weight=1.0,
+    )
+
+    if _query_plan_is_noop(query_plan):
+        return specs
+
+    standalone_weight = 0.35 if query_plan.needs_exact_phrase_bias else 0.65
+    if query_plan.should_expand or query_plan.query_type in {"follow_up", "ambiguous"}:
+        standalone_weight = 0.75 if not query_plan.needs_exact_phrase_bias else standalone_weight
+    _append_query_spec(
+        specs,
+        seen=seen,
+        source="standalone_question",
+        text=query_plan.standalone_question,
+        weight=standalone_weight,
+    )
+    return specs[:2]
+
+
+def _build_lexical_query_specs(
+    question: str,
+    query_plan: QueryPlannerPlan | None,
+) -> list[RetrievalQuerySpec]:
+    specs: list[RetrievalQuerySpec] = []
+    seen: set[str] = set()
+    original_weight = 1.25 if query_plan and not _query_plan_is_noop(query_plan) and query_plan.needs_exact_phrase_bias else 1.0
+    _append_query_spec(
+        specs,
+        seen=seen,
+        source="original_question",
+        text=question,
+        weight=original_weight,
+    )
+
+    if _query_plan_is_noop(query_plan):
+        return specs
+
+    standalone_weight = 0.55 if query_plan.needs_exact_phrase_bias else 0.85
+    if not query_plan.needs_chapter_lookup and not query_plan.should_expand:
+        standalone_weight = 0.75 if not query_plan.needs_exact_phrase_bias else standalone_weight
+    _append_query_spec(
+        specs,
+        seen=seen,
+        source="standalone_question",
+        text=query_plan.standalone_question,
+        weight=standalone_weight,
+    )
+
+    if not query_plan.needs_exact_phrase_bias:
+        search_weight = 0.85 if query_plan.needs_chapter_lookup else 0.7
+        for search_query in query_plan.search_queries:
+            _append_query_spec(
+                specs,
+                seen=seen,
+                source="planner_search_query",
+                text=search_query,
+                weight=search_weight,
+            )
+
+        keyword_query = " ".join(_normalize_query_text(keyword) for keyword in query_plan.keywords if keyword)
+        keyword_weight = 0.55 if query_plan.needs_chapter_lookup else 0.45
+        _append_query_spec(
+            specs,
+            seen=seen,
+            source="planner_keywords",
+            text=keyword_query,
+            weight=keyword_weight,
+        )
+    return specs
+
+
+def _accumulate_ranked_scores(
+    docs_by_key: dict[str, Document],
+    scores: dict[str, float],
+    docs: list[Document],
+    *,
+    weight: float,
+) -> None:
+    for rank, doc in enumerate(docs, start=1):
+        key = _doc_key(doc)
+        docs_by_key.setdefault(key, doc)
+        scores[key] = scores.get(key, 0.0) + (weight / (HYBRID_RRF_K + rank))
+
 
 def get_embeddings():
     if EMBEDDING_PROVIDER == "huggingface":
@@ -352,10 +503,22 @@ def _retrieve_child_rank_state(
     *,
     book_ids: list[str] | None,
     top_k: int,
-) -> tuple[dict[str, Document], dict[str, float], str, int, int, dict[str, int]]:
+    query_plan: QueryPlannerPlan | None = None,
+) -> tuple[
+    dict[str, Document],
+    dict[str, float],
+    str,
+    int,
+    int,
+    dict[str, int],
+    list[dict[str, float | str]],
+    list[dict[str, float | str]],
+]:
     started = time.perf_counter()
     mode = RETRIEVAL_MODE if RETRIEVAL_MODE in VALID_RETRIEVAL_MODES else "hybrid"
     fetch_k = max(top_k * 4, RETRIEVAL_FETCH_K)
+    dense_query_specs = _build_dense_query_specs(question, query_plan) if mode in {"dense_only", "hybrid"} else []
+    lexical_query_specs = _build_lexical_query_specs(question, query_plan) if mode in {"lexical_only", "hybrid"} else []
     log_structured(
         logger,
         "retrieval_requested",
@@ -366,35 +529,53 @@ def _retrieve_child_rank_state(
         book_filter_count=len(book_ids or []),
         question_len=len(question or ""),
         question_snippet=sanitize_for_debug(question, LOG_DEBUG_SNIPPET_CHARS),
+        planner_query_type=query_plan.query_type if query_plan is not None else None,
+        dense_queries=[spec.text for spec in dense_query_specs],
+        lexical_queries=[spec.text for spec in lexical_query_specs],
     )
 
     vectorstore = get_vectorstore()
 
-    dense_docs: list[Document] = []
-    lexical_docs: list[Document] = []
+    dense_docs_by_key: dict[str, Document] = {}
+    lexical_docs_by_key: dict[str, Document] = {}
+    dense_scores: dict[str, float] = {}
+    lexical_scores: dict[str, float] = {}
     dense_ms = 0
     lexical_ms = 0
     if mode in {"dense_only", "hybrid"}:
         dense_started = time.perf_counter()
-        dense_docs = _dense_search(vectorstore, question, fetch_k, book_ids)
+        for spec in dense_query_specs:
+            dense_docs = _dense_search(vectorstore, spec.text, fetch_k, book_ids)
+            _accumulate_ranked_scores(
+                dense_docs_by_key,
+                dense_scores,
+                dense_docs,
+                weight=spec.weight,
+            )
         dense_ms = int((time.perf_counter() - dense_started) * 1000)
     if mode in {"lexical_only", "hybrid"}:
         lexical_started = time.perf_counter()
         lexical_corpus = _load_lexical_corpus(vectorstore, book_ids)
-        lexical_docs = _bm25_rank(question, lexical_corpus, fetch_k)
+        for spec in lexical_query_specs:
+            lexical_docs = _bm25_rank(spec.text, lexical_corpus, fetch_k)
+            _accumulate_ranked_scores(
+                lexical_docs_by_key,
+                lexical_scores,
+                lexical_docs,
+                weight=spec.weight,
+            )
         lexical_ms = int((time.perf_counter() - lexical_started) * 1000)
 
     merge_started = time.perf_counter()
     if mode == "dense_only":
-        base_scores = _score_ranked_list(dense_docs, weight=1.0)
-        combined_docs = dense_docs
+        base_scores = dense_scores
+        combined_docs = list(dense_docs_by_key.values())
     elif mode == "lexical_only":
-        base_scores = _score_ranked_list(lexical_docs, weight=1.0)
-        combined_docs = lexical_docs
+        base_scores = lexical_scores
+        combined_docs = list(lexical_docs_by_key.values())
     else:
-        combined_docs = dense_docs + lexical_docs
-        base_scores = _score_ranked_list(dense_docs, weight=0.7)
-        lexical_scores = _score_ranked_list(lexical_docs, weight=1.0)
+        combined_docs = list(dense_docs_by_key.values()) + list(lexical_docs_by_key.values())
+        base_scores = {key: score * 0.7 for key, score in dense_scores.items()}
         for key, score in lexical_scores.items():
             base_scores[key] = base_scores.get(key, 0.0) + score
 
@@ -416,12 +597,23 @@ def _retrieve_child_rank_state(
         logger,
         "retrieval_child_candidates",
         mode=mode,
-        dense=len(dense_docs),
-        lexical=len(lexical_docs),
+        dense=len(dense_docs_by_key),
+        lexical=len(lexical_docs_by_key),
         unique=len(docs_by_key),
+        dense_queries=[spec.text for spec in dense_query_specs],
+        lexical_queries=[spec.text for spec in lexical_query_specs],
         stage_latency_ms=stage_latencies_ms,
     )
-    return docs_by_key, base_scores, mode, len(dense_docs), len(lexical_docs), stage_latencies_ms
+    return (
+        docs_by_key,
+        base_scores,
+        mode,
+        len(dense_docs_by_key),
+        len(lexical_docs_by_key),
+        stage_latencies_ms,
+        _serialize_query_specs(dense_query_specs),
+        _serialize_query_specs(lexical_query_specs),
+    )
 
 
 def _ranked_child_docs(docs_by_key: dict[str, Document], base_scores: dict[str, float]) -> list[Document]:
@@ -540,11 +732,18 @@ def delete_book_vectors(book_id: str) -> int:
         return 0
 
 
-def search_documents(question: str, top_k: int, book_ids: list[str] | None = None):
-    docs_by_key, base_scores, mode, dense_count, lexical_count, stage_latencies_ms = _retrieve_child_rank_state(
+def search_documents(
+    question: str,
+    top_k: int,
+    book_ids: list[str] | None = None,
+    *,
+    query_plan: QueryPlannerPlan | None = None,
+):
+    docs_by_key, base_scores, mode, dense_count, lexical_count, stage_latencies_ms, _, _ = _retrieve_child_rank_state(
         question,
         book_ids=book_ids,
         top_k=top_k,
+        query_plan=query_plan,
     )
     ranked_children = _ranked_child_docs(docs_by_key, base_scores)
     results = _postprocess_ranked_docs(ranked_children, base_scores, top_k)
@@ -567,13 +766,15 @@ def search_parent_evidence(
     top_k: int,
     book_ids: list[str] | None = None,
     *,
+    query_plan: QueryPlannerPlan | None = None,
     debug_info: dict | None = None,
 ) -> list[dict]:
     started = time.perf_counter()
-    docs_by_key, base_scores, mode, dense_count, lexical_count, stage_latencies_ms = _retrieve_child_rank_state(
+    docs_by_key, base_scores, mode, dense_count, lexical_count, stage_latencies_ms, dense_queries, lexical_queries = _retrieve_child_rank_state(
         question,
         book_ids=book_ids,
         top_k=max(top_k * 2, 8),
+        query_plan=query_plan,
     )
     rank_started = time.perf_counter()
     ranked_children = _ranked_child_docs(docs_by_key, base_scores)
@@ -619,6 +820,9 @@ def search_parent_evidence(
         mode=mode,
         dense=dense_count,
         lexical=lexical_count,
+        planner_query_type=query_plan.query_type if query_plan is not None else None,
+        dense_queries=dense_queries,
+        lexical_queries=lexical_queries,
         parent_sections=len(parent_evidence),
         candidates=len(candidate_children),
         retrieved_child_chunk_ids=child_chunk_ids,
@@ -635,11 +839,14 @@ def search_parent_evidence(
                 "selected_books": list(book_ids or []),
                 "dense_candidates": dense_count,
                 "lexical_candidates": lexical_count,
+                "dense_queries": dense_queries,
+                "lexical_queries": lexical_queries,
                 "candidate_children_count": len(candidate_children),
                 "parent_sections_count": len(parent_evidence),
                 "retrieved_child_chunk_ids": child_chunk_ids,
                 "grouped_section_ids": grouped_section_ids,
                 "top_group_child_chunk_ids": top_group_child_chunk_ids,
+                "query_plan": _serialize_query_plan(query_plan),
                 "stage_latency_ms": stage_trace,
             }
         )

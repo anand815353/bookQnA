@@ -132,6 +132,37 @@ def test_query_debug_payload_returned_when_enabled(monkeypatch):
     assert response.json()["debug"]["enabled"] is True
 
 
+def test_query_debug_mode_can_force_planner_for_experiments(monkeypatch):
+    client = TestClient(app)
+    monkeypatch.setattr("app.api.query.QUERY_DEBUG_ENABLED", True)
+    monkeypatch.setattr("app.api.query.QUERY_PLANNER_FORCE_IN_DEBUG", True)
+    captured = {}
+
+    def fake_answer_question(
+        question: str,
+        book_ids=None,
+        top_k: int = 4,
+        include_debug: bool = False,
+        force_query_planner: bool = False,
+        **kwargs,
+    ):
+        captured["include_debug"] = include_debug
+        captured["force_query_planner"] = force_query_planner
+        return {
+            "answer": f"Answer for: {question}",
+            "grounded": True,
+            "citations": [],
+            "debug": {"enabled": include_debug},
+        }
+
+    monkeypatch.setattr("app.api.query.answer_question", fake_answer_question)
+    response = client.post("/query", json={"question": "debug planner please", "debug": True})
+
+    assert response.status_code == 200
+    assert captured["include_debug"] is True
+    assert captured["force_query_planner"] is True
+
+
 def test_request_id_header_is_propagated():
     client = TestClient(app)
     response = client.get("/health", headers={"X-Request-ID": "req-test-123"})
@@ -314,7 +345,11 @@ def test_chat_thread_page_returns_404_for_missing_session():
 
 def test_query_passes_recent_history_for_follow_up(monkeypatch):
     client = TestClient(app)
-    captured = {"recent_history_turns": None, "reformulation_enabled": None}
+    captured = {
+        "recent_history_turns": None,
+        "reformulation_enabled": None,
+        "planner_enabled": None,
+    }
 
     def fake_answer_question(
         question: str,
@@ -323,9 +358,11 @@ def test_query_passes_recent_history_for_follow_up(monkeypatch):
         include_debug: bool = False,
         recent_history=None,
         enable_query_reformulation: bool = False,
+        enable_query_planner: bool = False,
     ):
         captured["recent_history_turns"] = len(recent_history or [])
         captured["reformulation_enabled"] = enable_query_reformulation
+        captured["planner_enabled"] = enable_query_planner
         return {
             "answer": f"Answer for: {question}",
             "grounded": True,
@@ -345,6 +382,7 @@ def test_query_passes_recent_history_for_follow_up(monkeypatch):
     assert second_response.status_code == 200
     assert captured["recent_history_turns"] >= 1
     assert isinstance(captured["reformulation_enabled"], bool)
+    assert isinstance(captured["planner_enabled"], bool)
 
 
 def test_placeholder_session_title_is_upgraded_after_first_turn(monkeypatch):

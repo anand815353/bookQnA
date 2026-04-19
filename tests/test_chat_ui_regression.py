@@ -145,6 +145,19 @@ def test_template_contains_empty_loading_and_error_state_markers():
     assert 'resultSection.classList.add("is-highlight")' in html
 
 
+def test_chat_template_debug_trace_includes_planner_markers():
+    client = TestClient(app)
+    response = client.get("/chat")
+
+    assert response.status_code == 200
+    html = response.text
+    assert "Planner enabled:" in html
+    assert "Planner gate reason:" in html
+    assert "Planner standalone question:" in html
+    assert "Planner search queries:" in html
+    assert "planner output, retrieval trace, stage latency, and context preview for tuning" in html
+
+
 def test_chat_page_renders_empty_state_guidance():
     client = TestClient(app)
     response = client.get("/chat")

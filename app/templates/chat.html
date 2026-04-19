@@ -1,79 +1,120 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="page-header">
-    <h1>Ask Questions</h1>
-    <p>Start or continue chats and review grounded answers with citations.</p>
-</section>
+<style>
+    .container.page-content {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+    }
+</style>
 
 <section class="chat-layout">
-    <aside class="card chat-sidebar">
-        <div class="button-row">
-            <button type="button" class="secondary" id="new-chat-btn">New Chat</button>
-            <button type="button" class="danger hidden" id="delete-chat-btn">Delete Chat</button>
+    <aside class="chat-sidebar" id="chat-sidebar">
+        <div class="chat-sidebar-head">
+            <h3 id="sessions-meta" class="section-subtitle">Chats</h3>
+            <button type="button" class="secondary icon-btn" id="close-sidebar-btn" aria-label="Close Sidebar" title="Close Sidebar" style="padding: 2px 8px;">✕</button>
         </div>
-        <p class="muted">Previous chats</p>
+        <button type="button" class="secondary" id="new-chat-btn" style="width: 100%; margin-bottom: 8px;">New Chat</button>
         <div id="sessions-box" class="session-list">
-            <p class="muted">No chats yet.</p>
+            <article class="empty-state compact">
+                <p class="empty-state-title">No chats yet</p>
+                <p class="empty-state-body">Start with <strong>New Chat</strong> and ask your first question.</p>
+            </article>
         </div>
     </aside>
 
-    <div>
-        <section class="card">
-            <p id="active-session-label" class="muted">Active chat: New chat (unsaved)</p>
-            <form id="query-form" class="form-stack">
-                <label>Question</label>
-                <textarea name="question" id="question" rows="4" required></textarea>
-
-                <label>Select Books (optional)</label>
-                <div class="checkbox-list">
-                    {% for book in books %}
-                        {% if book.status == "indexed" %}
-                            <label class="checkbox">
-                                <input type="checkbox" name="book_ids" value="{{ book.id }}">
-                                {{ book.title }}
-                            </label>
-                        {% endif %}
-                    {% endfor %}
+    <section class="chat-thread">
+            <div class="thread-header">
+                <div class="thread-header-top">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <button type="button" id="sidebar-toggle-btn" class="secondary icon-btn hidden" aria-label="Toggle Sidebar" title="Toggle Sidebar" style="padding: 2px 8px;">☰</button>
+                        <h2 id="thread-title" class="thread-title">New chat</h2>
+                    </div>
+                    <div class="thread-header-actions">
+                        <span id="session-state-pill" class="session-state-pill is-new">New Chat</span>
+                        <p id="thread-updated-at" class="muted thread-context-time hidden"></p>
+                        <details id="thread-actions-menu" class="thread-actions-menu hidden">
+                            <summary aria-label="Thread actions" title="Thread actions">...</summary>
+                            <div class="thread-actions-panel">
+                                <button type="button" class="danger danger-subtle hidden" id="delete-chat-btn">Delete Chat</button>
+                            </div>
+                        </details>
+                    </div>
                 </div>
-
-                <label>Top K</label>
-                <input type="number" name="top_k" id="top_k" min="1" max="30" value="4">
-
-                {% if query_debug_enabled %}
-                    <label class="checkbox">
-                        <input type="checkbox" name="debug" id="debug_mode">
-                        Include debug trace (development only)
-                    </label>
-                    <p class="muted">Shows retrieval trace, stage latency, and context preview for tuning.</p>
-                {% endif %}
-
-                <button type="submit" id="ask-btn">Ask</button>
-            </form>
-            <p id="query-feedback" class="muted hidden"></p>
-            <p id="request-id" class="muted hidden"></p>
-        </section>
-
-        <section class="card">
-            <h2>Conversation</h2>
-            <div id="messages-box" class="message-list">
-                <p class="muted">Ask a question to start a chat.</p>
+                <div class="thread-context-row">
+                    <p id="thread-book-context" class="muted thread-context-text">Scope: All indexed books</p>
+                </div>
+                <div id="thread-selected-books" class="selected-books-chips thread-selected-books hidden" aria-live="polite"></div>
             </div>
-        </section>
 
-        <section id="result-section" class="card hidden">
-            <h2>Latest Answer</h2>
-            <div id="answer-box"></div>
+            <div id="messages-box" class="message-list thread-messages">
+                <article class="empty-state">
+                    <p class="empty-state-title">No messages yet</p>
+                    <p class="empty-state-body">Ask your first question below to start this chat.</p>
+                </article>
+            </div>
 
-            <h3>Citations</h3>
-            <div id="citations-box"></div>
+            <section id="result-section" class="latest-answer hidden">
+                <h3>Latest answer</h3>
+                <div id="answer-box"></div>
 
-            <details id="debug-details" class="debug-details hidden">
-                <summary>Debug Trace</summary>
-                <div id="debug-box" class="debug-box"></div>
-            </details>
-        </section>
-    </div>
+                <details id="latest-citations-details" class="citations-details">
+                    <summary id="latest-citations-summary">Sources</summary>
+                    <div id="citations-box"></div>
+                </details>
+
+                <details id="debug-details" class="debug-details hidden">
+                    <summary>Debug Trace</summary>
+                    <div id="debug-box" class="debug-box"></div>
+                </details>
+            </section>
+
+            <section class="thread-composer">
+                <form id="query-form" class="form-stack composer-form">
+                    <label for="question" class="visually-hidden">Ask a follow-up</label>
+                    <textarea name="question" id="question" rows="2" placeholder="Ask a question..." required></textarea>
+                    <div class="composer-actions">
+                        <button type="submit" id="ask-btn">Ask</button>
+                    </div>
+
+                    <details class="composer-details composer-options" id="options-details">
+                        <summary>
+                            Options
+                            <span id="selected-books-summary" class="composer-summary">All indexed books</span>
+                        </summary>
+                        <div id="selected-books-chips" class="selected-books-chips hidden" aria-live="polite"></div>
+                        <div class="checkbox-list composer-books">
+                            {% for book in books %}
+                                {% if book.status == "indexed" %}
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="book_ids" value="{{ book.id }}">
+                                        {{ book.title }}
+                                    </label>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="advanced-controls">
+                            <div class="advanced-inline">
+                                <label for="top_k">Top K</label>
+                                <input type="number" name="top_k" id="top_k" min="1" max="30" value="20">
+                            </div>
+
+                            {% if query_debug_enabled %}
+                                <label class="checkbox">
+                                    <input type="checkbox" name="debug" id="debug_mode">
+                                    Include debug trace (development only)
+                                </label>
+                                <p class="muted">Shows retrieval trace, stage latency, and context preview for tuning.</p>
+                            {% endif %}
+                        </div>
+                    </details>
+                </form>
+                <p id="query-feedback" class="query-feedback hidden"></p>
+                <p id="query-error-banner" class="error-text hidden" role="alert"></p>
+                <p id="request-id" class="muted hidden"></p>
+            </section>
+    </section>
 </section>
 
 <script>
@@ -93,6 +134,88 @@ function escapeHtml(value) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#39;");
+}
+
+function renderEmptyState(title, body, compact = false) {
+    return `
+        <article class="empty-state ${compact ? "compact" : ""}">
+            <p class="empty-state-title">${escapeHtml(title)}</p>
+            <p class="empty-state-body">${escapeHtml(body)}</p>
+        </article>
+    `;
+}
+
+function setFeedback(message, tone = "info") {
+    const feedback = document.getElementById("query-feedback");
+    feedback.classList.remove("hidden", "feedback-info", "feedback-success", "feedback-error");
+    feedback.classList.add(`feedback-${tone}`);
+    feedback.textContent = message;
+}
+
+function clearFeedback() {
+    const feedback = document.getElementById("query-feedback");
+    feedback.textContent = "";
+    feedback.classList.remove("feedback-info", "feedback-success", "feedback-error");
+    feedback.classList.add("hidden");
+}
+
+function showInlineError(message) {
+    const banner = document.getElementById("query-error-banner");
+    if (!banner) {
+        return;
+    }
+    banner.textContent = message;
+    banner.classList.remove("hidden");
+}
+
+function clearInlineError() {
+    const banner = document.getElementById("query-error-banner");
+    if (!banner) {
+        return;
+    }
+    banner.textContent = "";
+    banner.classList.add("hidden");
+}
+
+function clearPendingTurn() {
+    const pending = document.getElementById("pending-turn");
+    if (pending) {
+        pending.remove();
+    }
+}
+
+function emphasizeLatestTurn() {
+    const latest = document.querySelector(".turn.is-latest .turn-assistant");
+    if (!latest) {
+        return;
+    }
+    latest.classList.remove("latest-flash");
+    void latest.offsetWidth;
+    latest.classList.add("latest-flash");
+    window.setTimeout(() => {
+        latest.classList.remove("latest-flash");
+    }, 1300);
+}
+
+function appendPendingTurn(questionText) {
+    clearPendingTurn();
+    const box = document.getElementById("messages-box");
+    const questionPreview = compactSnippet(questionText || "", 160);
+    const pendingHtml = `
+        <div id="pending-turn" class="thread-pending-state" aria-live="polite">
+            <p class="thread-pending-label">
+                <span class="pending-dot" aria-hidden="true"></span>
+                Answering...
+            </p>
+            ${questionPreview ? `<p class="thread-pending-question">${escapeHtml(questionPreview)}</p>` : ""}
+        </div>
+    `;
+    const hadEmptyState = !!box.querySelector(".empty-state");
+    if (hadEmptyState) {
+        box.innerHTML = "";
+    }
+    box.insertAdjacentHTML("beforeend", pendingHtml);
+    box.scrollTop = box.scrollHeight;
 }
 
 function renderDebug(data) {
@@ -126,44 +249,166 @@ function formatTime(value) {
     if (!value) return "";
     const date = new Date(value);
     if (Number.isNaN(date.getTime())) return "";
-    return date.toLocaleString();
+    const now = new Date();
+    const sameDay = date.toDateString() === now.toDateString();
+    if (sameDay) {
+        return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    }
+
+    const sameYear = date.getFullYear() === now.getFullYear();
+    return date.toLocaleDateString([], sameYear
+        ? { month: "short", day: "numeric" }
+        : { month: "short", day: "numeric", year: "numeric" });
+}
+
+function formatSessionTimestamp(value) {
+    if (!value) return "Unknown";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "Unknown";
+
+    const now = new Date();
+    const sameDay = date.toDateString() === now.toDateString();
+    if (sameDay) {
+        return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+    }
+
+    const yesterday = new Date(now);
+    yesterday.setDate(now.getDate() - 1);
+    if (date.toDateString() === yesterday.toDateString()) {
+        return "Yesterday";
+    }
+
+    const sameYear = date.getFullYear() === now.getFullYear();
+    return date.toLocaleDateString([], sameYear
+        ? { month: "short", day: "numeric" }
+        : { month: "short", day: "numeric", year: "numeric" });
 }
 
 function setActiveSessionLabel(title) {
-    const label = document.getElementById("active-session-label");
+    const threadTitle = document.getElementById("thread-title");
+    const statePill = document.getElementById("session-state-pill");
     const deleteBtn = document.getElementById("delete-chat-btn");
+    const actionsMenu = document.getElementById("thread-actions-menu");
     if (title) {
-        label.textContent = `Active chat: ${title}`;
+        threadTitle.textContent = title;
+        if (statePill) {
+            statePill.textContent = "Continue Chat";
+            statePill.classList.remove("is-new");
+            statePill.classList.add("is-active");
+        }
         deleteBtn.classList.remove("hidden");
+        if (actionsMenu) {
+            actionsMenu.classList.remove("hidden");
+        }
     } else {
-        label.textContent = "Active chat: New chat (unsaved)";
+        threadTitle.textContent = "New chat";
+        if (statePill) {
+            statePill.textContent = "New Chat";
+            statePill.classList.remove("is-active");
+            statePill.classList.add("is-new");
+        }
         deleteBtn.classList.add("hidden");
+        if (actionsMenu) {
+            actionsMenu.open = false;
+            actionsMenu.classList.add("hidden");
+        }
     }
+}
+
+function setThreadUpdatedAt(value) {
+    const label = document.getElementById("thread-updated-at");
+    if (!label) {
+        return;
+    }
+    if (!value) {
+        label.textContent = "";
+        label.classList.add("hidden");
+        return;
+    }
+    label.textContent = `Updated ${formatSessionTimestamp(value)}`;
+    label.classList.remove("hidden");
+}
+
+function renderBookChips(labels) {
+    return labels.map(label => `<span class="selected-book-chip">${escapeHtml(label)}</span>`).join("");
+}
+
+function updateSelectedBooksUi() {
+    const bookInputs = Array.from(document.querySelectorAll("input[name='book_ids']"));
+    const selectedInputs = bookInputs.filter(input => input.checked);
+    const summary = document.getElementById("selected-books-summary");
+    const chips = document.getElementById("selected-books-chips");
+    const threadScope = document.getElementById("thread-book-context");
+    const threadChips = document.getElementById("thread-selected-books");
+    if (!summary || !chips || !threadScope || !threadChips) {
+        return;
+    }
+
+    if (!bookInputs.length) {
+        summary.textContent = "No indexed books";
+        chips.classList.add("hidden");
+        chips.innerHTML = "";
+        threadScope.textContent = "Scope: No indexed books";
+        threadChips.classList.add("hidden");
+        threadChips.innerHTML = "";
+        return;
+    }
+
+    if (!selectedInputs.length) {
+        summary.textContent = "All indexed books";
+        chips.classList.add("hidden");
+        chips.innerHTML = "";
+        threadScope.textContent = "Scope: All indexed books";
+        threadChips.classList.add("hidden");
+        threadChips.innerHTML = "";
+        return;
+    }
+
+    const selectedLabels = selectedInputs.map(input => input.closest("label")?.textContent?.trim() || input.value);
+    summary.textContent = `${selectedInputs.length} selected`;
+    chips.innerHTML = renderBookChips(selectedLabels);
+    chips.classList.remove("hidden");
+    threadScope.textContent = `Scope: ${selectedInputs.length} selected`;
+    threadChips.innerHTML = renderBookChips(selectedLabels);
+    threadChips.classList.remove("hidden");
 }
 
 function renderSessions(sessions) {
     const box = document.getElementById("sessions-box");
+    const sessionsMeta = document.getElementById("sessions-meta");
     if (!sessions.length) {
-        box.innerHTML = "<p class='muted'>No chats yet.</p>";
+        sessionsMeta.textContent = "Chats";
+        box.innerHTML = renderEmptyState(
+            "No chats yet",
+            "Start with New Chat and ask your first question.",
+            true
+        );
         return;
     }
+    sessionsMeta.textContent = `Chats (${sessions.length})`;
 
-    box.innerHTML = sessions.map(session => `
+    box.innerHTML = sessions.map(session => {
+        const isActive = session.id === currentSessionId;
+        const title = session.title || "Untitled";
+        const preview = session.preview_text || session.summary_text || "No messages yet.";
+        const timestamp = formatSessionTimestamp(
+            session.last_message_at || session.updated_at || session.created_at
+        );
+        return `
         <a
             href="/chat/${encodeURIComponent(session.id)}"
-            class="session-item ${session.id === currentSessionId ? "active" : ""}"
+            class="session-item ${isActive ? "active" : ""}"
             data-session-id="${escapeHtml(session.id)}"
+            aria-current="${isActive ? "page" : "false"}"
         >
-            <strong class="session-title">${escapeHtml(session.title || "Untitled")}</strong>
-            ${session.summary_text ? `<span class="session-summary">${escapeHtml(session.summary_text)}</span>` : ""}
-            ${
-                session.preview_text && session.preview_text !== session.summary_text
-                    ? `<span class="session-preview">${escapeHtml(session.preview_text)}</span>`
-                    : ""
-            }
-            <span class="muted">${escapeHtml(formatTime(session.last_message_at || session.updated_at || session.created_at))}</span>
+            <div class="session-item-top">
+                <strong class="session-title" title="${escapeHtml(title)}">${escapeHtml(title)}</strong>
+                <span class="session-time">${escapeHtml(timestamp)}</span>
+            </div>
+            <span class="session-preview" title="${escapeHtml(preview)}">${escapeHtml(preview)}</span>
         </a>
-    `).join("");
+        `;
+    }).join("");
 
     Array.from(box.querySelectorAll("[data-session-id]")).forEach(el => {
         el.addEventListener("click", async (event) => {
@@ -174,45 +419,286 @@ function renderSessions(sessions) {
     });
 }
 
-function renderCitations(citations) {
-    return (citations || []).map(c => `
-        <div class="citation-card compact">
-            <p><strong>Book:</strong> ${escapeHtml(c.book_title)}</p>
-            <p><strong>Pages:</strong> ${escapeHtml(c.page_start)}-${escapeHtml(c.page_end)}</p>
-            ${c.chapter_title ? `<p><strong>Chapter:</strong> ${escapeHtml(c.chapter_title)}</p>` : ""}
-            ${c.subchapter_title ? `<p><strong>Subchapter:</strong> ${escapeHtml(c.subchapter_title)}</p>` : ""}
-            <p><strong>Snippet:</strong> ${escapeHtml(c.snippet)}</p>
-        </div>
-    `).join("");
+function compactSnippet(value, maxChars = 180) {
+    const compact = String(value ?? "").replace(/\s+/g, " ").trim();
+    if (!compact) return "";
+    if (compact.length <= maxChars) return compact;
+    return `${compact.slice(0, Math.max(0, maxChars - 3)).trimEnd()}...`;
+}
+
+function normalizeGroupId(value) {
+    return String(value ?? "").replace(/[^a-zA-Z0-9_-]/g, "-");
+}
+
+function renderCitations(citations, options = {}) {
+    const groupId = options.groupId || "";
+    const previewChars = options.previewChars || 180;
+    const collapsedCount = Number.isInteger(options.collapsedCount) ? options.collapsedCount : null;
+
+    return (citations || []).map((c, index) => {
+        const bookTitle = c.book_title || "Unknown book";
+        const pageStart = c.page_start ?? "?";
+        const pageEnd = c.page_end ?? pageStart;
+        const fullSnippet = String(c.snippet ?? "").replace(/\s+/g, " ").trim();
+        const previewSnippet = compactSnippet(fullSnippet, previewChars);
+        const hasFullEvidence = !!fullSnippet && fullSnippet !== previewSnippet;
+        const isCollapsed = Number.isInteger(collapsedCount) && index >= collapsedCount;
+        const chapterParts = [];
+        if (c.chapter_title) {
+            chapterParts.push(`Chapter: ${c.chapter_title}`);
+        }
+        if (c.subchapter_title) {
+            chapterParts.push(`Subchapter: ${c.subchapter_title}`);
+        }
+        const chapterMeta = chapterParts.join(" | ");
+        return `
+            <div class="citation-inline ${isCollapsed ? "citation-collapsed hidden" : ""}" ${groupId ? `data-citation-group-item="${escapeHtml(groupId)}"` : ""}>
+                <p class="citation-source">
+                    <strong>${escapeHtml(bookTitle)}</strong>
+                    <span class="citation-pages">p. ${escapeHtml(pageStart)}-${escapeHtml(pageEnd)}</span>
+                </p>
+                ${chapterMeta ? `<p class="citation-meta muted">${escapeHtml(chapterMeta)}</p>` : ""}
+                ${
+                    hasFullEvidence
+                        ? `
+                            <details class="citation-full">
+                                <summary>${escapeHtml(previewSnippet || "Expand evidence")}</summary>
+                                <p class="citation-snippet">${escapeHtml(fullSnippet)}</p>
+                            </details>
+                        `
+                        : `<p class="citation-snippet-preview">${escapeHtml(previewSnippet || "No snippet available.")}</p>`
+                }
+            </div>
+        `;
+    }).join("");
+}
+
+function bindCitationControls(scope) {
+    const root = scope || document;
+    Array.from(root.querySelectorAll("[data-citation-group]")).forEach(button => {
+        if (button.dataset.bound === "1") {
+            return;
+        }
+        button.dataset.bound = "1";
+        button.addEventListener("click", () => {
+            const groupId = button.getAttribute("data-citation-group");
+            const expanded = button.getAttribute("data-expanded") === "true";
+            const total = parseInt(button.getAttribute("data-total-citations") || "0", 10);
+            const items = Array.from(root.querySelectorAll(`[data-citation-group-item="${groupId}"]`));
+            const collapsedItems = items.filter(item => item.classList.contains("citation-collapsed"));
+
+            if (expanded) {
+                collapsedItems.forEach(item => item.classList.add("hidden"));
+                button.setAttribute("data-expanded", "false");
+                button.textContent = `Show all ${total} sources`;
+                return;
+            }
+
+            collapsedItems.forEach(item => item.classList.remove("hidden"));
+            button.setAttribute("data-expanded", "true");
+            button.textContent = "Show fewer sources";
+        });
+    });
+}
+
+function bindTurnControls(scope) {
+    const root = scope || document;
+    Array.from(root.querySelectorAll("[data-turn-toggle]")).forEach(button => {
+        if (button.dataset.bound === "1") {
+            return;
+        }
+        button.dataset.bound = "1";
+        button.addEventListener("click", () => {
+            const turn = button.closest(".turn");
+            if (!turn) {
+                return;
+            }
+            const isCollapsed = turn.classList.contains("is-collapsed");
+            if (isCollapsed) {
+                turn.classList.remove("is-collapsed");
+                button.textContent = "Hide turn";
+                button.setAttribute("aria-expanded", "true");
+                return;
+            }
+            turn.classList.add("is-collapsed");
+            button.textContent = "Show turn";
+            button.setAttribute("aria-expanded", "false");
+        });
+    });
+}
+
+function groupTurns(messages) {
+    const turns = [];
+    let pendingUser = null;
+
+    (messages || []).forEach(message => {
+        if (message.role === "user") {
+            if (pendingUser) {
+                turns.push({ user: pendingUser, assistant: null });
+            }
+            pendingUser = message;
+            return;
+        }
+
+        if (message.role === "assistant") {
+            if (pendingUser) {
+                turns.push({ user: pendingUser, assistant: message });
+                pendingUser = null;
+            } else {
+                turns.push({ user: null, assistant: message });
+            }
+        }
+    });
+
+    if (pendingUser) {
+        turns.push({ user: pendingUser, assistant: null });
+    }
+
+    return turns;
 }
 
 function renderMessages(messages) {
     const box = document.getElementById("messages-box");
     if (!messages.length) {
-        box.innerHTML = "<p class='muted'>No messages in this chat yet.</p>";
+        const body = currentSessionId
+            ? "Ask your first question in this chat."
+            : "Ask your first question below to start this chat.";
+        box.innerHTML = renderEmptyState(
+            "No messages yet",
+            body
+        );
         return;
     }
 
-    box.innerHTML = messages.map(message => {
-        if (message.role === "user") {
-            return `
-                <div class="message user">
-                    <p class="message-meta">You - ${escapeHtml(formatTime(message.created_at))}</p>
-                    <p>${escapeHtml(message.question_text || "")}</p>
-                </div>
-            `;
+    const turns = groupTurns(messages);
+    let latestAssistantTurnIndex = -1;
+    turns.forEach((turn, index) => {
+        if (turn.assistant) {
+            latestAssistantTurnIndex = index;
         }
+    });
 
-        const status = message.grounded ? "Grounded" : "Not fully grounded";
+    box.innerHTML = turns.map((turn, turnIndex) => {
+        const user = turn.user;
+        const assistant = turn.assistant;
+        const isLatestAssistantTurn = !!assistant && turnIndex === latestAssistantTurnIndex;
+        const isOlderTurn = latestAssistantTurnIndex > -1 && turnIndex < latestAssistantTurnIndex;
+        const isCollapsedTurn = isOlderTurn;
+        const turnClasses = ["turn"];
+        if (isOlderTurn) {
+            turnClasses.push("is-older");
+        }
+        if (isLatestAssistantTurn) {
+            turnClasses.push("is-latest");
+        }
+        if (isCollapsedTurn) {
+            turnClasses.push("is-collapsed");
+        }
+        const citations = assistant?.citations || [];
+        const citationCount = citations.length;
+        const collapsedCount = citationCount > 2 ? 2 : citationCount;
+        const hasCollapsedCitations = citationCount > collapsedCount;
+        const citationGroupId = `turn-citations-${normalizeGroupId(assistant?.id || `turn-${turnIndex}`)}`;
+        const grounded = !!assistant?.grounded;
+        const statusText = grounded ? "Grounded" : "Not fully grounded";
+        const statusClass = grounded ? "is-grounded" : "is-ungrounded";
+        const questionPreview = compactSnippet(user?.question_text || "No question recorded.", 130);
+        const answerPreview = compactSnippet(assistant?.answer_text || "No assistant response recorded for this turn.", 170);
+        const turnTime = formatTime(assistant?.created_at || user?.created_at);
+
         return `
-            <div class="message assistant">
-                <p class="message-meta">Assistant - ${escapeHtml(formatTime(message.created_at))}</p>
-                <p>${escapeHtml(message.answer_text || "")}</p>
-                <p><strong>Status:</strong> ${escapeHtml(status)}</p>
-                ${renderCitations(message.citations)}
+            <div class="${turnClasses.join(" ")}">
+                ${
+                    isOlderTurn
+                        ? `
+                            <details class="turn-summary">
+                                <summary class="turn-summary-head">
+                                    <div class="turn-summary-line" style="flex: 1; padding-right: 10px;">
+                                        <strong>Q:</strong> ${escapeHtml(user?.question_text || "")}
+                                    </div>
+                                    ${turnTime ? `<span class="turn-meta muted" style="white-space: nowrap;">${escapeHtml(turnTime)}</span>` : ""}
+                                </summary>
+                                <div class="turn-summary-body" style="margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(71, 85, 105, 0.3);">
+                                    <p style="margin: 0; font-size: 0.84rem; white-space: pre-wrap; color: #cbd5e1;"><strong>A:</strong> ${escapeHtml(assistant?.answer_text || "")}</p>
+                                </div>
+                            </details>
+                        `
+                        : ""
+                }
+                <div class="turn-detail">
+                ${
+                    user
+                        ? `
+                            <article class="turn-block turn-user">
+                                <div class="turn-header-row">
+                                    <p class="turn-role">You</p>
+                                    <p class="turn-meta">${escapeHtml(formatTime(user.created_at))}</p>
+                                </div>
+                                <p class="turn-question">${escapeHtml(user.question_text || "")}</p>
+                            </article>
+                        `
+                        : ""
+                }
+                ${
+                    assistant
+                        ? `
+                            <article class="turn-block turn-assistant ${isLatestAssistantTurn ? "turn-assistant-latest" : ""}">
+                                <div class="turn-header-row">
+                                    <p class="turn-role">Assistant</p>
+                                    <div class="turn-assistant-meta">
+                                        ${isLatestAssistantTurn ? `<span class="turn-latest-badge">Latest answer</span>` : ""}
+                                        <span class="turn-status ${statusClass}">${escapeHtml(statusText)}</span>
+                                        <span class="turn-meta">${escapeHtml(formatTime(assistant.created_at))}</span>
+                                    </div>
+                                </div>
+                                <p class="turn-answer">${escapeHtml(assistant.answer_text || "")}</p>
+                                ${
+                                    citationCount
+                                        ? `
+                                            <details class="turn-evidence turn-evidence-details" aria-label="Sources">
+                                                <summary class="turn-evidence-summary">Sources (${citationCount})</summary>
+                                                <div class="turn-evidence-body">
+                                                    ${
+                                                        hasCollapsedCitations
+                                                            ? `
+                                                                <button
+                                                                    type="button"
+                                                                    class="citation-show-all-btn"
+                                                                    data-citation-group="${escapeHtml(citationGroupId)}"
+                                                                    data-expanded="false"
+                                                                    data-total-citations="${citationCount}"
+                                                                >
+                                                                    Show all ${citationCount} sources
+                                                                </button>
+                                                            `
+                                                            : ""
+                                                    }
+                                                    <div class="citation-stack">
+                                                        ${renderCitations(citations, { groupId: citationGroupId, collapsedCount: collapsedCount, previewChars: 150 })}
+                                                    </div>
+                                                </div>
+                                            </details>
+                                        `
+                                        : `<p class="turn-no-evidence muted">No evidence snippets returned for this answer.</p>`
+                                }
+                            </article>
+                        `
+                        : `
+                            <article class="turn-block turn-assistant">
+                                <div class="turn-header-row">
+                                    <p class="turn-role">Assistant</p>
+                                </div>
+                                <p class="muted">No assistant response recorded for this turn.</p>
+                            </article>
+                        `
+                }
+                </div>
             </div>
         `;
     }).join("");
+    bindTurnControls(box);
+    bindCitationControls(box);
+    box.scrollTop = box.scrollHeight;
 }
 
 async function refreshSessions() {
@@ -230,22 +716,37 @@ async function loadSession(sessionId) {
         return;
     }
     const data = await response.json();
+    const messages = data.messages || [];
+    const latestMessage = messages.length ? messages[messages.length - 1] : null;
     currentSessionId = data.session.id;
     setActiveSessionLabel(data.session.title);
     setUrlForSession(currentSessionId);
-    renderMessages(data.messages || []);
+    setThreadUpdatedAt(
+        data.session.last_message_at ||
+        data.session.updated_at ||
+        latestMessage?.created_at ||
+        data.session.created_at
+    );
+    renderMessages(messages);
+    clearPendingTurn();
+    clearFeedback();
+    clearInlineError();
+    document.getElementById("request-id").classList.add("hidden");
 }
 
 document.getElementById("query-form").addEventListener("submit", async function (e) {
     e.preventDefault();
     const askBtn = document.getElementById("ask-btn");
-    const feedback = document.getElementById("query-feedback");
     const requestIdLabel = document.getElementById("request-id");
     const debugToggle = document.getElementById("debug_mode");
     const debugDetails = document.getElementById("debug-details");
     const debugBox = document.getElementById("debug-box");
+    const latestCitationsDetails = document.getElementById("latest-citations-details");
+    const latestCitationsSummary = document.getElementById("latest-citations-summary");
+    const resultSection = document.getElementById("result-section");
 
-    const question = document.getElementById("question").value;
+    const questionInput = document.getElementById("question");
+    const question = questionInput.value;
     const topK = parseInt(document.getElementById("top_k").value, 10);
     const selectedBooks = Array.from(document.querySelectorAll("input[name='book_ids']:checked"))
         .map(el => el.value);
@@ -261,77 +762,141 @@ document.getElementById("query-form").addEventListener("submit", async function 
     }
 
     askBtn.disabled = true;
-    askBtn.textContent = "Thinking...";
-    feedback.textContent = "Retrieving and generating answer...";
-    feedback.classList.remove("hidden");
+    askBtn.classList.add("is-loading");
+    askBtn.textContent = "Answering...";
+    questionInput.disabled = true;
+    clearFeedback();
+    clearInlineError();
+    appendPendingTurn(question);
     requestIdLabel.classList.add("hidden");
     debugDetails.classList.add("hidden");
+    debugDetails.open = false;
     debugBox.innerHTML = "";
 
-    const response = await fetch("/query", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-    });
-    const requestId = response.headers.get("X-Request-ID");
-    if (requestId) {
-        requestIdLabel.textContent = `Request ID: ${requestId}`;
-        requestIdLabel.classList.remove("hidden");
-    }
+    let data;
+    try {
+        const response = await fetch("/query", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+        const requestId = response.headers.get("X-Request-ID");
+        if (requestId) {
+            requestIdLabel.textContent = `Request ID: ${requestId}`;
+            requestIdLabel.classList.remove("hidden");
+        }
 
-    if (!response.ok) {
-        const errorText = await response.text();
-        feedback.textContent = `Request failed: ${errorText}`;
-        feedback.classList.remove("hidden");
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(errorText || `HTTP ${response.status}`);
+        }
+
+        data = await response.json();
+    } catch (err) {
+        clearPendingTurn();
+        showInlineError(err.message || "A network error occurred.");
         askBtn.disabled = false;
+        askBtn.classList.remove("is-loading");
         askBtn.textContent = "Ask";
+        questionInput.disabled = false;
         return;
     }
-
-    const data = await response.json();
+    
+    clearPendingTurn();
     currentSessionId = data.session_id || currentSessionId;
     if (currentSessionId) {
         await loadSession(currentSessionId);
         await refreshSessions();
+        emphasizeLatestTurn();
     }
 
-    document.getElementById("result-section").classList.remove("hidden");
+    resultSection.classList.remove("hidden");
     const groundedBadge = data.grounded ? "Grounded" : "Not fully grounded";
-    document.getElementById("answer-box").innerHTML =
-        `<p>${escapeHtml(data.answer)}</p><p><strong>Status:</strong> ${groundedBadge}</p>`;
+    const groundedClass = data.grounded ? "is-grounded" : "is-ungrounded";
 
-    const citationsHtml = (data.citations || []).map(c => `
-        <div class="citation-card">
-            <p><strong>Book:</strong> ${escapeHtml(c.book_title)}</p>
-            <p><strong>Pages:</strong> ${escapeHtml(c.page_start)}-${escapeHtml(c.page_end)}</p>
-            ${c.chapter_title ? `<p><strong>Chapter:</strong> ${escapeHtml(c.chapter_title)}</p>` : ""}
-            ${c.subchapter_title ? `<p><strong>Subchapter:</strong> ${escapeHtml(c.subchapter_title)}</p>` : ""}
-            <p><strong>Snippet:</strong> ${escapeHtml(c.snippet)}</p>
-        </div>
-    `).join("");
+    const answeredAt = formatTime(new Date().toISOString());
+    document.getElementById("answer-box").innerHTML =
+        `
+            <p class="latest-answer-text">${escapeHtml(data.answer)}</p>
+            <p class="latest-answer-meta">
+                <span class="turn-status ${groundedClass}">${escapeHtml(groundedBadge)}</span>
+                <span class="latest-answer-time">${escapeHtml(answeredAt)}</span>
+            </p>
+        `;
+    const citations = data.citations || [];
+    const latestCollapsedCount = citations.length > 3 ? 2 : citations.length;
+    const latestCitationGroupId = "latest-citations";
+    const citationsHtml = citations.length
+        ? `
+            ${
+                citations.length > latestCollapsedCount
+                    ? `
+                        <button
+                            type="button"
+                            class="citation-show-all-btn"
+                            data-citation-group="${latestCitationGroupId}"
+                            data-expanded="false"
+                            data-total-citations="${citations.length}"
+                        >
+                            Show all ${citations.length} sources
+                        </button>
+                    `
+                    : ""
+            }
+            <div class="citation-stack">
+                ${renderCitations(citations, { groupId: latestCitationGroupId, collapsedCount: latestCollapsedCount, previewChars: 150 })}
+            </div>
+        `
+        : "";
+    latestCitationsSummary.textContent = citations.length
+        ? `Sources (${citations.length})`
+        : "Sources";
+    latestCitationsDetails.open = citations.length === 0;
 
     document.getElementById("citations-box").innerHTML =
-        citationsHtml || "<p>No citations returned.</p>";
+        citationsHtml || renderEmptyState(
+            "No sources returned",
+            "This answer did not include source snippets."
+        );
+    bindCitationControls(document.getElementById("citations-box"));
 
     if (data.debug) {
-        debugBox.innerHTML = renderDebug(data.debug);
         debugDetails.classList.remove("hidden");
+        debugBox.innerHTML = renderDebug(data.debug);
     }
 
-    feedback.textContent = "Done.";
+    setFeedback("Answer ready.", "success");
+    clearInlineError();
+    window.setTimeout(() => {
+        clearFeedback();
+    }, 1600);
     askBtn.disabled = false;
+    askBtn.classList.remove("is-loading");
     askBtn.textContent = "Ask";
+    questionInput.disabled = false;
+    questionInput.value = "";
+    questionInput.focus();
+    resultSection.classList.add("is-highlight");
+    window.setTimeout(() => {
+        resultSection.classList.remove("is-highlight");
+    }, 1200);
+    resultSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
 });
 
 document.getElementById("new-chat-btn").addEventListener("click", () => {
     currentSessionId = null;
     setActiveSessionLabel(null);
     setUrlForSession(null);
-    document.getElementById("messages-box").innerHTML = "<p class='muted'>Ask a question to start a chat.</p>";
+    setThreadUpdatedAt(null);
+    document.getElementById("messages-box").innerHTML = renderEmptyState(
+        "No messages yet",
+        "Ask your first question below to start this chat."
+    );
     document.getElementById("result-section").classList.add("hidden");
-    document.getElementById("query-feedback").classList.add("hidden");
+    clearFeedback();
+    clearInlineError();
     document.getElementById("request-id").classList.add("hidden");
     document.getElementById("question").focus();
     refreshSessions();
@@ -356,10 +921,23 @@ document.getElementById("delete-chat-btn").addEventListener("click", async () =>
     currentSessionId = null;
     setActiveSessionLabel(null);
     setUrlForSession(null);
-    document.getElementById("messages-box").innerHTML = "<p class='muted'>Ask a question to start a chat.</p>";
+    setThreadUpdatedAt(null);
+    document.getElementById("messages-box").innerHTML = renderEmptyState(
+        "No messages yet",
+        "Ask your first question below to start this chat."
+    );
     document.getElementById("result-section").classList.add("hidden");
+    clearPendingTurn();
+    clearFeedback();
+    clearInlineError();
+    document.getElementById("request-id").classList.add("hidden");
     await refreshSessions();
 });
+
+Array.from(document.querySelectorAll("input[name='book_ids']")).forEach(el => {
+    el.addEventListener("change", updateSelectedBooksUi);
+});
+updateSelectedBooksUi();
 
 setActiveSessionLabel(null);
 if (currentSessionId) {
@@ -367,5 +945,19 @@ if (currentSessionId) {
 } else {
     refreshSessions();
 }
+
+const sidebar = document.getElementById("chat-sidebar");
+const toggleBtn = document.getElementById("sidebar-toggle-btn");
+const closeBtn = document.getElementById("close-sidebar-btn");
+
+toggleBtn.addEventListener("click", () => {
+    document.querySelector(".chat-layout").classList.remove("sidebar-closed");
+    toggleBtn.classList.add("hidden");
+});
+
+closeBtn.addEventListener("click", () => {
+    document.querySelector(".chat-layout").classList.add("sidebar-closed");
+    toggleBtn.classList.remove("hidden");
+});
 </script>
 {% endblock %}

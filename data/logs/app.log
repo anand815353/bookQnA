@@ -897,3 +897,1021 @@ It is a technique that enhances a model's generation by retrieving relevant info
 2026-04-15 22:02:36,738 INFO app.main request_id=f5aa595c-3330-487a-b93d-16132fe9ff84 http_request_started method=GET path=/chats client=127.0.0.1
 2026-04-15 22:02:36,741 INFO app.main request_id=f5aa595c-3330-487a-b93d-16132fe9ff84 http_request_finished method=GET path=/chats status=200 duration_ms=3
 2026-04-15 22:04:04,487 INFO app.main request_id=- app_shutdown
+2026-04-15 22:41:49,844 INFO app.main request_id=- app_startup
+2026-04-15 22:41:54,748 INFO app.main request_id=11d236fe-0ee6-4c8d-824d-9541f6e50c26 http_request_started method=GET path=/ client=127.0.0.1
+2026-04-15 22:41:54,766 INFO app.main request_id=11d236fe-0ee6-4c8d-824d-9541f6e50c26 http_request_finished method=GET path=/ status=200 duration_ms=18
+2026-04-15 22:41:57,810 INFO app.main request_id=bc8a0c49-671d-407c-a932-fe7a4269bd7c http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 22:41:57,823 INFO app.main request_id=bc8a0c49-671d-407c-a932-fe7a4269bd7c http_request_finished method=GET path=/library status=200 duration_ms=12
+2026-04-15 22:42:00,622 INFO app.main request_id=e0e9cf67-365e-4d7c-915c-51ad8197be73 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 22:42:00,632 INFO app.main request_id=e0e9cf67-365e-4d7c-915c-51ad8197be73 http_request_finished method=GET path=/chat status=200 duration_ms=10
+2026-04-15 22:42:00,676 INFO app.main request_id=e7a215a9-6a75-40c8-a93d-35b5b1b0ec66 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 22:42:00,688 INFO app.main request_id=e7a215a9-6a75-40c8-a93d-35b5b1b0ec66 http_request_finished method=GET path=/chats status=200 duration_ms=12
+2026-04-15 22:42:26,119 INFO app.main request_id=3773c616-0e36-46f9-9e37-93d84739367d http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-15 22:42:26,128 INFO app.main request_id=3773c616-0e36-46f9-9e37-93d84739367d http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=8
+2026-04-15 22:42:26,158 INFO app.main request_id=53012990-4800-406b-821d-462df7d2b41c http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 22:42:26,163 INFO app.main request_id=53012990-4800-406b-821d-462df7d2b41c http_request_finished method=GET path=/chats status=200 duration_ms=4
+2026-04-15 22:43:33,750 INFO app.main request_id=828a428d-5d74-49e7-86fe-082980e63feb http_request_started method=POST path=/query client=127.0.0.1
+2026-04-15 22:43:33,755 INFO app.api.query request_id=828a428d-5d74-49e7-86fe-082980e63feb query_requested question_len=30 question_snippet=examples of  foundation models selected_books=["d8392407-1456-4a22-b115-a3420020c442"] session_id=52ba05b4-f093-48d3-ae15-01d8d63140de recent_history_turns=2 top_k=30 retrieval_mode=hybrid debug_requested=False debug_enabled=False
+2026-04-15 22:43:37,099 INFO app.services.qa request_id=828a428d-5d74-49e7-86fe-082980e63feb qa_answer_started question_len=30 question_snippet=examples of  foundation models effective_question_snippet=Examples of foundation models top_k=30 selected_books=["d8392407-1456-4a22-b115-a3420020c442"] book_filter_count=1 include_debug=False recent_history_turns=2 reformulation_used=True
+2026-04-15 22:43:37,100 INFO app.services.retrieval request_id=828a428d-5d74-49e7-86fe-082980e63feb retrieval_requested mode=hybrid top_k=60 fetch_k=240 selected_books=["d8392407-1456-4a22-b115-a3420020c442"] book_filter_count=1 question_len=29 question_snippet=Examples of foundation models
+2026-04-15 22:43:37,100 INFO app.services.retrieval request_id=828a428d-5d74-49e7-86fe-082980e63feb vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-15 22:43:37,100 INFO app.services.retrieval request_id=828a428d-5d74-49e7-86fe-082980e63feb embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 22:43:40,819 INFO sentence_transformers.SentenceTransformer request_id=828a428d-5d74-49e7-86fe-082980e63feb Use pytorch device_name: cuda
+2026-04-15 22:43:40,819 INFO sentence_transformers.SentenceTransformer request_id=828a428d-5d74-49e7-86fe-082980e63feb Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 22:43:45,266 INFO app.services.retrieval request_id=828a428d-5d74-49e7-86fe-082980e63feb retrieval_child_candidates mode=hybrid dense=240 lexical=240 unique=361 stage_latency_ms={"dense_search": 227, "lexical_search": 276, "merge_rank": 0, "total": 8166}
+2026-04-15 22:43:45,314 INFO app.services.retrieval request_id=828a428d-5d74-49e7-86fe-082980e63feb parent_retrieval_completed mode=hybrid dense=240 lexical=240 parent_sections=30 candidates=300 retrieved_child_chunk_ids=["d8392407-1456-4a22-b115-a3420020c442::chunk::48", "d8392407-1456-4a22-b115-a3420020c442::chunk::60", "d8392407-1456-4a22-b115-a3420020c442::chunk::119", "d8392407-1456-4a22-b115-a3420020c442::chunk::500", "d8392407-1456-4a22-b115-a3420020c442::chunk::92", "d8392407-1456-4a22-b115-a3420020c442::chu...<truncated> grouped_section_ids=["d8392407-1456-4a22-b115-a3420020c442::section::toc::177", "d8392407-1456-4a22-b115-a3420020c442::section::toc::32", "d8392407-1456-4a22-b115-a3420020c442::section::toc::81", "d8392407-1456-4a22-b115-a3420020c442::section::toc::116", "d8392407-1456-4a22-b115-a3420020c442::section::toc::41", "d83924...<truncated> top_group_child_chunk_ids=["d8392407-1456-4a22-b115-a3420020c442::chunk::975", "d8392407-1456-4a22-b115-a3420020c442::chunk::105", "d8392407-1456-4a22-b115-a3420020c442::chunk::367", "d8392407-1456-4a22-b115-a3420020c442::chunk::563", "d8392407-1456-4a22-b115-a3420020c442::chunk::155", "d8392407-1456-4a22-b115-a3420020c442::...<truncated> stage_latency_ms={"dense_search": 227, "lexical_search": 276, "merge_rank": 0, "total": 8166, "child_rank": 21, "parent_group": 23, "search_parent_total": 8213}
+2026-04-15 22:43:45,315 INFO app.services.qa request_id=828a428d-5d74-49e7-86fe-082980e63feb qa_retrieval_completed parent_sections=30 grouped_section_ids=["d8392407-1456-4a22-b115-a3420020c442::section::toc::177", "d8392407-1456-4a22-b115-a3420020c442::section::toc::32", "d8392407-1456-4a22-b115-a3420020c442::section::toc::81", "d8392407-1456-4a22-b115-a3420020c442::section::toc::116", "d8392407-1456-4a22-b115-a3420020c442::section::toc::41", "d83924...<truncated> retrieved_child_chunk_ids=["d8392407-1456-4a22-b115-a3420020c442::chunk::48", "d8392407-1456-4a22-b115-a3420020c442::chunk::60", "d8392407-1456-4a22-b115-a3420020c442::chunk::119", "d8392407-1456-4a22-b115-a3420020c442::chunk::500", "d8392407-1456-4a22-b115-a3420020c442::chunk::92", "d8392407-1456-4a22-b115-a3420020c442::chu...<truncated> retrieval_latency_ms=8215
+2026-04-15 22:43:45,327 INFO app.services.qa request_id=828a428d-5d74-49e7-86fe-082980e63feb qa_context_built context_chars=133552 citations=30 chosen_citations=["d8392407-1456-4a22-b115-a3420020c442:p932-988:Index", "d8392407-1456-4a22-b115-a3420020c442:p97-111:AI Engineering Versus ML Engineering", "d8392407-1456-4a22-b115-a3420020c442:p359-376:Model Build Versus Buy", "d8392407-1456-4a22-b115-a3420020c442:p546-575:Planning", "d8392407-1456-4a22-b115-a342...<truncated> context_build_latency_ms=10
+2026-04-15 22:43:57,039 INFO app.services.qa request_id=828a428d-5d74-49e7-86fe-082980e63feb qa_llm_invoke_completed llm_latency_ms=11708
+2026-04-15 22:43:57,039 INFO app.services.qa request_id=828a428d-5d74-49e7-86fe-082980e63feb qa_answer_completed grounded=True citations=30 chosen_citations=["d8392407-1456-4a22-b115-a3420020c442:p932-988:Index", "d8392407-1456-4a22-b115-a3420020c442:p97-111:AI Engineering Versus ML Engineering", "d8392407-1456-4a22-b115-a3420020c442:p359-376:Model Build Versus Buy", "d8392407-1456-4a22-b115-a3420020c442:p546-575:Planning", "d8392407-1456-4a22-b115-a342...<truncated> stage_latency_ms={"reformulation": 3315, "retrieval": 8215, "context_build": 10, "llm_invoke": 11708, "total": 23282} answer_snippet=Examples of foundation models mentioned in the context include:
+
+*   **General-purpose models**:
+    *   Gemini (p45, p108, p131)
+    *   GPT-4V (p45)
+    *   GPT-3 (p155)
+    *   GPT-3.5 (p170)
+    *   GPT-4 (p128)
+    *   Llama (p131), including Llama-13B, Llama 2, and Llama 3 ...<truncated>
+2026-04-15 22:43:57,040 INFO app.api.query request_id=828a428d-5d74-49e7-86fe-082980e63feb query_completed session_id=52ba05b4-f093-48d3-ae15-01d8d63140de grounded=True citations=30 chosen_citations=["d8392407-1456-4a22-b115-a3420020c442:p932-988", "d8392407-1456-4a22-b115-a3420020c442:p97-111", "d8392407-1456-4a22-b115-a3420020c442:p359-376", "d8392407-1456-4a22-b115-a3420020c442:p546-575", "d8392407-1456-4a22-b115-a3420020c442:p151-168", "d8392407-1456-4a22-b115-a3420020c442:p44-50", "d839240...<truncated> duration_ms=23286 debug_included=False
+2026-04-15 22:43:57,074 INFO app.main request_id=828a428d-5d74-49e7-86fe-082980e63feb http_request_finished method=POST path=/query status=200 duration_ms=23323
+2026-04-15 22:43:57,083 INFO app.main request_id=1a0dd1a8-bd03-4c49-927c-565550388a03 http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-15 22:43:57,092 INFO app.main request_id=1a0dd1a8-bd03-4c49-927c-565550388a03 http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=9
+2026-04-15 22:43:57,108 INFO app.main request_id=c60b5868-a295-45aa-acce-9738e09baa4b http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 22:43:57,111 INFO app.main request_id=c60b5868-a295-45aa-acce-9738e09baa4b http_request_finished method=GET path=/chats status=200 duration_ms=3
+2026-04-15 23:09:46,718 INFO app.main request_id=- app_shutdown
+2026-04-15 23:10:01,871 INFO app.main request_id=- app_startup
+2026-04-15 23:10:39,614 INFO app.main request_id=- app_shutdown
+2026-04-15 23:11:00,652 INFO app.main request_id=- app_startup
+2026-04-15 23:11:37,880 INFO app.main request_id=1f8c1038-b911-4518-8422-5c3a5e18c785 http_request_started method=GET path=/ client=127.0.0.1
+2026-04-15 23:11:37,899 INFO app.main request_id=1f8c1038-b911-4518-8422-5c3a5e18c785 http_request_finished method=GET path=/ status=200 duration_ms=18
+2026-04-15 23:11:41,019 INFO app.main request_id=845003c5-5201-4ef7-aa8b-bc0970cfa26e http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 23:11:41,033 INFO app.main request_id=845003c5-5201-4ef7-aa8b-bc0970cfa26e http_request_finished method=GET path=/library status=200 duration_ms=13
+2026-04-15 23:11:43,879 INFO app.main request_id=7d674695-7332-40d2-a88a-fc72c1b0106e http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 23:11:43,892 INFO app.main request_id=7d674695-7332-40d2-a88a-fc72c1b0106e http_request_finished method=GET path=/chat status=200 duration_ms=12
+2026-04-15 23:11:43,935 INFO app.main request_id=1ab09c92-1650-432d-8eee-f9db6e1a57ef http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:11:43,950 INFO app.main request_id=1ab09c92-1650-432d-8eee-f9db6e1a57ef http_request_finished method=GET path=/chats status=200 duration_ms=14
+2026-04-15 23:11:48,798 INFO app.main request_id=a29c8b8c-8100-49b1-91cd-a543b73ca851 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 23:11:48,801 INFO app.main request_id=a29c8b8c-8100-49b1-91cd-a543b73ca851 http_request_finished method=GET path=/chat status=200 duration_ms=2
+2026-04-15 23:11:48,841 INFO app.main request_id=ff81de97-32c2-4a8f-8045-8a212e474eba http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:11:48,849 INFO app.main request_id=ff81de97-32c2-4a8f-8045-8a212e474eba http_request_finished method=GET path=/chats status=200 duration_ms=7
+2026-04-15 23:11:49,654 INFO app.main request_id=13037daf-9d2d-4648-ba14-670734724adb http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 23:11:49,656 INFO app.main request_id=13037daf-9d2d-4648-ba14-670734724adb http_request_finished method=GET path=/chat status=200 duration_ms=2
+2026-04-15 23:11:49,702 INFO app.main request_id=87f676cf-15f0-4ede-a712-70584bdce31d http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:11:49,710 INFO app.main request_id=87f676cf-15f0-4ede-a712-70584bdce31d http_request_finished method=GET path=/chats status=200 duration_ms=7
+2026-04-15 23:11:49,957 INFO app.main request_id=559a67f0-4053-4929-b148-81beaefaba8b http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 23:11:49,960 INFO app.main request_id=559a67f0-4053-4929-b148-81beaefaba8b http_request_finished method=GET path=/chat status=200 duration_ms=3
+2026-04-15 23:11:50,007 INFO app.main request_id=abb25829-66bb-4aca-bc34-8d4cafa97487 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:11:50,015 INFO app.main request_id=abb25829-66bb-4aca-bc34-8d4cafa97487 http_request_finished method=GET path=/chats status=200 duration_ms=8
+2026-04-15 23:11:50,275 INFO app.main request_id=7a5423f3-4d0b-4020-80f8-da65a03eab7f http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 23:11:50,277 INFO app.main request_id=7a5423f3-4d0b-4020-80f8-da65a03eab7f http_request_finished method=GET path=/chat status=200 duration_ms=2
+2026-04-15 23:11:50,318 INFO app.main request_id=edac0f7f-ce52-4743-8a3b-fa9565f88d6b http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:11:50,322 INFO app.main request_id=edac0f7f-ce52-4743-8a3b-fa9565f88d6b http_request_finished method=GET path=/chats status=200 duration_ms=4
+2026-04-15 23:11:50,612 INFO app.main request_id=4d4fe7a9-be43-4f3b-b493-a46f30f5705e http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 23:11:50,614 INFO app.main request_id=4d4fe7a9-be43-4f3b-b493-a46f30f5705e http_request_finished method=GET path=/chat status=200 duration_ms=2
+2026-04-15 23:11:50,649 INFO app.main request_id=a8db8320-8fac-40d4-92f9-270bd4a857c4 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:11:50,654 INFO app.main request_id=a8db8320-8fac-40d4-92f9-270bd4a857c4 http_request_finished method=GET path=/chats status=200 duration_ms=4
+2026-04-15 23:11:50,854 INFO app.main request_id=110c6f67-b504-4e24-b844-bd11035db97c http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 23:11:50,856 INFO app.main request_id=110c6f67-b504-4e24-b844-bd11035db97c http_request_finished method=GET path=/chat status=200 duration_ms=1
+2026-04-15 23:11:50,946 INFO app.main request_id=4cdc38c6-edf6-4866-ac5d-e64d622ae9cc http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:11:50,952 INFO app.main request_id=4cdc38c6-edf6-4866-ac5d-e64d622ae9cc http_request_finished method=GET path=/chats status=200 duration_ms=5
+2026-04-15 23:11:56,057 INFO app.main request_id=11182f1c-c98d-489b-88dd-2976489aaa81 http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-15 23:11:56,067 INFO app.main request_id=11182f1c-c98d-489b-88dd-2976489aaa81 http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=10
+2026-04-15 23:11:56,095 INFO app.main request_id=abe52e47-65c7-4d48-a6b0-ca2c2cdc21ff http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:11:56,101 INFO app.main request_id=abe52e47-65c7-4d48-a6b0-ca2c2cdc21ff http_request_finished method=GET path=/chats status=200 duration_ms=6
+2026-04-15 23:12:13,969 INFO app.main request_id=f4717bba-f496-44b1-83f1-792841d93e25 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 23:12:13,971 INFO app.main request_id=f4717bba-f496-44b1-83f1-792841d93e25 http_request_finished method=GET path=/chat status=200 duration_ms=2
+2026-04-15 23:12:14,012 INFO app.main request_id=8acbb694-aa9c-4fb3-bdba-e8002b1bf9a4 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:12:14,018 INFO app.main request_id=8acbb694-aa9c-4fb3-bdba-e8002b1bf9a4 http_request_finished method=GET path=/chats status=200 duration_ms=6
+2026-04-15 23:14:58,184 INFO app.main request_id=fa909ee7-41a9-41a7-a7bc-6188fadef58e http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 23:14:58,186 INFO app.main request_id=fa909ee7-41a9-41a7-a7bc-6188fadef58e http_request_finished method=GET path=/library status=200 duration_ms=1
+2026-04-15 23:14:59,139 INFO app.main request_id=5785da4d-766e-4f93-a9e7-d02ea638202b http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 23:14:59,141 INFO app.main request_id=5785da4d-766e-4f93-a9e7-d02ea638202b http_request_finished method=GET path=/chat status=200 duration_ms=1
+2026-04-15 23:14:59,185 INFO app.main request_id=8ccc2564-6464-404d-a73e-ba658bbcfd17 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:14:59,190 INFO app.main request_id=8ccc2564-6464-404d-a73e-ba658bbcfd17 http_request_finished method=GET path=/chats status=200 duration_ms=5
+2026-04-15 23:15:01,710 INFO app.main request_id=9cc5d578-c717-4343-9238-7034b3d7456d http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-15 23:15:01,716 INFO app.main request_id=9cc5d578-c717-4343-9238-7034b3d7456d http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=5
+2026-04-15 23:15:01,744 INFO app.main request_id=6cc87593-58af-472f-a56e-6e2cb91dcf00 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:15:01,748 INFO app.main request_id=6cc87593-58af-472f-a56e-6e2cb91dcf00 http_request_finished method=GET path=/chats status=200 duration_ms=4
+2026-04-15 23:15:05,771 INFO app.main request_id=6415891b-21ae-4c92-9eda-df5af08b7827 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:15:05,776 INFO app.main request_id=6415891b-21ae-4c92-9eda-df5af08b7827 http_request_finished method=GET path=/chats status=200 duration_ms=4
+2026-04-15 23:15:23,280 INFO app.main request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d http_request_started method=POST path=/query client=127.0.0.1
+2026-04-15 23:15:23,283 INFO app.api.query request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d query_requested question_len=21 question_snippet=authors of this book? selected_books=[] recent_history_turns=0 top_k=4 retrieval_mode=hybrid debug_requested=False debug_enabled=False
+2026-04-15 23:15:23,284 INFO app.services.qa request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d qa_answer_started question_len=21 question_snippet=authors of this book? effective_question_snippet=authors of this book? top_k=4 selected_books=[] book_filter_count=0 include_debug=False recent_history_turns=0 reformulation_used=False
+2026-04-15 23:15:23,284 INFO app.services.retrieval request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d retrieval_requested mode=hybrid top_k=8 fetch_k=40 selected_books=[] book_filter_count=0 question_len=21 question_snippet=authors of this book?
+2026-04-15 23:15:23,284 INFO app.services.retrieval request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-15 23:15:23,284 INFO app.services.retrieval request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 23:15:27,123 INFO sentence_transformers.SentenceTransformer request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d Use pytorch device_name: cuda
+2026-04-15 23:15:27,123 INFO sentence_transformers.SentenceTransformer request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 23:15:31,405 INFO app.services.retrieval request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d retrieval_child_candidates mode=hybrid dense=40 lexical=40 unique=76 stage_latency_ms={"dense_search": 187, "lexical_search": 275, "merge_rank": 0, "total": 8120}
+2026-04-15 23:15:31,415 INFO app.services.retrieval request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d parent_retrieval_completed mode=hybrid dense=40 lexical=40 parent_sections=4 candidates=40 retrieved_child_chunk_ids=["d8392407-1456-4a22-b115-a3420020c442::chunk::57", "d8392407-1456-4a22-b115-a3420020c442::chunk::6", "d8392407-1456-4a22-b115-a3420020c442::chunk::17", "d8392407-1456-4a22-b115-a3420020c442::chunk::547", "d8392407-1456-4a22-b115-a3420020c442::chunk::582", "d8392407-1456-4a22-b115-a3420020c442::chun...<truncated> grouped_section_ids=["d8392407-1456-4a22-b115-a3420020c442::section::toc::145", "d8392407-1456-4a22-b115-a3420020c442::section::toc::132", "d8392407-1456-4a22-b115-a3420020c442::section::toc::10", "d8392407-1456-4a22-b115-a3420020c442::section::toc::50"] top_group_child_chunk_ids=["d8392407-1456-4a22-b115-a3420020c442::chunk::759", "d8392407-1456-4a22-b115-a3420020c442::chunk::655", "d8392407-1456-4a22-b115-a3420020c442::chunk::28", "d8392407-1456-4a22-b115-a3420020c442::chunk::221"] stage_latency_ms={"dense_search": 187, "lexical_search": 275, "merge_rank": 0, "total": 8120, "child_rank": 4, "parent_group": 3, "search_parent_total": 8131}
+2026-04-15 23:15:31,416 INFO app.services.qa request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d qa_retrieval_completed parent_sections=4 grouped_section_ids=["d8392407-1456-4a22-b115-a3420020c442::section::toc::145", "d8392407-1456-4a22-b115-a3420020c442::section::toc::132", "d8392407-1456-4a22-b115-a3420020c442::section::toc::10", "d8392407-1456-4a22-b115-a3420020c442::section::toc::50"] retrieved_child_chunk_ids=["d8392407-1456-4a22-b115-a3420020c442::chunk::57", "d8392407-1456-4a22-b115-a3420020c442::chunk::6", "d8392407-1456-4a22-b115-a3420020c442::chunk::17", "d8392407-1456-4a22-b115-a3420020c442::chunk::547", "d8392407-1456-4a22-b115-a3420020c442::chunk::582", "d8392407-1456-4a22-b115-a3420020c442::chun...<truncated> retrieval_latency_ms=8131
+2026-04-15 23:15:31,418 INFO app.services.qa request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d qa_context_built context_chars=15718 citations=4 chosen_citations=["d8392407-1456-4a22-b115-a3420020c442:p738-752:AI-Powered Data Synthesis", "d8392407-1456-4a22-b115-a3420020c442:p639-663:Parameter-Efficient Finetuning", "d8392407-1456-4a22-b115-a3420020c442:p27-31:Acknowledgments", "d8392407-1456-4a22-b115-a3420020c442:p214-224:The Probabilistic Nature of AI"] context_build_latency_ms=1
+2026-04-15 23:15:39,715 INFO app.services.qa request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d qa_llm_invoke_completed llm_latency_ms=8269
+2026-04-15 23:15:39,715 INFO app.services.qa request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d qa_answer_completed grounded=True citations=4 chosen_citations=["d8392407-1456-4a22-b115-a3420020c442:p738-752:AI-Powered Data Synthesis", "d8392407-1456-4a22-b115-a3420020c442:p639-663:Parameter-Efficient Finetuning", "d8392407-1456-4a22-b115-a3420020c442:p27-31:Acknowledgments", "d8392407-1456-4a22-b115-a3420020c442:p214-224:The Probabilistic Nature of AI"] stage_latency_ms={"reformulation": 0, "retrieval": 8131, "context_build": 1, "llm_invoke": 8269, "total": 16431} answer_snippet=Based on the provided context, the book "Ai Engineering" appears to have a single author, as indicated by the consistent use of "I" and "my" in the Acknowledgments section (pages 28-30). However, the name of this author is not explicitly stated in the provided snippets.
+2026-04-15 23:15:39,716 INFO app.api.query request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d query_completed grounded=True citations=4 chosen_citations=["d8392407-1456-4a22-b115-a3420020c442:p738-752", "d8392407-1456-4a22-b115-a3420020c442:p639-663", "d8392407-1456-4a22-b115-a3420020c442:p27-31", "d8392407-1456-4a22-b115-a3420020c442:p214-224"] duration_ms=16433 debug_included=False
+2026-04-15 23:15:39,754 INFO app.main request_id=c023fb6f-238c-4c43-820d-bbcfce8e076d http_request_finished method=POST path=/query status=200 duration_ms=16473
+2026-04-15 23:15:39,759 INFO app.main request_id=e06c118e-50e7-45e7-b842-3fae2da0bb1b http_request_started method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 client=127.0.0.1
+2026-04-15 23:15:39,762 INFO app.main request_id=e06c118e-50e7-45e7-b842-3fae2da0bb1b http_request_finished method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 status=200 duration_ms=3
+2026-04-15 23:15:39,788 INFO app.main request_id=0ec480ef-afa1-4333-bdea-91e604564d5d http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:15:39,794 INFO app.main request_id=0ec480ef-afa1-4333-bdea-91e604564d5d http_request_finished method=GET path=/chats status=200 duration_ms=6
+2026-04-15 23:16:22,914 INFO app.main request_id=d94456fc-61d8-40de-b190-4d5f46195f8f http_request_started method=POST path=/query client=127.0.0.1
+2026-04-15 23:16:22,922 INFO app.api.query request_id=d94456fc-61d8-40de-b190-4d5f46195f8f query_requested question_len=21 question_snippet=authors of this book? selected_books=["d8392407-1456-4a22-b115-a3420020c442"] session_id=95017897-6610-4680-b830-4a664e265501 recent_history_turns=1 top_k=30 retrieval_mode=hybrid debug_requested=False debug_enabled=False
+2026-04-15 23:16:24,685 INFO app.services.qa request_id=d94456fc-61d8-40de-b190-4d5f46195f8f qa_answer_started question_len=21 question_snippet=authors of this book? effective_question_snippet=Who are the authors of the book Ai Engineering? top_k=30 selected_books=["d8392407-1456-4a22-b115-a3420020c442"] book_filter_count=1 include_debug=False recent_history_turns=1 reformulation_used=True
+2026-04-15 23:16:24,686 INFO app.services.retrieval request_id=d94456fc-61d8-40de-b190-4d5f46195f8f retrieval_requested mode=hybrid top_k=60 fetch_k=240 selected_books=["d8392407-1456-4a22-b115-a3420020c442"] book_filter_count=1 question_len=47 question_snippet=Who are the authors of the book Ai Engineering?
+2026-04-15 23:16:24,686 INFO app.services.retrieval request_id=d94456fc-61d8-40de-b190-4d5f46195f8f vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-15 23:16:24,686 INFO app.services.retrieval request_id=d94456fc-61d8-40de-b190-4d5f46195f8f embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 23:16:24,689 INFO sentence_transformers.SentenceTransformer request_id=d94456fc-61d8-40de-b190-4d5f46195f8f Use pytorch device_name: cuda
+2026-04-15 23:16:24,690 INFO sentence_transformers.SentenceTransformer request_id=d94456fc-61d8-40de-b190-4d5f46195f8f Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-15 23:16:28,584 INFO app.services.retrieval request_id=d94456fc-61d8-40de-b190-4d5f46195f8f retrieval_child_candidates mode=hybrid dense=240 lexical=240 unique=415 stage_latency_ms={"dense_search": 74, "lexical_search": 277, "merge_rank": 0, "total": 3898}
+2026-04-15 23:16:28,636 INFO app.services.retrieval request_id=d94456fc-61d8-40de-b190-4d5f46195f8f parent_retrieval_completed mode=hybrid dense=240 lexical=240 parent_sections=30 candidates=300 retrieved_child_chunk_ids=["d8392407-1456-4a22-b115-a3420020c442::chunk::16", "d8392407-1456-4a22-b115-a3420020c442::chunk::27", "d8392407-1456-4a22-b115-a3420020c442::chunk::57", "d8392407-1456-4a22-b115-a3420020c442::chunk::28", "d8392407-1456-4a22-b115-a3420020c442::chunk::62", "d8392407-1456-4a22-b115-a3420020c442::chunk...<truncated> grouped_section_ids=["d8392407-1456-4a22-b115-a3420020c442::section::toc::32", "d8392407-1456-4a22-b115-a3420020c442::section::toc::132", "d8392407-1456-4a22-b115-a3420020c442::section::toc::177", "d8392407-1456-4a22-b115-a3420020c442::section::toc::145", "d8392407-1456-4a22-b115-a3420020c442::section::toc::116", "d839...<truncated> top_group_child_chunk_ids=["d8392407-1456-4a22-b115-a3420020c442::chunk::95", "d8392407-1456-4a22-b115-a3420020c442::chunk::660", "d8392407-1456-4a22-b115-a3420020c442::chunk::955", "d8392407-1456-4a22-b115-a3420020c442::chunk::759", "d8392407-1456-4a22-b115-a3420020c442::chunk::582", "d8392407-1456-4a22-b115-a3420020c442::c...<truncated> stage_latency_ms={"dense_search": 74, "lexical_search": 277, "merge_rank": 0, "total": 3898, "child_rank": 25, "parent_group": 24, "search_parent_total": 3950}
+2026-04-15 23:16:28,637 INFO app.services.qa request_id=d94456fc-61d8-40de-b190-4d5f46195f8f qa_retrieval_completed parent_sections=30 grouped_section_ids=["d8392407-1456-4a22-b115-a3420020c442::section::toc::32", "d8392407-1456-4a22-b115-a3420020c442::section::toc::132", "d8392407-1456-4a22-b115-a3420020c442::section::toc::177", "d8392407-1456-4a22-b115-a3420020c442::section::toc::145", "d8392407-1456-4a22-b115-a3420020c442::section::toc::116", "d839...<truncated> retrieved_child_chunk_ids=["d8392407-1456-4a22-b115-a3420020c442::chunk::16", "d8392407-1456-4a22-b115-a3420020c442::chunk::27", "d8392407-1456-4a22-b115-a3420020c442::chunk::57", "d8392407-1456-4a22-b115-a3420020c442::chunk::28", "d8392407-1456-4a22-b115-a3420020c442::chunk::62", "d8392407-1456-4a22-b115-a3420020c442::chunk...<truncated> retrieval_latency_ms=3951
+2026-04-15 23:16:28,649 INFO app.services.qa request_id=d94456fc-61d8-40de-b190-4d5f46195f8f qa_context_built context_chars=141001 citations=30 chosen_citations=["d8392407-1456-4a22-b115-a3420020c442:p97-111:AI Engineering Versus ML Engineering", "d8392407-1456-4a22-b115-a3420020c442:p639-663:Parameter-Efficient Finetuning", "d8392407-1456-4a22-b115-a3420020c442:p932-988:Index", "d8392407-1456-4a22-b115-a3420020c442:p738-752:AI-Powered Data Synthesis", "d83...<truncated> context_build_latency_ms=11
+2026-04-15 23:16:36,462 INFO app.services.qa request_id=d94456fc-61d8-40de-b190-4d5f46195f8f qa_llm_invoke_completed llm_latency_ms=7809
+2026-04-15 23:16:36,462 INFO app.services.qa request_id=d94456fc-61d8-40de-b190-4d5f46195f8f qa_answer_completed grounded=True citations=30 chosen_citations=["d8392407-1456-4a22-b115-a3420020c442:p97-111:AI Engineering Versus ML Engineering", "d8392407-1456-4a22-b115-a3420020c442:p639-663:Parameter-Efficient Finetuning", "d8392407-1456-4a22-b115-a3420020c442:p932-988:Index", "d8392407-1456-4a22-b115-a3420020c442:p738-752:AI-Powered Data Synthesis", "d83...<truncated> stage_latency_ms={"reformulation": 1759, "retrieval": 3951, "context_build": 11, "llm_invoke": 7809, "total": 13539} answer_snippet=The author of the book "Ai Engineering" is Chip Huyen (pages 2, 3, 5). The Acknowledgments section also consistently uses "I" and "my," indicating a single author (pages 11, 27-29).
+2026-04-15 23:16:36,463 INFO app.api.query request_id=d94456fc-61d8-40de-b190-4d5f46195f8f query_completed session_id=95017897-6610-4680-b830-4a664e265501 grounded=True citations=30 chosen_citations=["d8392407-1456-4a22-b115-a3420020c442:p97-111", "d8392407-1456-4a22-b115-a3420020c442:p639-663", "d8392407-1456-4a22-b115-a3420020c442:p932-988", "d8392407-1456-4a22-b115-a3420020c442:p738-752", "d8392407-1456-4a22-b115-a3420020c442:p546-575", "d8392407-1456-4a22-b115-a3420020c442:p113-118", "d8392...<truncated> duration_ms=13545 debug_included=False
+2026-04-15 23:16:36,496 INFO app.main request_id=d94456fc-61d8-40de-b190-4d5f46195f8f http_request_finished method=POST path=/query status=200 duration_ms=13581
+2026-04-15 23:16:36,502 INFO app.main request_id=b3548a1d-651e-4215-ab19-5d2059e258e7 http_request_started method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 client=127.0.0.1
+2026-04-15 23:16:36,511 INFO app.main request_id=b3548a1d-651e-4215-ab19-5d2059e258e7 http_request_finished method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 status=200 duration_ms=8
+2026-04-15 23:16:36,524 INFO app.main request_id=daacdeea-04c0-4958-b606-2de2509e0c8b http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:16:36,528 INFO app.main request_id=daacdeea-04c0-4958-b606-2de2509e0c8b http_request_finished method=GET path=/chats status=200 duration_ms=3
+2026-04-15 23:48:30,576 INFO app.main request_id=- app_shutdown
+2026-04-15 23:48:48,585 INFO app.main request_id=- app_startup
+2026-04-15 23:49:30,476 INFO app.main request_id=b0996b5c-9907-44dc-a694-7b78e85dfadf http_request_started method=GET path=/chat/95017897-6610-4680-b830-4a664e265501 client=127.0.0.1
+2026-04-15 23:49:30,503 INFO app.main request_id=b0996b5c-9907-44dc-a694-7b78e85dfadf http_request_finished method=GET path=/chat/95017897-6610-4680-b830-4a664e265501 status=200 duration_ms=26
+2026-04-15 23:49:30,577 INFO app.main request_id=901bf5fe-8a27-42a2-9bfa-0d9a74c95ea2 http_request_started method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 client=127.0.0.1
+2026-04-15 23:49:30,591 INFO app.main request_id=901bf5fe-8a27-42a2-9bfa-0d9a74c95ea2 http_request_finished method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 status=200 duration_ms=13
+2026-04-15 23:49:30,720 INFO app.main request_id=183c0f8a-4de5-4c3d-b776-ba09233c363e http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:49:30,727 INFO app.main request_id=183c0f8a-4de5-4c3d-b776-ba09233c363e http_request_finished method=GET path=/chats status=200 duration_ms=7
+2026-04-15 23:49:44,020 INFO app.main request_id=6870f82c-1e69-4510-b844-ddc3adafaaf1 http_request_started method=GET path=/ client=127.0.0.1
+2026-04-15 23:49:44,027 INFO app.main request_id=6870f82c-1e69-4510-b844-ddc3adafaaf1 http_request_finished method=GET path=/ status=200 duration_ms=6
+2026-04-15 23:49:46,854 INFO app.main request_id=d0122f0e-87bc-440a-bdd8-3e0f3e716c0b http_request_started method=GET path=/library client=127.0.0.1
+2026-04-15 23:49:46,866 INFO app.main request_id=d0122f0e-87bc-440a-bdd8-3e0f3e716c0b http_request_finished method=GET path=/library status=200 duration_ms=12
+2026-04-15 23:49:48,221 INFO app.main request_id=523ff50b-76d8-4c7b-8905-484417869388 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 23:49:48,224 INFO app.main request_id=523ff50b-76d8-4c7b-8905-484417869388 http_request_finished method=GET path=/chat status=200 duration_ms=2
+2026-04-15 23:49:48,269 INFO app.main request_id=ff048780-3807-49ae-ab6c-9d2aa19943da http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:49:48,277 INFO app.main request_id=ff048780-3807-49ae-ab6c-9d2aa19943da http_request_finished method=GET path=/chats status=200 duration_ms=8
+2026-04-15 23:49:57,204 INFO app.main request_id=92efca4b-b91c-49f8-b81d-c9ad2123face http_request_started method=GET path=/ client=127.0.0.1
+2026-04-15 23:49:57,206 INFO app.main request_id=92efca4b-b91c-49f8-b81d-c9ad2123face http_request_finished method=GET path=/ status=200 duration_ms=2
+2026-04-15 23:49:58,924 INFO app.main request_id=16b4ee35-93d8-4c62-9b41-6fad996939b6 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 23:49:58,926 INFO app.main request_id=16b4ee35-93d8-4c62-9b41-6fad996939b6 http_request_finished method=GET path=/chat status=200 duration_ms=2
+2026-04-15 23:49:58,955 INFO app.main request_id=8ba85f96-8f3b-433c-a4d6-c7ccf37daf75 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:49:58,965 INFO app.main request_id=8ba85f96-8f3b-433c-a4d6-c7ccf37daf75 http_request_finished method=GET path=/chats status=200 duration_ms=9
+2026-04-15 23:50:03,495 INFO app.main request_id=77789b56-91e9-4358-b0ba-0cd4d5e307fa http_request_started method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 client=127.0.0.1
+2026-04-15 23:50:03,500 INFO app.main request_id=77789b56-91e9-4358-b0ba-0cd4d5e307fa http_request_finished method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 status=200 duration_ms=4
+2026-04-15 23:50:03,523 INFO app.main request_id=49544ac8-7a1c-4e13-98c0-7c5f23ce6891 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:50:03,528 INFO app.main request_id=49544ac8-7a1c-4e13-98c0-7c5f23ce6891 http_request_finished method=GET path=/chats status=200 duration_ms=5
+2026-04-15 23:50:25,910 INFO app.main request_id=- app_shutdown
+2026-04-15 23:52:19,680 INFO app.main request_id=- app_startup
+2026-04-15 23:52:19,924 INFO app.main request_id=fc17f0aa-2d3b-4c9f-9e0a-b5ea0f277589 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 23:52:19,954 INFO app.main request_id=fc17f0aa-2d3b-4c9f-9e0a-b5ea0f277589 http_request_finished method=GET path=/chat status=200 duration_ms=30
+2026-04-15 23:52:20,032 INFO app.main request_id=58a34bec-82a0-4d22-aa2e-51a0314fff5f http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:52:20,045 INFO app.main request_id=58a34bec-82a0-4d22-aa2e-51a0314fff5f http_request_finished method=GET path=/chats status=200 duration_ms=13
+2026-04-15 23:52:20,206 INFO app.main request_id=2bc4c96b-1db5-4480-8fed-34da036b81a0 http_request_started method=GET path=/favicon.ico client=127.0.0.1
+2026-04-15 23:52:20,206 INFO app.main request_id=2bc4c96b-1db5-4480-8fed-34da036b81a0 http_request_finished method=GET path=/favicon.ico status=404 duration_ms=0
+2026-04-15 23:52:28,672 INFO app.main request_id=cae1013f-4d24-430a-9f7c-119cdc41eba3 http_request_started method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 client=127.0.0.1
+2026-04-15 23:52:28,680 INFO app.main request_id=cae1013f-4d24-430a-9f7c-119cdc41eba3 http_request_finished method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 status=200 duration_ms=8
+2026-04-15 23:52:28,712 INFO app.main request_id=75b2aefe-cf03-4ba8-9dcd-532cf0e54078 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:52:28,718 INFO app.main request_id=75b2aefe-cf03-4ba8-9dcd-532cf0e54078 http_request_finished method=GET path=/chats status=200 duration_ms=6
+2026-04-15 23:52:51,304 INFO app.main request_id=d076f973-8073-475a-9d09-17e13222d8cc http_request_started method=GET path=/.well-known/appspecific/com.chrome.devtools.json client=127.0.0.1
+2026-04-15 23:52:51,306 INFO app.main request_id=d076f973-8073-475a-9d09-17e13222d8cc http_request_finished method=GET path=/.well-known/appspecific/com.chrome.devtools.json status=404 duration_ms=1
+2026-04-15 23:52:51,484 INFO app.main request_id=95be1c6e-30f4-4988-a25a-ed730d418e96 http_request_started method=GET path=/chat/content.css.map client=127.0.0.1
+2026-04-15 23:52:51,490 INFO app.main request_id=dcd69830-bf24-446c-849f-49a903f13300 http_request_started method=GET path=/chat/sidebar.css.map client=127.0.0.1
+2026-04-15 23:52:51,493 INFO app.main request_id=95be1c6e-30f4-4988-a25a-ed730d418e96 http_request_finished method=GET path=/chat/content.css.map status=404 duration_ms=9
+2026-04-15 23:52:51,495 INFO app.main request_id=dcd69830-bf24-446c-849f-49a903f13300 http_request_finished method=GET path=/chat/sidebar.css.map status=404 duration_ms=5
+2026-04-15 23:55:31,698 INFO app.main request_id=- app_shutdown
+2026-04-15 23:58:42,376 INFO app.main request_id=- app_startup
+2026-04-15 23:58:45,929 INFO app.main request_id=971eb159-53df-4f48-a91b-cbe908fb15dc http_request_started method=GET path=/ client=127.0.0.1
+2026-04-15 23:58:45,950 INFO app.main request_id=971eb159-53df-4f48-a91b-cbe908fb15dc http_request_finished method=GET path=/ status=200 duration_ms=20
+2026-04-15 23:58:45,989 INFO app.main request_id=67e1a0c5-b7cc-4cfb-89a6-065c9e8a55b9 http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-15 23:58:46,214 INFO app.main request_id=67e1a0c5-b7cc-4cfb-89a6-065c9e8a55b9 http_request_finished method=GET path=/static/styles.css status=200 duration_ms=224
+2026-04-15 23:58:48,476 INFO app.main request_id=35725a87-c018-4fb5-9f2f-532a78214ebb http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-15 23:58:48,497 INFO app.main request_id=35725a87-c018-4fb5-9f2f-532a78214ebb http_request_finished method=GET path=/chat status=200 duration_ms=20
+2026-04-15 23:58:48,531 INFO app.main request_id=7958c3f5-2a1b-411b-bd05-6d0a8b2bfede http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:58:48,544 INFO app.main request_id=7958c3f5-2a1b-411b-bd05-6d0a8b2bfede http_request_finished method=GET path=/chats status=200 duration_ms=13
+2026-04-15 23:58:54,587 INFO app.main request_id=db8ea638-2ed2-4098-a6c0-a3c039b21faa http_request_started method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 client=127.0.0.1
+2026-04-15 23:58:54,593 INFO app.main request_id=db8ea638-2ed2-4098-a6c0-a3c039b21faa http_request_finished method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 status=200 duration_ms=5
+2026-04-15 23:58:54,632 INFO app.main request_id=89673a05-b706-43e5-bc99-1a89148a4fc4 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:58:54,640 INFO app.main request_id=89673a05-b706-43e5-bc99-1a89148a4fc4 http_request_finished method=GET path=/chats status=200 duration_ms=8
+2026-04-15 23:59:19,911 INFO app.main request_id=62513952-5b6f-429e-9024-2a4a0eacacb7 http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-15 23:59:19,917 INFO app.main request_id=62513952-5b6f-429e-9024-2a4a0eacacb7 http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=6
+2026-04-15 23:59:19,947 INFO app.main request_id=dd15f386-8a42-48c5-aae1-edb678be971a http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-15 23:59:19,953 INFO app.main request_id=dd15f386-8a42-48c5-aae1-edb678be971a http_request_finished method=GET path=/chats status=200 duration_ms=5
+2026-04-15 23:59:35,544 INFO app.main request_id=05900da8-4973-4e9e-a783-f476e355f8bd http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-15 23:59:35,546 INFO app.main request_id=05900da8-4973-4e9e-a783-f476e355f8bd http_request_finished method=GET path=/static/styles.css status=304 duration_ms=1
+2026-04-15 23:59:35,584 INFO app.main request_id=3057dd18-6e97-421c-bd82-ff0add31044c http_request_started method=GET path=/.well-known/appspecific/com.chrome.devtools.json client=127.0.0.1
+2026-04-15 23:59:35,585 INFO app.main request_id=3057dd18-6e97-421c-bd82-ff0add31044c http_request_finished method=GET path=/.well-known/appspecific/com.chrome.devtools.json status=404 duration_ms=0
+2026-04-15 23:59:35,659 INFO app.main request_id=f0dd9750-ce85-40dc-ab7c-3a705c640791 http_request_started method=GET path=/chat/content.css.map client=127.0.0.1
+2026-04-15 23:59:35,662 INFO app.main request_id=c66a0525-4924-4e1f-9b88-697c18693c6c http_request_started method=GET path=/chat/sidebar.css.map client=127.0.0.1
+2026-04-15 23:59:35,663 INFO app.main request_id=f0dd9750-ce85-40dc-ab7c-3a705c640791 http_request_finished method=GET path=/chat/content.css.map status=404 duration_ms=4
+2026-04-15 23:59:35,666 INFO app.main request_id=c66a0525-4924-4e1f-9b88-697c18693c6c http_request_finished method=GET path=/chat/sidebar.css.map status=404 duration_ms=4
+2026-04-16 00:00:49,929 INFO app.main request_id=dda7e9c4-af6b-4087-8927-bc24f65f9a8b http_request_started method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 client=127.0.0.1
+2026-04-16 00:00:49,933 INFO app.main request_id=dda7e9c4-af6b-4087-8927-bc24f65f9a8b http_request_finished method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 status=200 duration_ms=4
+2026-04-16 00:00:49,966 INFO app.main request_id=b2572ec4-b9bd-4f93-88fd-af67109023b7 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-16 00:00:49,975 INFO app.main request_id=b2572ec4-b9bd-4f93-88fd-af67109023b7 http_request_finished method=GET path=/chats status=200 duration_ms=9
+2026-04-16 00:03:19,312 INFO app.main request_id=- app_shutdown
+2026-04-16 00:04:26,260 INFO app.main request_id=- app_startup
+2026-04-16 00:04:26,366 INFO app.main request_id=77819782-3423-4410-aa3c-c24163c66f78 http_request_started method=GET path=/chat/95017897-6610-4680-b830-4a664e265501 client=127.0.0.1
+2026-04-16 00:04:26,394 INFO app.main request_id=77819782-3423-4410-aa3c-c24163c66f78 http_request_finished method=GET path=/chat/95017897-6610-4680-b830-4a664e265501 status=200 duration_ms=28
+2026-04-16 00:04:26,434 INFO app.main request_id=95dfa13f-63f5-4a0d-aed2-1994414cc016 http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-16 00:04:26,675 INFO app.main request_id=95dfa13f-63f5-4a0d-aed2-1994414cc016 http_request_finished method=GET path=/static/styles.css status=200 duration_ms=241
+2026-04-16 00:04:26,728 INFO app.main request_id=8f3058b3-35e1-48cb-bb19-f820d649b0f7 http_request_started method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 client=127.0.0.1
+2026-04-16 00:04:26,740 INFO app.main request_id=8f3058b3-35e1-48cb-bb19-f820d649b0f7 http_request_finished method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 status=200 duration_ms=12
+2026-04-16 00:04:26,809 INFO app.main request_id=5e1d409e-20e9-4da2-969b-c46069f9badc http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-16 00:04:26,818 INFO app.main request_id=5e1d409e-20e9-4da2-969b-c46069f9badc http_request_finished method=GET path=/chats status=200 duration_ms=8
+2026-04-16 00:04:36,801 INFO app.main request_id=ec842c25-27da-4a05-9a50-2503aac07ca2 http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-16 00:04:36,808 INFO app.main request_id=ec842c25-27da-4a05-9a50-2503aac07ca2 http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=7
+2026-04-16 00:04:36,837 INFO app.main request_id=fa30e9fd-b124-486e-aa6a-f112f8dc6718 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-16 00:04:36,844 INFO app.main request_id=fa30e9fd-b124-486e-aa6a-f112f8dc6718 http_request_finished method=GET path=/chats status=200 duration_ms=6
+2026-04-17 22:41:16,771 INFO app.main request_id=- app_startup
+2026-04-17 22:41:22,007 INFO app.main request_id=7503a810-36c0-42fa-a26c-e1ad534b006d http_request_started method=GET path=/chat/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-17 22:41:22,101 INFO app.main request_id=7503a810-36c0-42fa-a26c-e1ad534b006d http_request_finished method=GET path=/chat/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=93
+2026-04-17 22:41:22,174 INFO app.main request_id=1efca01f-fa87-496c-b96d-aaf94d8c9e56 http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-17 22:41:22,461 INFO app.main request_id=1efca01f-fa87-496c-b96d-aaf94d8c9e56 http_request_finished method=GET path=/static/styles.css status=304 duration_ms=287
+2026-04-17 22:41:22,468 INFO app.main request_id=d4643c67-f440-47f0-9d09-6a0d1dbf4ead http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-17 22:41:22,489 INFO app.main request_id=d4643c67-f440-47f0-9d09-6a0d1dbf4ead http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=20
+2026-04-17 22:41:22,569 INFO app.main request_id=b8dbb8fa-1190-43c3-89bd-b99cd2946fc1 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-17 22:41:22,575 INFO app.main request_id=b8dbb8fa-1190-43c3-89bd-b99cd2946fc1 http_request_finished method=GET path=/chats status=200 duration_ms=6
+2026-04-17 22:41:22,612 INFO app.main request_id=9988be77-1e91-41ea-a34c-0f2f76f536b2 http_request_started method=GET path=/favicon.ico client=127.0.0.1
+2026-04-17 22:41:22,613 INFO app.main request_id=9988be77-1e91-41ea-a34c-0f2f76f536b2 http_request_finished method=GET path=/favicon.ico status=404 duration_ms=0
+2026-04-17 22:47:32,346 INFO app.main request_id=- app_shutdown
+2026-04-17 23:35:10,839 INFO app.main request_id=- app_startup
+2026-04-17 23:36:00,106 INFO app.main request_id=92b26c71-fbd9-42cf-89c5-8fb244812994 http_request_started method=GET path=/chat/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-17 23:36:00,135 INFO app.main request_id=92b26c71-fbd9-42cf-89c5-8fb244812994 http_request_finished method=GET path=/chat/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=29
+2026-04-17 23:36:00,244 INFO app.main request_id=5a964106-7a5e-492f-893c-1f35cffb93bb http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-17 23:36:00,261 INFO app.main request_id=5a964106-7a5e-492f-893c-1f35cffb93bb http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=17
+2026-04-17 23:36:00,366 INFO app.main request_id=6e0e5109-8feb-4df5-bd5d-ba4664ff8511 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-17 23:36:00,374 INFO app.main request_id=6e0e5109-8feb-4df5-bd5d-ba4664ff8511 http_request_finished method=GET path=/chats status=200 duration_ms=8
+2026-04-17 23:36:06,286 INFO app.main request_id=c36dfd6e-1acc-4303-8803-2c63d4009be4 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-17 23:36:06,290 INFO app.main request_id=c36dfd6e-1acc-4303-8803-2c63d4009be4 http_request_finished method=GET path=/chats status=200 duration_ms=3
+2026-04-17 23:36:10,880 INFO app.main request_id=48bd43e7-4187-4d52-9ba2-5eb6cf5a4df3 http_request_started method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 client=127.0.0.1
+2026-04-17 23:36:10,886 INFO app.main request_id=48bd43e7-4187-4d52-9ba2-5eb6cf5a4df3 http_request_finished method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 status=200 duration_ms=5
+2026-04-17 23:36:10,908 INFO app.main request_id=4cf7a418-eb5a-46ec-ad7e-97820bd1cd8f http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-17 23:36:10,915 INFO app.main request_id=4cf7a418-eb5a-46ec-ad7e-97820bd1cd8f http_request_finished method=GET path=/chats status=200 duration_ms=6
+2026-04-17 23:36:15,975 INFO app.main request_id=06f989c6-15eb-4a33-b121-79a73cb233da http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-17 23:36:15,981 INFO app.main request_id=06f989c6-15eb-4a33-b121-79a73cb233da http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=5
+2026-04-17 23:36:16,009 INFO app.main request_id=00c06c8e-4ff0-4e16-845b-36b48002c9e8 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-17 23:36:16,015 INFO app.main request_id=00c06c8e-4ff0-4e16-845b-36b48002c9e8 http_request_finished method=GET path=/chats status=200 duration_ms=6
+2026-04-17 23:36:47,859 INFO app.main request_id=- app_shutdown
+2026-04-17 23:58:55,116 INFO app.main request_id=- app_startup
+2026-04-17 23:59:19,148 INFO app.main request_id=7ec76d88-69d0-46cf-9e5f-09baaf98fcb5 http_request_started method=GET path=/chat/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-17 23:59:19,186 INFO app.main request_id=7ec76d88-69d0-46cf-9e5f-09baaf98fcb5 http_request_finished method=GET path=/chat/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=38
+2026-04-17 23:59:19,298 INFO app.main request_id=d170aa9d-b698-4b34-aa18-63cd57780766 http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-17 23:59:19,339 INFO app.main request_id=d170aa9d-b698-4b34-aa18-63cd57780766 http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=41
+2026-04-17 23:59:19,494 INFO app.main request_id=52537901-bcc7-43fe-80b9-ebbdfa7bf841 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-17 23:59:19,504 INFO app.main request_id=52537901-bcc7-43fe-80b9-ebbdfa7bf841 http_request_finished method=GET path=/chats status=200 duration_ms=10
+2026-04-18 00:25:58,900 INFO app.main request_id=95f87d7e-2c36-443a-851c-e4fd559995f8 http_request_started method=GET path=/ client=127.0.0.1
+2026-04-18 00:25:58,926 INFO app.main request_id=95f87d7e-2c36-443a-851c-e4fd559995f8 http_request_finished method=GET path=/ status=200 duration_ms=26
+2026-04-18 00:25:58,962 INFO app.main request_id=446626ef-23f1-429a-a9a1-9ce301833f65 http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-18 00:25:59,312 INFO app.main request_id=446626ef-23f1-429a-a9a1-9ce301833f65 http_request_finished method=GET path=/static/styles.css status=200 duration_ms=349
+2026-04-18 00:25:59,346 INFO app.main request_id=7c40910c-5a37-44b9-b34c-9b8d90b6154b http_request_started method=GET path=/favicon.ico client=127.0.0.1
+2026-04-18 00:25:59,346 INFO app.main request_id=7c40910c-5a37-44b9-b34c-9b8d90b6154b http_request_finished method=GET path=/favicon.ico status=404 duration_ms=0
+2026-04-18 00:26:12,516 INFO app.main request_id=4b775258-edb1-4ecf-b8fd-e65e4a36620a http_request_started method=GET path=/library client=127.0.0.1
+2026-04-18 00:26:12,586 INFO app.main request_id=4b775258-edb1-4ecf-b8fd-e65e4a36620a http_request_finished method=GET path=/library status=200 duration_ms=70
+2026-04-18 00:26:19,126 INFO app.main request_id=7d74ee1c-6cb3-4d71-84b4-42db29070179 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-18 00:26:19,174 INFO app.main request_id=7d74ee1c-6cb3-4d71-84b4-42db29070179 http_request_finished method=GET path=/chat status=200 duration_ms=48
+2026-04-18 00:26:19,216 INFO app.main request_id=1e7f4911-4425-41c7-94b4-7caa54f599f7 http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-18 00:26:19,221 INFO app.main request_id=1e7f4911-4425-41c7-94b4-7caa54f599f7 http_request_finished method=GET path=/static/styles.css status=304 duration_ms=4
+2026-04-18 00:26:19,226 INFO app.main request_id=9a88de92-6104-454f-be38-cd7e27ad9f2f http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:26:19,236 INFO app.main request_id=9a88de92-6104-454f-be38-cd7e27ad9f2f http_request_finished method=GET path=/chats status=200 duration_ms=9
+2026-04-18 00:27:15,712 INFO app.main request_id=96d03d8b-9316-4115-904c-8c7e1703995b http_request_started method=POST path=/query client=127.0.0.1
+2026-04-18 00:27:15,720 INFO app.api.query request_id=96d03d8b-9316-4115-904c-8c7e1703995b query_requested question_len=36 question_snippet=Who is the author of Ai Engineering? selected_books=[] recent_history_turns=0 top_k=4 retrieval_mode=hybrid debug_requested=False debug_enabled=False
+2026-04-18 00:27:15,721 INFO app.services.qa request_id=96d03d8b-9316-4115-904c-8c7e1703995b qa_answer_started question_len=36 question_snippet=Who is the author of Ai Engineering? effective_question_snippet=Who is the author of Ai Engineering? top_k=4 selected_books=[] book_filter_count=0 include_debug=False recent_history_turns=0 reformulation_used=False
+2026-04-18 00:27:15,724 INFO app.services.retrieval request_id=96d03d8b-9316-4115-904c-8c7e1703995b retrieval_requested mode=hybrid top_k=8 fetch_k=40 selected_books=[] book_filter_count=0 question_len=36 question_snippet=Who is the author of Ai Engineering?
+2026-04-18 00:27:15,725 INFO app.services.retrieval request_id=96d03d8b-9316-4115-904c-8c7e1703995b vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-18 00:27:15,725 INFO app.services.retrieval request_id=96d03d8b-9316-4115-904c-8c7e1703995b embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-18 00:27:36,742 INFO sentence_transformers.SentenceTransformer request_id=96d03d8b-9316-4115-904c-8c7e1703995b Use pytorch device_name: cuda
+2026-04-18 00:27:36,743 INFO sentence_transformers.SentenceTransformer request_id=96d03d8b-9316-4115-904c-8c7e1703995b Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-18 00:27:48,085 INFO app.services.retrieval request_id=96d03d8b-9316-4115-904c-8c7e1703995b retrieval_child_candidates mode=hybrid dense=40 lexical=40 unique=74 stage_latency_ms={"dense_search": 4031, "lexical_search": 778, "merge_rank": 0, "total": 32360}
+2026-04-18 00:27:48,123 INFO app.services.retrieval request_id=96d03d8b-9316-4115-904c-8c7e1703995b parent_retrieval_completed mode=hybrid dense=40 lexical=40 parent_sections=4 candidates=40 retrieved_child_chunk_ids=["d8392407-1456-4a22-b115-a3420020c442::chunk::16", "d8392407-1456-4a22-b115-a3420020c442::chunk::27", "d8392407-1456-4a22-b115-a3420020c442::chunk::64", "d8392407-1456-4a22-b115-a3420020c442::chunk::111", "d8392407-1456-4a22-b115-a3420020c442::chunk::6", "d8392407-1456-4a22-b115-a3420020c442::chunk...<truncated> grouped_section_ids=["d8392407-1456-4a22-b115-a3420020c442::section::toc::10", "d8392407-1456-4a22-b115-a3420020c442::section::toc::1", "d8392407-1456-4a22-b115-a3420020c442::section::toc::178", "d8392407-1456-4a22-b115-a3420020c442::section::toc::4"] top_group_child_chunk_ids=["d8392407-1456-4a22-b115-a3420020c442::chunk::27", "d8392407-1456-4a22-b115-a3420020c442::chunk::6", "d8392407-1456-4a22-b115-a3420020c442::chunk::1013", "d8392407-1456-4a22-b115-a3420020c442::chunk::16"] stage_latency_ms={"dense_search": 4031, "lexical_search": 778, "merge_rank": 0, "total": 32360, "child_rank": 11, "parent_group": 12, "search_parent_total": 32398}
+2026-04-18 00:27:48,126 INFO app.services.qa request_id=96d03d8b-9316-4115-904c-8c7e1703995b qa_retrieval_completed parent_sections=4 grouped_section_ids=["d8392407-1456-4a22-b115-a3420020c442::section::toc::10", "d8392407-1456-4a22-b115-a3420020c442::section::toc::1", "d8392407-1456-4a22-b115-a3420020c442::section::toc::178", "d8392407-1456-4a22-b115-a3420020c442::section::toc::4"] retrieved_child_chunk_ids=["d8392407-1456-4a22-b115-a3420020c442::chunk::16", "d8392407-1456-4a22-b115-a3420020c442::chunk::27", "d8392407-1456-4a22-b115-a3420020c442::chunk::64", "d8392407-1456-4a22-b115-a3420020c442::chunk::111", "d8392407-1456-4a22-b115-a3420020c442::chunk::6", "d8392407-1456-4a22-b115-a3420020c442::chunk...<truncated> retrieval_latency_ms=32401
+2026-04-18 00:27:48,131 INFO app.services.qa request_id=96d03d8b-9316-4115-904c-8c7e1703995b qa_context_built context_chars=13730 citations=4 chosen_citations=["d8392407-1456-4a22-b115-a3420020c442:p27-31:Acknowledgments", "d8392407-1456-4a22-b115-a3420020c442:p9-31:Preface", "d8392407-1456-4a22-b115-a3420020c442:p989-991:About the Author", "d8392407-1456-4a22-b115-a3420020c442:p17-18:Who This Book Is For"] context_build_latency_ms=3
+2026-04-18 00:27:51,999 INFO app.services.qa request_id=96d03d8b-9316-4115-904c-8c7e1703995b qa_llm_invoke_completed llm_latency_ms=3720
+2026-04-18 00:27:52,002 INFO app.services.qa request_id=96d03d8b-9316-4115-904c-8c7e1703995b qa_answer_completed grounded=True citations=4 chosen_citations=["d8392407-1456-4a22-b115-a3420020c442:p27-31:Acknowledgments", "d8392407-1456-4a22-b115-a3420020c442:p9-31:Preface", "d8392407-1456-4a22-b115-a3420020c442:p989-991:About the Author", "d8392407-1456-4a22-b115-a3420020c442:p17-18:Who This Book Is For"] stage_latency_ms={"reformulation": 0, "retrieval": 32401, "context_build": 3, "llm_invoke": 3720, "total": 36280} answer_snippet=The author of Ai Engineering is Chip Huyen (p. 989).
+2026-04-18 00:27:52,003 INFO app.api.query request_id=96d03d8b-9316-4115-904c-8c7e1703995b query_completed grounded=True citations=4 chosen_citations=["d8392407-1456-4a22-b115-a3420020c442:p27-31", "d8392407-1456-4a22-b115-a3420020c442:p9-31", "d8392407-1456-4a22-b115-a3420020c442:p989-991", "d8392407-1456-4a22-b115-a3420020c442:p17-18"] duration_ms=36282 debug_included=False
+2026-04-18 00:27:52,050 INFO app.main request_id=96d03d8b-9316-4115-904c-8c7e1703995b http_request_finished method=POST path=/query status=200 duration_ms=36338
+2026-04-18 00:27:52,063 INFO app.main request_id=bab24c42-1f75-41a5-904e-9498d587132e http_request_started method=GET path=/chats/af804c8b-7449-4953-b703-c6273c26c9c0 client=127.0.0.1
+2026-04-18 00:27:52,070 INFO app.main request_id=bab24c42-1f75-41a5-904e-9498d587132e http_request_finished method=GET path=/chats/af804c8b-7449-4953-b703-c6273c26c9c0 status=200 duration_ms=7
+2026-04-18 00:27:52,143 INFO app.main request_id=d0fcef39-4566-40c2-839e-46c2b02291ab http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:27:52,154 INFO app.main request_id=d0fcef39-4566-40c2-839e-46c2b02291ab http_request_finished method=GET path=/chats status=200 duration_ms=11
+2026-04-18 00:29:28,527 INFO app.main request_id=- app_shutdown
+2026-04-18 00:29:45,060 INFO app.main request_id=- app_startup
+2026-04-18 00:30:12,761 INFO app.main request_id=08093b74-e16d-4456-8eea-c72bec7b7e6a http_request_started method=GET path=/chat/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-18 00:30:12,795 INFO app.main request_id=08093b74-e16d-4456-8eea-c72bec7b7e6a http_request_finished method=GET path=/chat/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=33
+2026-04-18 00:30:12,885 INFO app.main request_id=557c601b-391f-444c-951c-cfc14d9f1538 http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-18 00:30:12,909 INFO app.main request_id=557c601b-391f-444c-951c-cfc14d9f1538 http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=24
+2026-04-18 00:30:13,008 INFO app.main request_id=1910661e-803f-4405-afb5-7ca69cba6e59 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:30:13,017 INFO app.main request_id=1910661e-803f-4405-afb5-7ca69cba6e59 http_request_finished method=GET path=/chats status=200 duration_ms=9
+2026-04-18 00:30:22,285 INFO app.main request_id=988a836b-0fe3-4efe-9a8a-29fdecaf3044 http_request_started method=GET path=/chat/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-18 00:30:22,290 INFO app.main request_id=988a836b-0fe3-4efe-9a8a-29fdecaf3044 http_request_finished method=GET path=/chat/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=4
+2026-04-18 00:30:22,327 INFO app.main request_id=dafd6102-2619-4353-bdce-ee07e8cb1a42 http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-18 00:30:22,567 INFO app.main request_id=dafd6102-2619-4353-bdce-ee07e8cb1a42 http_request_finished method=GET path=/static/styles.css status=200 duration_ms=239
+2026-04-18 00:30:22,573 INFO app.main request_id=d00ab001-1a19-4d0b-8203-afe63be832c4 http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-18 00:30:22,585 INFO app.main request_id=d00ab001-1a19-4d0b-8203-afe63be832c4 http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=12
+2026-04-18 00:30:22,624 INFO app.main request_id=43d7581d-7778-4e23-b432-e37c6bec560f http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:30:22,632 INFO app.main request_id=43d7581d-7778-4e23-b432-e37c6bec560f http_request_finished method=GET path=/chats status=200 duration_ms=8
+2026-04-18 00:30:22,636 INFO app.main request_id=add9e849-3b99-4d70-8265-a7751b2a887b http_request_started method=GET path=/favicon.ico client=127.0.0.1
+2026-04-18 00:30:22,646 INFO app.main request_id=add9e849-3b99-4d70-8265-a7751b2a887b http_request_finished method=GET path=/favicon.ico status=404 duration_ms=9
+2026-04-18 00:30:38,776 INFO app.main request_id=18b43556-f649-4587-9bb7-c0c60b3af4f4 http_request_started method=GET path=/ client=127.0.0.1
+2026-04-18 00:30:38,784 INFO app.main request_id=18b43556-f649-4587-9bb7-c0c60b3af4f4 http_request_finished method=GET path=/ status=200 duration_ms=7
+2026-04-18 00:30:43,436 INFO app.main request_id=36e8e3ce-32b1-455d-b334-57eff986dd79 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-18 00:30:43,456 INFO app.main request_id=36e8e3ce-32b1-455d-b334-57eff986dd79 http_request_finished method=GET path=/library status=200 duration_ms=19
+2026-04-18 00:30:53,700 INFO app.main request_id=2659a31d-44e3-4ca2-812d-fc8a71fc7094 http_request_started method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status client=127.0.0.1
+2026-04-18 00:30:53,704 INFO app.api.books request_id=2659a31d-44e3-4ca2-812d-fc8a71fc7094 book_status_success book_id=d8392407-1456-4a22-b115-a3420020c442 status=indexed progress=100
+2026-04-18 00:30:53,706 INFO app.main request_id=2659a31d-44e3-4ca2-812d-fc8a71fc7094 http_request_finished method=GET path=/books/d8392407-1456-4a22-b115-a3420020c442/status status=200 duration_ms=5
+2026-04-18 00:30:53,720 INFO app.main request_id=83f91f8d-f209-4a8c-b89d-24e60f5ef0f9 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-18 00:30:53,723 INFO app.main request_id=83f91f8d-f209-4a8c-b89d-24e60f5ef0f9 http_request_finished method=GET path=/library status=200 duration_ms=3
+2026-04-18 00:31:08,183 INFO app.main request_id=f720c6e4-b918-4a3a-8ee4-b18544647b98 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-18 00:31:08,186 INFO app.main request_id=f720c6e4-b918-4a3a-8ee4-b18544647b98 http_request_finished method=GET path=/chat status=200 duration_ms=3
+2026-04-18 00:31:08,231 INFO app.main request_id=4130a81a-64ff-4d78-ad97-57b203c509bd http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-18 00:31:08,233 INFO app.main request_id=4130a81a-64ff-4d78-ad97-57b203c509bd http_request_finished method=GET path=/static/styles.css status=304 duration_ms=2
+2026-04-18 00:31:08,242 INFO app.main request_id=3a3b72cb-39ad-42aa-820f-5f69c98ca475 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:31:08,250 INFO app.main request_id=3a3b72cb-39ad-42aa-820f-5f69c98ca475 http_request_finished method=GET path=/chats status=200 duration_ms=7
+2026-04-18 00:38:01,911 INFO app.main request_id=d79c9b08-806a-4ba5-b5f0-5e5d6ade2137 http_request_started method=GET path=/ client=127.0.0.1
+2026-04-18 00:38:01,917 INFO app.main request_id=d79c9b08-806a-4ba5-b5f0-5e5d6ade2137 http_request_finished method=GET path=/ status=200 duration_ms=5
+2026-04-18 00:38:01,951 INFO app.main request_id=39b18ca2-b71b-4b3d-b258-3bef25703a3d http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-18 00:38:01,963 INFO app.main request_id=39b18ca2-b71b-4b3d-b258-3bef25703a3d http_request_finished method=GET path=/static/styles.css status=200 duration_ms=11
+2026-04-18 00:38:11,329 INFO app.main request_id=6b721075-0089-487f-98a8-07450578cac2 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-18 00:38:11,346 ERROR app.main request_id=6b721075-0089-487f-98a8-07450578cac2 http_request_failed method=GET path=/chat client=127.0.0.1 duration_ms=16
+Traceback (most recent call last):
+  File "D:\1st RAG project\Mini Project\bookQnA\app\main.py", line 52, in request_logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\fastapi\routing.py", line 115, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\fastapi\routing.py", line 101, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\fastapi\routing.py", line 355, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\fastapi\routing.py", line 245, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\concurrency.py", line 32, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2502, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\anyio\_backends\_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "D:\1st RAG project\Mini Project\bookQnA\app\web\pages.py", line 97, in chat_page
+    return templates.TemplateResponse(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        },
+        ^^
+    )
+    ^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\templating.py", line 209, in TemplateResponse
+    template = self.get_template(name)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\templating.py", line 132, in get_template
+    return self.env.get_template(name)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "D:\1st RAG project\Mini Project\bookQnA\app\templates\chat.html", line 964, in template
+    {% endblock %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endblock'.
+2026-04-18 00:38:24,151 INFO app.main request_id=- app_shutdown
+2026-04-18 00:41:06,202 INFO app.main request_id=- app_startup
+2026-04-18 00:41:26,410 INFO app.main request_id=f2a8b726-8b6f-402d-a632-0a771a2bc852 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-18 00:41:26,445 ERROR app.main request_id=f2a8b726-8b6f-402d-a632-0a771a2bc852 http_request_failed method=GET path=/chat client=127.0.0.1 duration_ms=34
+Traceback (most recent call last):
+  File "D:\1st RAG project\Mini Project\bookQnA\app\main.py", line 52, in request_logging_middleware
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\fastapi\routing.py", line 115, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\fastapi\routing.py", line 101, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\fastapi\routing.py", line 355, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\fastapi\routing.py", line 245, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\concurrency.py", line 32, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\anyio\to_thread.py", line 63, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        func, args, abandon_on_cancel=abandon_on_cancel, limiter=limiter
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\anyio\_backends\_asyncio.py", line 2502, in run_sync_in_worker_thread
+    return await future
+           ^^^^^^^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\anyio\_backends\_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "D:\1st RAG project\Mini Project\bookQnA\app\web\pages.py", line 97, in chat_page
+    return templates.TemplateResponse(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        request=request,
+        ^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+        },
+        ^^
+    )
+    ^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\templating.py", line 209, in TemplateResponse
+    template = self.get_template(name)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\starlette\templating.py", line 132, in get_template
+    return self.env.get_template(name)
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\jinja2\environment.py", line 1016, in get_template
+    return self._load_template(name, globals)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\jinja2\environment.py", line 975, in _load_template
+    template = self.loader.load(self, name, self.make_globals(globals))
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\jinja2\loaders.py", line 138, in load
+    code = environment.compile(source, name, filename)
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\jinja2\environment.py", line 771, in compile
+    self.handle_exception(source=source_hint)
+    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "F:\Installations\Anaconda\envs\genAiEnv\Lib\site-packages\jinja2\environment.py", line 942, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "D:\1st RAG project\Mini Project\bookQnA\app\templates\chat.html", line 964, in template
+    {% endblock %}
+jinja2.exceptions.TemplateSyntaxError: Encountered unknown tag 'endblock'.
+2026-04-18 00:46:00,857 INFO app.main request_id=- app_shutdown
+2026-04-18 00:46:14,610 INFO app.main request_id=- app_startup
+2026-04-18 00:46:20,122 INFO app.main request_id=01937f21-faa2-44cf-bcee-45ac6c7192ac http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-18 00:46:20,151 INFO app.main request_id=01937f21-faa2-44cf-bcee-45ac6c7192ac http_request_finished method=GET path=/chat status=200 duration_ms=28
+2026-04-18 00:46:20,187 INFO app.main request_id=fae2c547-9e2d-4b00-b21d-f70e4d26cac8 http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-18 00:46:20,470 INFO app.main request_id=fae2c547-9e2d-4b00-b21d-f70e4d26cac8 http_request_finished method=GET path=/static/styles.css status=200 duration_ms=283
+2026-04-18 00:46:20,478 INFO app.main request_id=e88e0f03-016d-4180-a9f9-c0b1491f31f0 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:46:20,494 INFO app.main request_id=e88e0f03-016d-4180-a9f9-c0b1491f31f0 http_request_finished method=GET path=/chats status=200 duration_ms=15
+2026-04-18 00:46:36,606 INFO app.main request_id=46161efb-4776-47ce-a379-e6ed4c37f899 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-18 00:46:36,626 INFO app.main request_id=46161efb-4776-47ce-a379-e6ed4c37f899 http_request_finished method=GET path=/library status=200 duration_ms=20
+2026-04-18 00:46:41,914 INFO app.main request_id=339f0ff0-6d0e-4ebb-ae28-7ebd0b27d6d9 http_request_started method=GET path=/ client=127.0.0.1
+2026-04-18 00:46:41,921 INFO app.main request_id=339f0ff0-6d0e-4ebb-ae28-7ebd0b27d6d9 http_request_finished method=GET path=/ status=200 duration_ms=6
+2026-04-18 00:46:56,250 INFO app.main request_id=3533b958-668b-47dc-861d-1338e315a95c http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-18 00:46:56,254 INFO app.main request_id=3533b958-668b-47dc-861d-1338e315a95c http_request_finished method=GET path=/chat status=200 duration_ms=3
+2026-04-18 00:46:56,296 INFO app.main request_id=bba9f6ca-8310-43b8-8629-8ccc3fd6818f http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:46:56,304 INFO app.main request_id=bba9f6ca-8310-43b8-8629-8ccc3fd6818f http_request_finished method=GET path=/chats status=200 duration_ms=8
+2026-04-18 00:47:07,473 INFO app.main request_id=baf9e325-cf6b-49c9-a0f7-e263c9fbb2e2 http_request_started method=GET path=/chats/af804c8b-7449-4953-b703-c6273c26c9c0 client=127.0.0.1
+2026-04-18 00:47:07,480 INFO app.main request_id=baf9e325-cf6b-49c9-a0f7-e263c9fbb2e2 http_request_finished method=GET path=/chats/af804c8b-7449-4953-b703-c6273c26c9c0 status=200 duration_ms=7
+2026-04-18 00:47:07,502 INFO app.main request_id=1ae2bbd7-4883-477e-8fb5-0cb75a252b92 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:47:07,509 INFO app.main request_id=1ae2bbd7-4883-477e-8fb5-0cb75a252b92 http_request_finished method=GET path=/chats status=200 duration_ms=6
+2026-04-18 00:47:12,311 INFO app.main request_id=9ac2ad18-db8e-4e46-9e5f-5fa254e54655 http_request_started method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 client=127.0.0.1
+2026-04-18 00:47:12,315 INFO app.main request_id=9ac2ad18-db8e-4e46-9e5f-5fa254e54655 http_request_finished method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 status=200 duration_ms=4
+2026-04-18 00:47:12,341 INFO app.main request_id=14026545-7a01-41c2-a908-11da7b5367ad http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:47:12,347 INFO app.main request_id=14026545-7a01-41c2-a908-11da7b5367ad http_request_finished method=GET path=/chats status=200 duration_ms=6
+2026-04-18 00:47:23,514 INFO app.main request_id=30526d1b-0e52-4b54-8e27-c959d0b1f690 http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-18 00:47:23,524 INFO app.main request_id=30526d1b-0e52-4b54-8e27-c959d0b1f690 http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=9
+2026-04-18 00:47:23,553 INFO app.main request_id=6ea5b50f-6a49-4aa4-93de-6c539cab1f40 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:47:23,573 INFO app.main request_id=6ea5b50f-6a49-4aa4-93de-6c539cab1f40 http_request_finished method=GET path=/chats status=200 duration_ms=20
+2026-04-18 00:48:40,728 INFO app.main request_id=f27d9f42-3d47-40c3-aef4-4246f5d2501f http_request_started method=GET path=/ client=127.0.0.1
+2026-04-18 00:48:40,731 INFO app.main request_id=f27d9f42-3d47-40c3-aef4-4246f5d2501f http_request_finished method=GET path=/ status=200 duration_ms=2
+2026-04-18 00:48:40,759 INFO app.main request_id=3bf60024-20b8-4d19-96d8-b0b68e7b173b http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-18 00:48:40,763 INFO app.main request_id=3bf60024-20b8-4d19-96d8-b0b68e7b173b http_request_finished method=GET path=/static/styles.css status=304 duration_ms=3
+2026-04-18 00:49:06,426 INFO app.main request_id=- app_shutdown
+2026-04-18 00:56:41,512 INFO app.main request_id=- app_startup
+2026-04-18 00:56:43,115 INFO app.main request_id=ead0e37f-01b8-45da-a980-b643326754c4 http_request_started method=GET path=/chats/af804c8b-7449-4953-b703-c6273c26c9c0 client=127.0.0.1
+2026-04-18 00:56:43,135 INFO app.main request_id=ead0e37f-01b8-45da-a980-b643326754c4 http_request_finished method=GET path=/chats/af804c8b-7449-4953-b703-c6273c26c9c0 status=200 duration_ms=19
+2026-04-18 00:56:43,163 INFO app.main request_id=05f55fb3-15ec-4710-9fab-b2fe4d52611a http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:56:43,177 INFO app.main request_id=05f55fb3-15ec-4710-9fab-b2fe4d52611a http_request_finished method=GET path=/chats status=200 duration_ms=13
+2026-04-18 00:56:47,877 INFO app.main request_id=506ed222-a580-4a71-a3e5-c91db2eb8058 http_request_started method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 client=127.0.0.1
+2026-04-18 00:56:47,882 INFO app.main request_id=506ed222-a580-4a71-a3e5-c91db2eb8058 http_request_finished method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 status=200 duration_ms=5
+2026-04-18 00:56:47,909 INFO app.main request_id=1095b4f4-9ec7-484a-b5e9-ec263f550868 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:56:47,917 INFO app.main request_id=1095b4f4-9ec7-484a-b5e9-ec263f550868 http_request_finished method=GET path=/chats status=200 duration_ms=8
+2026-04-18 00:56:50,303 INFO app.main request_id=d5179f4a-4660-40d6-a110-7076f048c23f http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-18 00:56:50,309 INFO app.main request_id=d5179f4a-4660-40d6-a110-7076f048c23f http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=6
+2026-04-18 00:56:50,336 INFO app.main request_id=1e013698-a07c-4e98-bce6-34324cf21313 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:56:50,344 INFO app.main request_id=1e013698-a07c-4e98-bce6-34324cf21313 http_request_finished method=GET path=/chats status=200 duration_ms=7
+2026-04-18 00:56:59,592 INFO app.main request_id=d9b2b531-617f-4d6c-98e3-2ebc91d4f309 http_request_started method=GET path=/chat/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-18 00:56:59,618 INFO app.main request_id=d9b2b531-617f-4d6c-98e3-2ebc91d4f309 http_request_finished method=GET path=/chat/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=26
+2026-04-18 00:56:59,650 INFO app.main request_id=9f35f009-919a-4768-b186-62d203cfc415 http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-18 00:56:59,899 INFO app.main request_id=9f35f009-919a-4768-b186-62d203cfc415 http_request_finished method=GET path=/static/styles.css status=200 duration_ms=249
+2026-04-18 00:56:59,908 INFO app.main request_id=d79e8f65-a8ca-4d6c-a571-31c60c90ab48 http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-18 00:56:59,921 INFO app.main request_id=d79e8f65-a8ca-4d6c-a571-31c60c90ab48 http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=12
+2026-04-18 00:56:59,969 INFO app.main request_id=6c8f7ba4-fbab-4a81-9d40-cd5627b780e3 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:56:59,980 INFO app.main request_id=6c8f7ba4-fbab-4a81-9d40-cd5627b780e3 http_request_finished method=GET path=/chats status=200 duration_ms=10
+2026-04-18 00:57:23,581 INFO app.main request_id=8e3b29b5-d6ba-48f5-abb1-5bcffdebac70 http_request_started method=GET path=/chats/af804c8b-7449-4953-b703-c6273c26c9c0 client=127.0.0.1
+2026-04-18 00:57:23,586 INFO app.main request_id=8e3b29b5-d6ba-48f5-abb1-5bcffdebac70 http_request_finished method=GET path=/chats/af804c8b-7449-4953-b703-c6273c26c9c0 status=200 duration_ms=4
+2026-04-18 00:57:23,609 INFO app.main request_id=3cb41e8b-17d2-4662-bbb7-69704b7c6ea2 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:57:23,617 INFO app.main request_id=3cb41e8b-17d2-4662-bbb7-69704b7c6ea2 http_request_finished method=GET path=/chats status=200 duration_ms=7
+2026-04-18 00:57:26,619 INFO app.main request_id=82e8fa3b-b520-4221-b7a8-1673e374a270 http_request_started method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 client=127.0.0.1
+2026-04-18 00:57:26,625 INFO app.main request_id=82e8fa3b-b520-4221-b7a8-1673e374a270 http_request_finished method=GET path=/chats/95017897-6610-4680-b830-4a664e265501 status=200 duration_ms=6
+2026-04-18 00:57:26,652 INFO app.main request_id=93935184-203c-4dd5-aede-94cd5a70b5cd http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:57:26,660 INFO app.main request_id=93935184-203c-4dd5-aede-94cd5a70b5cd http_request_finished method=GET path=/chats status=200 duration_ms=7
+2026-04-18 00:57:37,786 INFO app.main request_id=a70ef84f-da8d-4be9-840a-7c39a702b49e http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-18 00:57:37,793 INFO app.main request_id=a70ef84f-da8d-4be9-840a-7c39a702b49e http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=7
+2026-04-18 00:57:37,828 INFO app.main request_id=78778700-bac9-46eb-b303-bef9bdce9419 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-18 00:57:37,838 INFO app.main request_id=78778700-bac9-46eb-b303-bef9bdce9419 http_request_finished method=GET path=/chats status=200 duration_ms=10
+2026-04-18 00:58:32,406 INFO app.main request_id=- app_shutdown
+2026-04-19 15:12:34,412 INFO app.main request_id=- app_startup
+2026-04-19 15:12:56,987 INFO app.main request_id=837eec74-fcac-4246-8c67-b1d03630188c http_request_started method=GET path=/chat/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-19 15:12:57,037 INFO app.main request_id=837eec74-fcac-4246-8c67-b1d03630188c http_request_finished method=GET path=/chat/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=50
+2026-04-19 15:12:57,073 INFO app.main request_id=39783213-ebe8-4154-be87-319810938e7e http_request_started method=GET path=/static/styles.css client=127.0.0.1
+2026-04-19 15:12:57,324 INFO app.main request_id=39783213-ebe8-4154-be87-319810938e7e http_request_finished method=GET path=/static/styles.css status=304 duration_ms=250
+2026-04-19 15:12:57,367 INFO app.main request_id=7873ccc8-57c8-4a14-9cb2-6d53c3e4156f http_request_started method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de client=127.0.0.1
+2026-04-19 15:12:57,402 INFO app.main request_id=7873ccc8-57c8-4a14-9cb2-6d53c3e4156f http_request_finished method=GET path=/chats/52ba05b4-f093-48d3-ae15-01d8d63140de status=200 duration_ms=34
+2026-04-19 15:12:57,483 INFO app.main request_id=43a07bf0-2e67-4002-a7a7-ca86ad6c5323 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-19 15:12:57,490 INFO app.main request_id=43a07bf0-2e67-4002-a7a7-ca86ad6c5323 http_request_finished method=GET path=/chats status=200 duration_ms=7
+2026-04-19 15:12:59,684 INFO app.main request_id=bd7f0f17-4baf-4a9c-99ed-f65f036b295d http_request_started method=GET path=/ client=127.0.0.1
+2026-04-19 15:12:59,694 INFO app.main request_id=bd7f0f17-4baf-4a9c-99ed-f65f036b295d http_request_finished method=GET path=/ status=200 duration_ms=10
+2026-04-19 15:13:30,181 INFO app.main request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 http_request_started method=POST path=/upload-book client=127.0.0.1
+2026-04-19 15:13:30,455 INFO app.main request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 http_request_finished method=POST path=/upload-book status=303 duration_ms=273
+2026-04-19 15:13:30,459 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 ingestion_started book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook
+2026-04-19 15:13:30,462 INFO app.main request_id=25cfa555-3d25-4e7f-b9cf-f661a8b53b6c http_request_started method=GET path=/library client=127.0.0.1
+2026-04-19 15:13:30,485 INFO app.services.retrieval request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 vector_delete_requested book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b
+2026-04-19 15:13:30,485 INFO app.services.retrieval request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-19 15:13:30,486 INFO app.services.retrieval request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-19 15:13:30,496 INFO app.main request_id=25cfa555-3d25-4e7f-b9cf-f661a8b53b6c http_request_finished method=GET path=/library status=200 duration_ms=34
+2026-04-19 15:13:41,108 INFO app.main request_id=9d2ea35d-79ff-42ea-ac8f-4009f339979b http_request_started method=GET path=/books/37dc7a88-8b08-4c00-93ec-a94d9d93bd8b/status client=127.0.0.1
+2026-04-19 15:13:41,110 INFO app.api.books request_id=9d2ea35d-79ff-42ea-ac8f-4009f339979b book_status_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b status=parsing progress=0
+2026-04-19 15:13:41,111 INFO app.main request_id=9d2ea35d-79ff-42ea-ac8f-4009f339979b http_request_finished method=GET path=/books/37dc7a88-8b08-4c00-93ec-a94d9d93bd8b/status status=200 duration_ms=3
+2026-04-19 15:13:41,133 INFO app.main request_id=eee121dc-5bb3-465f-b638-b973336984c7 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-19 15:13:41,138 INFO app.main request_id=eee121dc-5bb3-465f-b638-b973336984c7 http_request_finished method=GET path=/library status=200 duration_ms=4
+2026-04-19 15:13:43,705 INFO app.main request_id=cc644d0f-cfc9-417a-b3ba-c4c90e55c648 http_request_started method=GET path=/books/37dc7a88-8b08-4c00-93ec-a94d9d93bd8b/status client=127.0.0.1
+2026-04-19 15:13:43,706 INFO app.api.books request_id=cc644d0f-cfc9-417a-b3ba-c4c90e55c648 book_status_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b status=parsing progress=0
+2026-04-19 15:13:43,708 INFO app.main request_id=cc644d0f-cfc9-417a-b3ba-c4c90e55c648 http_request_finished method=GET path=/books/37dc7a88-8b08-4c00-93ec-a94d9d93bd8b/status status=200 duration_ms=2
+2026-04-19 15:13:43,735 INFO app.main request_id=c19bf4cc-6161-4cb3-abd1-b5b7e95c9a46 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-19 15:13:43,745 INFO app.main request_id=c19bf4cc-6161-4cb3-abd1-b5b7e95c9a46 http_request_finished method=GET path=/library status=200 duration_ms=10
+2026-04-19 15:13:44,831 INFO sentence_transformers.SentenceTransformer request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 Use pytorch device_name: cuda
+2026-04-19 15:13:44,831 INFO sentence_transformers.SentenceTransformer request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-19 15:13:52,789 INFO app.services.retrieval request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 vector_delete_completed book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b deleted=0
+2026-04-19 15:13:53,591 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 ingestion_parse_completed book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b pages=523 duration_ms=798
+2026-04-19 15:13:53,675 INFO app.services.structure request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 structure_source_selected source=toc entries=298
+2026-04-19 15:13:53,804 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 ingestion_structuring_completed book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b sections=298 duration_ms=177
+2026-04-19 15:13:54,075 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 ingestion_chunking_completed book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b chunks=813 duration_ms=257
+2026-04-19 15:13:54,075 INFO app.services.retrieval request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-19 15:13:54,076 INFO app.services.retrieval request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-19 15:13:54,077 INFO sentence_transformers.SentenceTransformer request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 Use pytorch device_name: cuda
+2026-04-19 15:13:54,077 INFO sentence_transformers.SentenceTransformer request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-19 15:13:56,581 INFO app.main request_id=00e525d9-5811-46b1-a56e-4258d48c95fd http_request_started method=GET path=/books/37dc7a88-8b08-4c00-93ec-a94d9d93bd8b/status client=127.0.0.1
+2026-04-19 15:13:56,583 INFO app.api.books request_id=00e525d9-5811-46b1-a56e-4258d48c95fd book_status_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b status=chunking progress=0
+2026-04-19 15:13:56,585 INFO app.main request_id=00e525d9-5811-46b1-a56e-4258d48c95fd http_request_finished method=GET path=/books/37dc7a88-8b08-4c00-93ec-a94d9d93bd8b/status status=200 duration_ms=3
+2026-04-19 15:13:56,602 INFO app.main request_id=c02220d8-3b08-4252-bcb9-397d1e56ebe5 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-19 15:13:56,605 INFO app.main request_id=c02220d8-3b08-4252-bcb9-397d1e56ebe5 http_request_finished method=GET path=/library status=200 duration_ms=3
+2026-04-19 15:13:57,541 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_started book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook total_chunks=813 batch_size=5
+2026-04-19 15:13:58,493 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=1/163 processed=5 total=813
+2026-04-19 15:13:58,493 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=1/163 sleep_seconds=5.00
+2026-04-19 15:14:03,917 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=2/163 processed=10 total=813
+2026-04-19 15:14:03,917 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=2/163 sleep_seconds=5.00
+2026-04-19 15:14:09,157 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=3/163 processed=15 total=813
+2026-04-19 15:14:09,158 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=3/163 sleep_seconds=5.00
+2026-04-19 15:14:14,404 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=4/163 processed=20 total=813
+2026-04-19 15:14:14,404 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=4/163 sleep_seconds=5.00
+2026-04-19 15:14:19,664 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=5/163 processed=25 total=813
+2026-04-19 15:14:19,664 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=5/163 sleep_seconds=5.00
+2026-04-19 15:14:25,020 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=6/163 processed=30 total=813
+2026-04-19 15:14:25,020 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=6/163 sleep_seconds=5.00
+2026-04-19 15:14:30,305 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=7/163 processed=35 total=813
+2026-04-19 15:14:30,305 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=7/163 sleep_seconds=5.00
+2026-04-19 15:14:35,850 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=8/163 processed=40 total=813
+2026-04-19 15:14:35,850 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=8/163 sleep_seconds=5.00
+2026-04-19 15:14:36,312 INFO app.main request_id=73513986-5304-41fe-bf42-de9db38b3a39 http_request_started method=GET path=/books/37dc7a88-8b08-4c00-93ec-a94d9d93bd8b/status client=127.0.0.1
+2026-04-19 15:14:36,316 INFO app.api.books request_id=73513986-5304-41fe-bf42-de9db38b3a39 book_status_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b status=embedding progress=4
+2026-04-19 15:14:36,317 INFO app.main request_id=73513986-5304-41fe-bf42-de9db38b3a39 http_request_finished method=GET path=/books/37dc7a88-8b08-4c00-93ec-a94d9d93bd8b/status status=200 duration_ms=5
+2026-04-19 15:14:36,338 INFO app.main request_id=95f6c552-8a23-4e7f-a281-92749467ef45 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-19 15:14:36,341 INFO app.main request_id=95f6c552-8a23-4e7f-a281-92749467ef45 http_request_finished method=GET path=/library status=200 duration_ms=3
+2026-04-19 15:14:41,130 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=9/163 processed=45 total=813
+2026-04-19 15:14:41,130 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=9/163 sleep_seconds=5.00
+2026-04-19 15:14:46,414 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=10/163 processed=50 total=813
+2026-04-19 15:14:46,415 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=10/163 sleep_seconds=5.00
+2026-04-19 15:14:51,740 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=11/163 processed=55 total=813
+2026-04-19 15:14:51,740 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=11/163 sleep_seconds=5.00
+2026-04-19 15:14:57,142 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=12/163 processed=60 total=813
+2026-04-19 15:14:57,143 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=12/163 sleep_seconds=5.00
+2026-04-19 15:15:02,417 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=13/163 processed=65 total=813
+2026-04-19 15:15:02,417 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=13/163 sleep_seconds=5.00
+2026-04-19 15:15:07,953 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=14/163 processed=70 total=813
+2026-04-19 15:15:07,954 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=14/163 sleep_seconds=5.00
+2026-04-19 15:15:13,239 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=15/163 processed=75 total=813
+2026-04-19 15:15:13,240 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=15/163 sleep_seconds=5.00
+2026-04-19 15:15:18,506 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=16/163 processed=80 total=813
+2026-04-19 15:15:18,507 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=16/163 sleep_seconds=5.00
+2026-04-19 15:15:23,794 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=17/163 processed=85 total=813
+2026-04-19 15:15:23,794 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=17/163 sleep_seconds=5.00
+2026-04-19 15:15:29,089 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=18/163 processed=90 total=813
+2026-04-19 15:15:29,090 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=18/163 sleep_seconds=5.00
+2026-04-19 15:15:34,442 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=19/163 processed=95 total=813
+2026-04-19 15:15:34,442 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=19/163 sleep_seconds=5.00
+2026-04-19 15:15:39,935 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=20/163 processed=100 total=813
+2026-04-19 15:15:39,935 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=20/163 sleep_seconds=5.00
+2026-04-19 15:15:43,902 INFO app.main request_id=71e7a40f-7f1d-4fac-97d9-cd657a47c6bd http_request_started method=GET path=/books/37dc7a88-8b08-4c00-93ec-a94d9d93bd8b/status client=127.0.0.1
+2026-04-19 15:15:43,904 INFO app.api.books request_id=71e7a40f-7f1d-4fac-97d9-cd657a47c6bd book_status_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b status=embedding progress=12
+2026-04-19 15:15:43,905 INFO app.main request_id=71e7a40f-7f1d-4fac-97d9-cd657a47c6bd http_request_finished method=GET path=/books/37dc7a88-8b08-4c00-93ec-a94d9d93bd8b/status status=200 duration_ms=2
+2026-04-19 15:15:43,921 INFO app.main request_id=649929ed-4423-49ee-83e8-b30a708186a5 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-19 15:15:43,925 INFO app.main request_id=649929ed-4423-49ee-83e8-b30a708186a5 http_request_finished method=GET path=/library status=200 duration_ms=3
+2026-04-19 15:15:45,269 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=21/163 processed=105 total=813
+2026-04-19 15:15:45,269 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=21/163 sleep_seconds=5.00
+2026-04-19 15:15:50,538 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=22/163 processed=110 total=813
+2026-04-19 15:15:50,538 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=22/163 sleep_seconds=5.00
+2026-04-19 15:15:55,817 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=23/163 processed=115 total=813
+2026-04-19 15:15:55,818 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=23/163 sleep_seconds=5.00
+2026-04-19 15:16:01,143 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=24/163 processed=120 total=813
+2026-04-19 15:16:01,143 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=24/163 sleep_seconds=5.00
+2026-04-19 15:16:06,438 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=25/163 processed=125 total=813
+2026-04-19 15:16:06,439 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=25/163 sleep_seconds=5.00
+2026-04-19 15:16:11,715 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=26/163 processed=130 total=813
+2026-04-19 15:16:11,715 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=26/163 sleep_seconds=5.00
+2026-04-19 15:16:17,332 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=27/163 processed=135 total=813
+2026-04-19 15:16:17,332 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=27/163 sleep_seconds=5.00
+2026-04-19 15:16:22,618 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=28/163 processed=140 total=813
+2026-04-19 15:16:22,618 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=28/163 sleep_seconds=5.00
+2026-04-19 15:16:27,922 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=29/163 processed=145 total=813
+2026-04-19 15:16:27,922 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=29/163 sleep_seconds=5.00
+2026-04-19 15:16:33,289 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=30/163 processed=150 total=813
+2026-04-19 15:16:33,289 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=30/163 sleep_seconds=5.00
+2026-04-19 15:16:38,676 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=31/163 processed=155 total=813
+2026-04-19 15:16:38,676 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=31/163 sleep_seconds=5.00
+2026-04-19 15:16:43,963 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=32/163 processed=160 total=813
+2026-04-19 15:16:43,964 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=32/163 sleep_seconds=5.00
+2026-04-19 15:16:49,459 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=33/163 processed=165 total=813
+2026-04-19 15:16:49,459 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=33/163 sleep_seconds=5.00
+2026-04-19 15:16:54,770 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=34/163 processed=170 total=813
+2026-04-19 15:16:54,771 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=34/163 sleep_seconds=5.00
+2026-04-19 15:17:00,098 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=35/163 processed=175 total=813
+2026-04-19 15:17:00,099 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=35/163 sleep_seconds=5.00
+2026-04-19 15:17:05,367 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=36/163 processed=180 total=813
+2026-04-19 15:17:05,367 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=36/163 sleep_seconds=5.00
+2026-04-19 15:17:10,674 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=37/163 processed=185 total=813
+2026-04-19 15:17:10,674 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=37/163 sleep_seconds=5.00
+2026-04-19 15:17:16,024 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=38/163 processed=190 total=813
+2026-04-19 15:17:16,024 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=38/163 sleep_seconds=5.00
+2026-04-19 15:17:21,457 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=39/163 processed=195 total=813
+2026-04-19 15:17:21,457 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=39/163 sleep_seconds=5.00
+2026-04-19 15:17:26,787 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=40/163 processed=200 total=813
+2026-04-19 15:17:26,787 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=40/163 sleep_seconds=5.00
+2026-04-19 15:17:32,113 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=41/163 processed=205 total=813
+2026-04-19 15:17:32,113 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=41/163 sleep_seconds=5.00
+2026-04-19 15:17:37,459 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=42/163 processed=210 total=813
+2026-04-19 15:17:37,459 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=42/163 sleep_seconds=5.00
+2026-04-19 15:17:42,781 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=43/163 processed=215 total=813
+2026-04-19 15:17:42,781 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=43/163 sleep_seconds=5.00
+2026-04-19 15:17:48,125 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=44/163 processed=220 total=813
+2026-04-19 15:17:48,125 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=44/163 sleep_seconds=5.00
+2026-04-19 15:17:53,515 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=45/163 processed=225 total=813
+2026-04-19 15:17:53,516 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=45/163 sleep_seconds=5.00
+2026-04-19 15:17:58,850 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=46/163 processed=230 total=813
+2026-04-19 15:17:58,851 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=46/163 sleep_seconds=5.00
+2026-04-19 15:18:04,181 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=47/163 processed=235 total=813
+2026-04-19 15:18:04,181 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=47/163 sleep_seconds=5.00
+2026-04-19 15:18:09,563 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=48/163 processed=240 total=813
+2026-04-19 15:18:09,563 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=48/163 sleep_seconds=5.00
+2026-04-19 15:18:14,888 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=49/163 processed=245 total=813
+2026-04-19 15:18:14,888 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=49/163 sleep_seconds=5.00
+2026-04-19 15:18:20,221 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=50/163 processed=250 total=813
+2026-04-19 15:18:20,221 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=50/163 sleep_seconds=5.00
+2026-04-19 15:18:25,546 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=51/163 processed=255 total=813
+2026-04-19 15:18:25,546 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=51/163 sleep_seconds=5.00
+2026-04-19 15:18:30,872 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=52/163 processed=260 total=813
+2026-04-19 15:18:30,872 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=52/163 sleep_seconds=5.00
+2026-04-19 15:18:36,182 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=53/163 processed=265 total=813
+2026-04-19 15:18:36,182 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=53/163 sleep_seconds=5.00
+2026-04-19 15:18:41,551 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=54/163 processed=270 total=813
+2026-04-19 15:18:41,552 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=54/163 sleep_seconds=5.00
+2026-04-19 15:18:46,864 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=55/163 processed=275 total=813
+2026-04-19 15:18:46,864 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=55/163 sleep_seconds=5.00
+2026-04-19 15:18:52,195 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=56/163 processed=280 total=813
+2026-04-19 15:18:52,195 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=56/163 sleep_seconds=5.00
+2026-04-19 15:18:57,659 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=57/163 processed=285 total=813
+2026-04-19 15:18:57,660 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=57/163 sleep_seconds=5.00
+2026-04-19 15:19:03,046 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=58/163 processed=290 total=813
+2026-04-19 15:19:03,046 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=58/163 sleep_seconds=5.00
+2026-04-19 15:19:08,333 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=59/163 processed=295 total=813
+2026-04-19 15:19:08,333 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=59/163 sleep_seconds=5.00
+2026-04-19 15:19:13,636 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=60/163 processed=300 total=813
+2026-04-19 15:19:13,636 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=60/163 sleep_seconds=5.00
+2026-04-19 15:19:18,962 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=61/163 processed=305 total=813
+2026-04-19 15:19:18,962 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=61/163 sleep_seconds=5.00
+2026-04-19 15:19:24,286 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=62/163 processed=310 total=813
+2026-04-19 15:19:24,286 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=62/163 sleep_seconds=5.00
+2026-04-19 15:19:29,620 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=63/163 processed=315 total=813
+2026-04-19 15:19:29,620 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=63/163 sleep_seconds=5.00
+2026-04-19 15:19:34,951 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=64/163 processed=320 total=813
+2026-04-19 15:19:34,952 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=64/163 sleep_seconds=5.00
+2026-04-19 15:19:41,491 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=65/163 processed=325 total=813
+2026-04-19 15:19:41,491 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=65/163 sleep_seconds=5.00
+2026-04-19 15:19:46,828 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=66/163 processed=330 total=813
+2026-04-19 15:19:46,828 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=66/163 sleep_seconds=5.00
+2026-04-19 15:19:52,339 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=67/163 processed=335 total=813
+2026-04-19 15:19:52,340 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=67/163 sleep_seconds=5.00
+2026-04-19 15:19:57,619 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=68/163 processed=340 total=813
+2026-04-19 15:19:57,620 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=68/163 sleep_seconds=5.00
+2026-04-19 15:20:02,956 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=69/163 processed=345 total=813
+2026-04-19 15:20:02,956 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=69/163 sleep_seconds=5.00
+2026-04-19 15:20:08,244 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=70/163 processed=350 total=813
+2026-04-19 15:20:08,244 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=70/163 sleep_seconds=5.00
+2026-04-19 15:20:13,546 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=71/163 processed=355 total=813
+2026-04-19 15:20:13,546 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=71/163 sleep_seconds=5.00
+2026-04-19 15:20:18,862 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=72/163 processed=360 total=813
+2026-04-19 15:20:18,863 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=72/163 sleep_seconds=5.00
+2026-04-19 15:20:24,159 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=73/163 processed=365 total=813
+2026-04-19 15:20:24,159 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=73/163 sleep_seconds=5.00
+2026-04-19 15:20:29,462 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=74/163 processed=370 total=813
+2026-04-19 15:20:29,462 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=74/163 sleep_seconds=5.00
+2026-04-19 15:20:34,809 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=75/163 processed=375 total=813
+2026-04-19 15:20:34,810 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=75/163 sleep_seconds=5.00
+2026-04-19 15:20:40,147 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=76/163 processed=380 total=813
+2026-04-19 15:20:40,148 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=76/163 sleep_seconds=5.00
+2026-04-19 15:20:45,473 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=77/163 processed=385 total=813
+2026-04-19 15:20:45,473 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=77/163 sleep_seconds=5.00
+2026-04-19 15:20:50,838 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=78/163 processed=390 total=813
+2026-04-19 15:20:50,839 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=78/163 sleep_seconds=5.00
+2026-04-19 15:20:56,249 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=79/163 processed=395 total=813
+2026-04-19 15:20:56,250 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=79/163 sleep_seconds=5.00
+2026-04-19 15:21:01,669 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=80/163 processed=400 total=813
+2026-04-19 15:21:01,669 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=80/163 sleep_seconds=5.00
+2026-04-19 15:21:07,180 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=81/163 processed=405 total=813
+2026-04-19 15:21:07,180 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=81/163 sleep_seconds=5.00
+2026-04-19 15:21:12,589 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=82/163 processed=410 total=813
+2026-04-19 15:21:12,589 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=82/163 sleep_seconds=5.00
+2026-04-19 15:21:17,977 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=83/163 processed=415 total=813
+2026-04-19 15:21:17,977 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=83/163 sleep_seconds=5.00
+2026-04-19 15:21:24,743 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=84/163 processed=420 total=813
+2026-04-19 15:21:24,744 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=84/163 sleep_seconds=5.00
+2026-04-19 15:21:30,273 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=85/163 processed=425 total=813
+2026-04-19 15:21:30,273 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=85/163 sleep_seconds=5.00
+2026-04-19 15:21:37,079 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=86/163 processed=430 total=813
+2026-04-19 15:21:37,079 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=86/163 sleep_seconds=5.00
+2026-04-19 15:21:43,842 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=87/163 processed=435 total=813
+2026-04-19 15:21:43,842 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=87/163 sleep_seconds=5.00
+2026-04-19 15:21:49,230 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=88/163 processed=440 total=813
+2026-04-19 15:21:49,230 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=88/163 sleep_seconds=5.00
+2026-04-19 15:21:55,985 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=89/163 processed=445 total=813
+2026-04-19 15:21:55,985 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=89/163 sleep_seconds=5.00
+2026-04-19 15:22:01,351 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=90/163 processed=450 total=813
+2026-04-19 15:22:01,351 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=90/163 sleep_seconds=5.00
+2026-04-19 15:22:08,097 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=91/163 processed=455 total=813
+2026-04-19 15:22:08,098 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=91/163 sleep_seconds=5.00
+2026-04-19 15:22:14,886 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=92/163 processed=460 total=813
+2026-04-19 15:22:14,886 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=92/163 sleep_seconds=5.00
+2026-04-19 15:22:20,236 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=93/163 processed=465 total=813
+2026-04-19 15:22:20,237 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=93/163 sleep_seconds=5.00
+2026-04-19 15:22:25,594 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=94/163 processed=470 total=813
+2026-04-19 15:22:25,594 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=94/163 sleep_seconds=5.00
+2026-04-19 15:22:30,961 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=95/163 processed=475 total=813
+2026-04-19 15:22:30,961 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=95/163 sleep_seconds=5.00
+2026-04-19 15:22:36,337 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=96/163 processed=480 total=813
+2026-04-19 15:22:36,338 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=96/163 sleep_seconds=5.00
+2026-04-19 15:22:41,718 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=97/163 processed=485 total=813
+2026-04-19 15:22:41,719 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=97/163 sleep_seconds=5.00
+2026-04-19 15:22:47,071 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=98/163 processed=490 total=813
+2026-04-19 15:22:47,072 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=98/163 sleep_seconds=5.00
+2026-04-19 15:22:52,397 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=99/163 processed=495 total=813
+2026-04-19 15:22:52,398 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=99/163 sleep_seconds=5.00
+2026-04-19 15:22:57,766 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=100/163 processed=500 total=813
+2026-04-19 15:22:57,766 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=100/163 sleep_seconds=5.00
+2026-04-19 15:23:04,550 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=101/163 processed=505 total=813
+2026-04-19 15:23:04,550 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=101/163 sleep_seconds=5.00
+2026-04-19 15:23:09,894 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=102/163 processed=510 total=813
+2026-04-19 15:23:09,894 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=102/163 sleep_seconds=5.00
+2026-04-19 15:23:15,265 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=103/163 processed=515 total=813
+2026-04-19 15:23:15,265 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=103/163 sleep_seconds=5.00
+2026-04-19 15:23:20,605 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=104/163 processed=520 total=813
+2026-04-19 15:23:20,605 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=104/163 sleep_seconds=5.00
+2026-04-19 15:23:25,986 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=105/163 processed=525 total=813
+2026-04-19 15:23:25,987 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=105/163 sleep_seconds=5.00
+2026-04-19 15:23:31,348 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=106/163 processed=530 total=813
+2026-04-19 15:23:31,349 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=106/163 sleep_seconds=5.00
+2026-04-19 15:23:36,720 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=107/163 processed=535 total=813
+2026-04-19 15:23:36,720 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=107/163 sleep_seconds=5.00
+2026-04-19 15:23:42,190 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=108/163 processed=540 total=813
+2026-04-19 15:23:42,191 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=108/163 sleep_seconds=5.00
+2026-04-19 15:23:47,602 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=109/163 processed=545 total=813
+2026-04-19 15:23:47,602 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=109/163 sleep_seconds=5.00
+2026-04-19 15:23:53,104 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=110/163 processed=550 total=813
+2026-04-19 15:23:53,104 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=110/163 sleep_seconds=5.00
+2026-04-19 15:23:58,564 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=111/163 processed=555 total=813
+2026-04-19 15:23:58,564 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=111/163 sleep_seconds=5.00
+2026-04-19 15:24:03,888 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=112/163 processed=560 total=813
+2026-04-19 15:24:03,889 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=112/163 sleep_seconds=5.00
+2026-04-19 15:24:09,253 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=113/163 processed=565 total=813
+2026-04-19 15:24:09,253 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=113/163 sleep_seconds=5.00
+2026-04-19 15:24:14,661 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=114/163 processed=570 total=813
+2026-04-19 15:24:14,661 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=114/163 sleep_seconds=5.00
+2026-04-19 15:24:20,024 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=115/163 processed=575 total=813
+2026-04-19 15:24:20,024 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=115/163 sleep_seconds=5.00
+2026-04-19 15:24:25,359 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=116/163 processed=580 total=813
+2026-04-19 15:24:25,359 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=116/163 sleep_seconds=5.00
+2026-04-19 15:24:30,669 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=117/163 processed=585 total=813
+2026-04-19 15:24:30,669 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=117/163 sleep_seconds=5.00
+2026-04-19 15:24:36,083 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=118/163 processed=590 total=813
+2026-04-19 15:24:36,083 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=118/163 sleep_seconds=5.00
+2026-04-19 15:24:41,580 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=119/163 processed=595 total=813
+2026-04-19 15:24:41,580 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=119/163 sleep_seconds=5.00
+2026-04-19 15:24:46,900 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=120/163 processed=600 total=813
+2026-04-19 15:24:46,901 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=120/163 sleep_seconds=5.00
+2026-04-19 15:24:52,252 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=121/163 processed=605 total=813
+2026-04-19 15:24:52,252 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=121/163 sleep_seconds=5.00
+2026-04-19 15:24:57,582 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=122/163 processed=610 total=813
+2026-04-19 15:24:57,582 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=122/163 sleep_seconds=5.00
+2026-04-19 15:25:02,966 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=123/163 processed=615 total=813
+2026-04-19 15:25:02,966 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=123/163 sleep_seconds=5.00
+2026-04-19 15:25:08,387 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=124/163 processed=620 total=813
+2026-04-19 15:25:08,388 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=124/163 sleep_seconds=5.00
+2026-04-19 15:25:13,797 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=125/163 processed=625 total=813
+2026-04-19 15:25:13,797 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=125/163 sleep_seconds=5.00
+2026-04-19 15:25:19,187 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=126/163 processed=630 total=813
+2026-04-19 15:25:19,187 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=126/163 sleep_seconds=5.00
+2026-04-19 15:25:24,514 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=127/163 processed=635 total=813
+2026-04-19 15:25:24,514 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=127/163 sleep_seconds=5.00
+2026-04-19 15:25:31,391 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=128/163 processed=640 total=813
+2026-04-19 15:25:31,391 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=128/163 sleep_seconds=5.00
+2026-04-19 15:25:38,187 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=129/163 processed=645 total=813
+2026-04-19 15:25:38,187 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=129/163 sleep_seconds=5.00
+2026-04-19 15:25:45,049 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=130/163 processed=650 total=813
+2026-04-19 15:25:45,049 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=130/163 sleep_seconds=5.00
+2026-04-19 15:25:51,877 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=131/163 processed=655 total=813
+2026-04-19 15:25:51,878 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=131/163 sleep_seconds=5.00
+2026-04-19 15:25:57,275 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=132/163 processed=660 total=813
+2026-04-19 15:25:57,275 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=132/163 sleep_seconds=5.00
+2026-04-19 15:26:02,652 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=133/163 processed=665 total=813
+2026-04-19 15:26:02,652 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=133/163 sleep_seconds=5.00
+2026-04-19 15:26:08,039 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=134/163 processed=670 total=813
+2026-04-19 15:26:08,039 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=134/163 sleep_seconds=5.00
+2026-04-19 15:26:13,422 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=135/163 processed=675 total=813
+2026-04-19 15:26:13,422 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=135/163 sleep_seconds=5.00
+2026-04-19 15:26:18,943 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=136/163 processed=680 total=813
+2026-04-19 15:26:18,944 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=136/163 sleep_seconds=5.00
+2026-04-19 15:26:24,330 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=137/163 processed=685 total=813
+2026-04-19 15:26:24,330 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=137/163 sleep_seconds=5.00
+2026-04-19 15:26:29,679 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=138/163 processed=690 total=813
+2026-04-19 15:26:29,679 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=138/163 sleep_seconds=5.00
+2026-04-19 15:26:35,042 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=139/163 processed=695 total=813
+2026-04-19 15:26:35,043 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=139/163 sleep_seconds=5.00
+2026-04-19 15:26:40,400 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=140/163 processed=700 total=813
+2026-04-19 15:26:40,400 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=140/163 sleep_seconds=5.00
+2026-04-19 15:26:45,776 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=141/163 processed=705 total=813
+2026-04-19 15:26:45,776 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=141/163 sleep_seconds=5.00
+2026-04-19 15:26:51,116 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=142/163 processed=710 total=813
+2026-04-19 15:26:51,117 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=142/163 sleep_seconds=5.00
+2026-04-19 15:26:57,975 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=143/163 processed=715 total=813
+2026-04-19 15:26:57,975 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=143/163 sleep_seconds=5.00
+2026-04-19 15:27:04,804 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=144/163 processed=720 total=813
+2026-04-19 15:27:04,804 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=144/163 sleep_seconds=5.00
+2026-04-19 15:27:10,323 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=145/163 processed=725 total=813
+2026-04-19 15:27:10,323 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=145/163 sleep_seconds=5.00
+2026-04-19 15:27:15,700 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=146/163 processed=730 total=813
+2026-04-19 15:27:15,700 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=146/163 sleep_seconds=5.00
+2026-04-19 15:27:21,074 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=147/163 processed=735 total=813
+2026-04-19 15:27:21,074 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=147/163 sleep_seconds=5.00
+2026-04-19 15:27:26,465 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=148/163 processed=740 total=813
+2026-04-19 15:27:26,465 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=148/163 sleep_seconds=5.00
+2026-04-19 15:27:31,924 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=149/163 processed=745 total=813
+2026-04-19 15:27:31,929 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=149/163 sleep_seconds=5.00
+2026-04-19 15:27:37,764 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=150/163 processed=750 total=813
+2026-04-19 15:27:37,765 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=150/163 sleep_seconds=5.00
+2026-04-19 15:27:44,728 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=151/163 processed=755 total=813
+2026-04-19 15:27:44,729 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=151/163 sleep_seconds=5.00
+2026-04-19 15:27:50,118 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=152/163 processed=760 total=813
+2026-04-19 15:27:50,119 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=152/163 sleep_seconds=5.00
+2026-04-19 15:27:55,508 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=153/163 processed=765 total=813
+2026-04-19 15:27:55,509 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=153/163 sleep_seconds=5.00
+2026-04-19 15:28:01,016 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=154/163 processed=770 total=813
+2026-04-19 15:28:01,016 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=154/163 sleep_seconds=5.00
+2026-04-19 15:28:06,653 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=155/163 processed=775 total=813
+2026-04-19 15:28:06,653 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=155/163 sleep_seconds=5.00
+2026-04-19 15:28:13,598 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=156/163 processed=780 total=813
+2026-04-19 15:28:13,599 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=156/163 sleep_seconds=5.00
+2026-04-19 15:28:19,093 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=157/163 processed=785 total=813
+2026-04-19 15:28:19,093 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=157/163 sleep_seconds=5.00
+2026-04-19 15:28:24,522 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=158/163 processed=790 total=813
+2026-04-19 15:28:24,522 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=158/163 sleep_seconds=5.00
+2026-04-19 15:28:30,015 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=159/163 processed=795 total=813
+2026-04-19 15:28:30,015 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=159/163 sleep_seconds=5.00
+2026-04-19 15:28:35,607 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=160/163 processed=800 total=813
+2026-04-19 15:28:35,607 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=160/163 sleep_seconds=5.00
+2026-04-19 15:28:41,061 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=161/163 processed=805 total=813
+2026-04-19 15:28:41,061 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=161/163 sleep_seconds=5.00
+2026-04-19 15:28:46,566 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=162/163 processed=810 total=813
+2026-04-19 15:28:46,567 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_throttle book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=162/163 sleep_seconds=5.00
+2026-04-19 15:28:51,980 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 embedding_batch_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook batch=163/163 processed=813 total=813
+2026-04-19 15:28:51,996 INFO app.services.ingest request_id=a69c8871-0d8c-4255-86ae-e4fdca8a39e2 ingestion_completed book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b title=LLM engineering Handbook total_chunks=813 processed=813 failed=0 duration_ms=921539
+2026-04-19 15:30:41,514 INFO app.main request_id=75787503-39eb-4709-98c2-6d081872835e http_request_started method=GET path=/books/37dc7a88-8b08-4c00-93ec-a94d9d93bd8b/status client=127.0.0.1
+2026-04-19 15:30:41,516 INFO app.api.books request_id=75787503-39eb-4709-98c2-6d081872835e book_status_success book_id=37dc7a88-8b08-4c00-93ec-a94d9d93bd8b status=indexed progress=100
+2026-04-19 15:30:41,517 INFO app.main request_id=75787503-39eb-4709-98c2-6d081872835e http_request_finished method=GET path=/books/37dc7a88-8b08-4c00-93ec-a94d9d93bd8b/status status=200 duration_ms=3
+2026-04-19 15:30:41,538 INFO app.main request_id=a7bcd036-b042-4d23-aaab-162df1bc1846 http_request_started method=GET path=/library client=127.0.0.1
+2026-04-19 15:30:41,541 INFO app.main request_id=a7bcd036-b042-4d23-aaab-162df1bc1846 http_request_finished method=GET path=/library status=200 duration_ms=3
+2026-04-19 15:30:44,937 INFO app.main request_id=aa795c74-e231-4dab-9437-4ef48a4de7cb http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-19 15:30:44,940 INFO app.main request_id=aa795c74-e231-4dab-9437-4ef48a4de7cb http_request_finished method=GET path=/chat status=200 duration_ms=3
+2026-04-19 15:30:44,982 INFO app.main request_id=deb05b2a-0bbd-4da5-8589-56f402ca5108 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-19 15:30:46,624 INFO app.main request_id=deb05b2a-0bbd-4da5-8589-56f402ca5108 http_request_finished method=GET path=/chats status=200 duration_ms=1642
+2026-04-19 15:31:16,683 INFO app.main request_id=cf649709-44c5-4b93-9ad8-dd456d64fa67 http_request_started method=GET path=/.well-known/appspecific/com.chrome.devtools.json client=127.0.0.1
+2026-04-19 15:31:16,684 INFO app.main request_id=cf649709-44c5-4b93-9ad8-dd456d64fa67 http_request_finished method=GET path=/.well-known/appspecific/com.chrome.devtools.json status=404 duration_ms=1
+2026-04-19 15:31:16,845 INFO app.main request_id=a9d22f4c-e398-428b-887f-0a3a6a00b4ff http_request_started method=GET path=/content.css.map client=127.0.0.1
+2026-04-19 15:31:16,846 INFO app.main request_id=a9d22f4c-e398-428b-887f-0a3a6a00b4ff http_request_finished method=GET path=/content.css.map status=404 duration_ms=0
+2026-04-19 15:31:16,847 INFO app.main request_id=1dd5cec9-2409-4982-b61b-943e73cc35f3 http_request_started method=GET path=/sidebar.css.map client=127.0.0.1
+2026-04-19 15:31:16,848 INFO app.main request_id=1dd5cec9-2409-4982-b61b-943e73cc35f3 http_request_finished method=GET path=/sidebar.css.map status=404 duration_ms=0
+2026-04-19 15:32:16,254 INFO app.main request_id=2a590ab7-d4a5-4f40-a2dc-fce07d32fc81 http_request_started method=GET path=/chat client=127.0.0.1
+2026-04-19 15:32:16,279 INFO app.main request_id=2a590ab7-d4a5-4f40-a2dc-fce07d32fc81 http_request_finished method=GET path=/chat status=200 duration_ms=25
+2026-04-19 15:32:16,393 INFO app.main request_id=543c9de8-b3b8-45d3-866e-c17db78d1b46 http_request_started method=GET path=/.well-known/appspecific/com.chrome.devtools.json client=127.0.0.1
+2026-04-19 15:32:16,394 INFO app.main request_id=543c9de8-b3b8-45d3-866e-c17db78d1b46 http_request_finished method=GET path=/.well-known/appspecific/com.chrome.devtools.json status=404 duration_ms=0
+2026-04-19 15:32:16,424 INFO app.main request_id=78eb6e71-cc9b-4654-85e1-f38e63d72180 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-19 15:32:16,433 INFO app.main request_id=78eb6e71-cc9b-4654-85e1-f38e63d72180 http_request_finished method=GET path=/chats status=200 duration_ms=9
+2026-04-19 15:32:16,654 INFO app.main request_id=facede38-27fb-490f-bae4-d8c4ef9889d4 http_request_started method=GET path=/content.css.map client=127.0.0.1
+2026-04-19 15:32:16,656 INFO app.main request_id=facede38-27fb-490f-bae4-d8c4ef9889d4 http_request_finished method=GET path=/content.css.map status=404 duration_ms=1
+2026-04-19 15:32:16,714 INFO app.main request_id=6bb6d683-140e-4225-b3d9-4cc26fb4576d http_request_started method=GET path=/sidebar.css.map client=127.0.0.1
+2026-04-19 15:32:16,715 INFO app.main request_id=6bb6d683-140e-4225-b3d9-4cc26fb4576d http_request_finished method=GET path=/sidebar.css.map status=404 duration_ms=0
+2026-04-19 15:32:41,447 INFO app.main request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b http_request_started method=POST path=/query client=127.0.0.1
+2026-04-19 15:32:41,453 INFO app.api.query request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b query_requested question_len=24 question_snippet=what is this book about? selected_books=["37dc7a88-8b08-4c00-93ec-a94d9d93bd8b"] recent_history_turns=0 top_k=20 retrieval_mode=hybrid debug_requested=False debug_enabled=False
+2026-04-19 15:32:41,454 INFO app.services.qa request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b qa_answer_started question_len=24 question_snippet=what is this book about? effective_question_snippet=what is this book about? top_k=20 selected_books=["37dc7a88-8b08-4c00-93ec-a94d9d93bd8b"] book_filter_count=1 include_debug=False recent_history_turns=0 reformulation_used=False
+2026-04-19 15:32:41,456 INFO app.services.retrieval request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b retrieval_requested mode=hybrid top_k=40 fetch_k=160 selected_books=["37dc7a88-8b08-4c00-93ec-a94d9d93bd8b"] book_filter_count=1 question_len=24 question_snippet=what is this book about?
+2026-04-19 15:32:41,457 INFO app.services.retrieval request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b vectorstore_init provider=huggingface collection=books_huggingface persist_directory=data\chroma
+2026-04-19 15:32:41,458 INFO app.services.retrieval request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b embeddings_provider_selected provider=huggingface model=sentence-transformers/all-MiniLM-L6-v2
+2026-04-19 15:32:41,468 INFO sentence_transformers.SentenceTransformer request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b Use pytorch device_name: cuda
+2026-04-19 15:32:41,474 INFO sentence_transformers.SentenceTransformer request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b Load pretrained SentenceTransformer: sentence-transformers/all-MiniLM-L6-v2
+2026-04-19 15:32:50,012 INFO app.services.retrieval request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b retrieval_child_candidates mode=hybrid dense=160 lexical=160 unique=276 stage_latency_ms={"dense_search": 3822, "lexical_search": 957, "merge_rank": 0, "total": 8555}
+2026-04-19 15:32:50,069 INFO app.services.retrieval request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b parent_retrieval_completed mode=hybrid dense=160 lexical=160 parent_sections=20 candidates=200 retrieved_child_chunk_ids=["37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::36", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::38", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::590", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::7", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::4", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk:...<truncated> grouped_section_ids=["37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::section::toc::161", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::section::toc::133", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::section::toc::210", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::section::toc::211", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::section::toc::9", "37dc7...<truncated> top_group_child_chunk_ids=["37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::412", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::346", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::584", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::590", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::40", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::c...<truncated> stage_latency_ms={"dense_search": 3822, "lexical_search": 957, "merge_rank": 0, "total": 8555, "child_rank": 30, "parent_group": 24, "search_parent_total": 8612}
+2026-04-19 15:32:50,071 INFO app.services.qa request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b qa_retrieval_completed parent_sections=20 grouped_section_ids=["37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::section::toc::161", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::section::toc::133", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::section::toc::210", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::section::toc::211", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::section::toc::9", "37dc7...<truncated> retrieved_child_chunk_ids=["37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::36", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::38", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::590", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::7", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk::4", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b::chunk:...<truncated> retrieval_latency_ms=8614
+2026-04-19 15:32:50,080 INFO app.services.qa request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b qa_context_built context_chars=63160 citations=20 chosen_citations=["37dc7a88-8b08-4c00-93ec-a94d9d93bd8b:p266-273:Creating our own preference dataset", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b:p225-234:Creating our own instruction dataset", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b:p368-374:Implementing the retrieval module", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b:p375-37...<truncated> context_build_latency_ms=8
+2026-04-19 15:32:54,145 INFO app.services.qa request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b qa_llm_invoke_completed llm_latency_ms=3983
+2026-04-19 15:32:54,158 INFO app.services.qa request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b qa_answer_completed grounded=True citations=20 chosen_citations=["37dc7a88-8b08-4c00-93ec-a94d9d93bd8b:p266-273:Creating our own preference dataset", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b:p225-234:Creating our own instruction dataset", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b:p368-374:Implementing the retrieval module", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b:p375-37...<truncated> stage_latency_ms={"reformulation": 0, "retrieval": 8614, "context_build": 8, "llm_invoke": 3983, "total": 12703} answer_snippet=This book, "LLM engineering Handbook," is about building an end-to-end Large Language Model (LLM) product, specifically an "LLM Twin." An LLM Twin is an AI character that learns to write like a particular person by incorporating their style, voice, and personality into an LLM (p....<truncated>
+2026-04-19 15:32:54,166 INFO app.api.query request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b query_completed grounded=True citations=20 chosen_citations=["37dc7a88-8b08-4c00-93ec-a94d9d93bd8b:p266-273", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b:p225-234", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b:p368-374", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b:p375-379", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b:p32-33", "37dc7a88-8b08-4c00-93ec-a94d9d93bd8b:p386-387", "37dc7a...<truncated> duration_ms=12707 debug_included=False
+2026-04-19 15:32:54,235 INFO app.main request_id=e80ff029-febc-4eac-ad0d-6db83edfe80b http_request_finished method=POST path=/query status=200 duration_ms=12787
+2026-04-19 15:32:57,251 INFO app.main request_id=17508d4c-275d-4e02-acbd-c032fac0bb49 http_request_started method=GET path=/chats/2f2df5bf-eb08-4c56-ab38-7b1655adf261 client=127.0.0.1
+2026-04-19 15:32:57,259 INFO app.main request_id=17508d4c-275d-4e02-acbd-c032fac0bb49 http_request_finished method=GET path=/chats/2f2df5bf-eb08-4c56-ab38-7b1655adf261 status=200 duration_ms=7
+2026-04-19 15:32:59,505 INFO app.main request_id=9d9f2258-050c-4914-8bdd-da19e57cf641 http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-19 15:32:59,513 INFO app.main request_id=9d9f2258-050c-4914-8bdd-da19e57cf641 http_request_finished method=GET path=/chats status=200 duration_ms=8
+2026-04-19 15:33:19,428 INFO app.main request_id=76df41b6-09be-4b84-a32e-72711c3bc0b7 http_request_started method=GET path=/chats/af804c8b-7449-4953-b703-c6273c26c9c0 client=127.0.0.1
+2026-04-19 15:33:19,434 INFO app.main request_id=76df41b6-09be-4b84-a32e-72711c3bc0b7 http_request_finished method=GET path=/chats/af804c8b-7449-4953-b703-c6273c26c9c0 status=200 duration_ms=5
+2026-04-19 15:33:19,459 INFO app.main request_id=a287cc4f-9d6a-447e-8f07-d2e3017981ae http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-19 15:33:19,469 INFO app.main request_id=a287cc4f-9d6a-447e-8f07-d2e3017981ae http_request_finished method=GET path=/chats status=200 duration_ms=10
+2026-04-19 15:33:20,342 INFO app.main request_id=3ed4b53d-81b0-46d3-b060-b9cb7828c9b0 http_request_started method=GET path=/chats/2f2df5bf-eb08-4c56-ab38-7b1655adf261 client=127.0.0.1
+2026-04-19 15:33:20,347 INFO app.main request_id=3ed4b53d-81b0-46d3-b060-b9cb7828c9b0 http_request_finished method=GET path=/chats/2f2df5bf-eb08-4c56-ab38-7b1655adf261 status=200 duration_ms=5
+2026-04-19 15:33:20,371 INFO app.main request_id=b88c3f46-fc10-4258-959c-58cd0dd7dfca http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-19 15:33:20,381 INFO app.main request_id=b88c3f46-fc10-4258-959c-58cd0dd7dfca http_request_finished method=GET path=/chats status=200 duration_ms=9
+2026-04-19 15:33:22,917 INFO app.main request_id=3f1e5013-f60b-4845-b586-c9c6bd4d5d00 http_request_started method=GET path=/chat/2f2df5bf-eb08-4c56-ab38-7b1655adf261 client=127.0.0.1
+2026-04-19 15:33:22,920 INFO app.main request_id=3f1e5013-f60b-4845-b586-c9c6bd4d5d00 http_request_finished method=GET path=/chat/2f2df5bf-eb08-4c56-ab38-7b1655adf261 status=200 duration_ms=3
+2026-04-19 15:33:22,999 INFO app.main request_id=3b013759-2ad0-4be3-9b1c-ac1bb45559c4 http_request_started method=GET path=/chats/2f2df5bf-eb08-4c56-ab38-7b1655adf261 client=127.0.0.1
+2026-04-19 15:33:23,007 INFO app.main request_id=3b013759-2ad0-4be3-9b1c-ac1bb45559c4 http_request_finished method=GET path=/chats/2f2df5bf-eb08-4c56-ab38-7b1655adf261 status=200 duration_ms=7
+2026-04-19 15:33:23,097 INFO app.main request_id=964ad3d4-3d0a-4170-845b-6c15c2fb459a http_request_started method=GET path=/chats client=127.0.0.1
+2026-04-19 15:33:23,107 INFO app.main request_id=964ad3d4-3d0a-4170-845b-6c15c2fb459a http_request_finished method=GET path=/chats status=200 duration_ms=9
+2026-04-19 15:34:18,193 INFO app.main request_id=- app_shutdown

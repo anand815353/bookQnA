@@ -32,18 +32,24 @@
                 <h3>{{ book.title }}</h3>
                 <p class="muted"><strong>File:</strong> {{ book.file_name }}</p>
                 <p><strong>Status:</strong> <span class="status status-{{ book.status }}">{{ book.status }}</span></p>
-                <p class="muted"><strong>Current step:</strong> {{ book.current_step if book.current_step else "—" }}</p>
+                {% if book.status != "indexed" %}
+                    <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ book.progress_percent if book.progress_percent else 0 }}">
+                        <div class="progress-fill" data-progress="{{ book.progress_percent if book.progress_percent else 0 }}"></div>
+                    </div>
+                    <details class="book-processing-details">
+                        <summary>Processing Stats ({{ book.progress_percent if book.progress_percent else 0 }}%)</summary>
+                        <div class="book-stats-grid">
+                            <p class="muted"><strong>Current step:</strong> {{ book.current_step if book.current_step else "—" }}</p>
+                            <p class="muted"><strong>Total Chunks:</strong> {{ book.total_chunks if book.total_chunks else "—" }}</p>
+                            <p class="muted">
+                                <strong>Processed chunks:</strong>
+                                {{ book.processed_chunks if book.processed_chunks else 0 }} / {{ book.total_chunks if book.total_chunks else 0 }}
+                            </p>
+                            <p class="muted"><strong>Failed chunks:</strong> {{ book.failed_chunks if book.failed_chunks else 0 }}</p>
+                        </div>
+                    </details>
+                {% endif %}
                 <p class="muted"><strong>Total Pages:</strong> {{ book.total_pages if book.total_pages else "—" }}</p>
-                <p class="muted"><strong>Total Chunks:</strong> {{ book.total_chunks if book.total_chunks else "—" }}</p>
-                <p class="muted">
-                    <strong>Processed chunks:</strong>
-                    {{ book.processed_chunks if book.processed_chunks else 0 }} / {{ book.total_chunks if book.total_chunks else 0 }}
-                </p>
-                <p class="muted"><strong>Failed chunks:</strong> {{ book.failed_chunks if book.failed_chunks else 0 }}</p>
-                <p class="muted"><strong>Progress:</strong> {{ book.progress_percent if book.progress_percent else 0 }}%</p>
-                <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ book.progress_percent if book.progress_percent else 0 }}">
-                    <div class="progress-fill" data-progress="{{ book.progress_percent if book.progress_percent else 0 }}"></div>
-                </div>
 
                 {% if book.error_message %}
                     <details class="error-details">

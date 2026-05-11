@@ -1,0 +1,22 @@
+services:
+  bookqna:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    init: true
+    ports:
+      - "${BOOKQNA_PORT:-8000}:8000"
+    environment:
+      GOOGLE_API_KEY: "${GOOGLE_API_KEY:-}"
+      GEMINI_API_KEY: "${GEMINI_API_KEY:-}"
+      EMBEDDING_PROVIDER: "${EMBEDDING_PROVIDER:-huggingface}"
+      HF_EMBEDDING_MODEL: "${HF_EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}"
+      GEMINI_EMBEDDING_MODEL: "${GEMINI_EMBEDDING_MODEL:-models/gemini-embedding-001}"
+      LOG_LEVEL: "${LOG_LEVEL:-INFO}"
+      QUERY_DEBUG_ENABLED: "${QUERY_DEBUG_ENABLED:-false}"
+      ENABLE_QUERY_PLANNER: "${ENABLE_QUERY_PLANNER:-false}"
+      QUERY_PLANNER_FORCE_IN_DEBUG: "${QUERY_PLANNER_FORCE_IN_DEBUG:-false}"
+    volumes:
+      - ./data:/app/data
+    restart: unless-stopped
+

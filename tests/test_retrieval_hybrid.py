@@ -8,6 +8,8 @@ from app.services.retrieval import (
     _build_lexical_query_specs,
     _postprocess_ranked_docs,
     _score_ranked_list,
+    deserialize_parent_evidence,
+    serialize_parent_evidence,
 )
 
 
@@ -213,6 +215,36 @@ def test_lexical_query_specs_do_not_broaden_exact_phrase_queries():
         "standalone_question",
     ]
     assert "gradient descent definition chapter" not in [spec.text for spec in specs]
+
+
+def test_parent_evidence_serialize_roundtrip():
+    docs = [
+        Document(
+            page_content="Body text",
+            metadata={
+                "book_id": "b1",
+                "book_title": "Book One",
+                "chunk_index": 1,
+                "section_id": "s1",
+                "parent_section_id": "s1",
+                "section_title": "Optimization Basics",
+                "chapter_title": "Chapter 2",
+                "page_start": 20,
+                "page_end": 20,
+                "parent_page_start": 19,
+                "parent_page_end": 24,
+                "page_category": "content",
+            },
+        ),
+    ]
+    base_scores = _score_ranked_list(docs, weight=1.0)
+    evidence = _build_parent_evidence(docs, base_scores=base_scores, top_k=2)
+    blob = serialize_parent_evidence(evidence)
+    restored = deserialize_parent_evidence(blob)
+    assert len(restored) == len(evidence)
+    assert restored[0]["book_id"] == evidence[0]["book_id"]
+    assert restored[0]["children"][0]["doc"].page_content == "Body text"
+    assert restored[0]["children"][0]["score"] == evidence[0]["children"][0]["score"]
 
 
 def test_noop_planner_plan_does_not_change_dense_or_lexical_queries():

@@ -1,0 +1,14 @@
+.git
+.idea
+.venv
+venv
+.pytest_cache
+**/__pycache__
+**/*.py[cod]
+.env
+app/.env
+data
+tests
+book_qa_cursor_docs
+project_document
+

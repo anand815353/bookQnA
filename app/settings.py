@@ -28,6 +28,12 @@ HF_EMBEDDING_MODEL = os.getenv(
     "HF_EMBEDDING_MODEL", "sentence-transformers/all-MiniLM-L6-v2"
 )
 GEMINI_EMBEDDING_MODEL = os.getenv("GEMINI_EMBEDDING_MODEL", "models/gemini-embedding-001")
+
+# Gemini chat (answer + planner + reformulation): optional spacing to reduce free-tier 429 RPM bursts
+GEMINI_CHAT_MIN_INTERVAL_SECONDS = float(os.getenv("GEMINI_CHAT_MIN_INTERVAL_SECONDS", "0"))
+GEMINI_CHAT_MAX_RETRIES = max(1, int(os.getenv("GEMINI_CHAT_MAX_RETRIES", "6")))
+# Q&A and query reformulation use this model (planner uses QUERY_PLANNER_MODEL separately).
+GEMINI_CHAT_MODEL = os.getenv("GEMINI_CHAT_MODEL", "gemini-2.5-flash").strip()
 VECTORSTORE_COLLECTION_PREFIX = os.getenv("VECTORSTORE_COLLECTION_PREFIX", "books").strip()
 VECTORSTORE_COLLECTION_NAME = (
     f"{VECTORSTORE_COLLECTION_PREFIX}_{EMBEDDING_PROVIDER}"
@@ -57,3 +63,51 @@ QUERY_PLANNER_MAX_KEYWORDS = int(os.getenv("QUERY_PLANNER_MAX_KEYWORDS", "6"))
 QUERY_PLANNER_USE_BOOK_METADATA = _env_bool("QUERY_PLANNER_USE_BOOK_METADATA", default=True)
 QUERY_PLANNER_LOW_TEMP = float(os.getenv("QUERY_PLANNER_LOW_TEMP", "0"))
 QUERY_PLANNER_SHORT_QUERY_WORDS = int(os.getenv("QUERY_PLANNER_SHORT_QUERY_WORDS", "3"))
+
+# Hybrid merge (defaults preserve prior dense*0.7 + lexical*1.0 behavior)
+HYBRID_DENSE_WEIGHT = float(os.getenv("HYBRID_DENSE_WEIGHT", "0.7"))
+HYBRID_LEXICAL_WEIGHT = float(os.getenv("HYBRID_LEXICAL_WEIGHT", "1.0"))
+
+# Lexical FTS index (optional; false = legacy Chroma corpus BM25 scan)
+ENABLE_LEXICAL_RETRIEVAL = _env_bool("ENABLE_LEXICAL_RETRIEVAL", default=False)
+LEXICAL_INDEX_VERSION = os.getenv("LEXICAL_INDEX_VERSION", "2").strip()
+
+# Reranker (disabled by default). Prefer RERANKER_ENABLED; if unset, ENABLE_RERANKER is used.
+if os.getenv("RERANKER_ENABLED") is not None:
+    RERANKER_ENABLED = _env_bool("RERANKER_ENABLED", default=False)
+else:
+    RERANKER_ENABLED = _env_bool("ENABLE_RERANKER", default=False)
+ENABLE_RERANKER = RERANKER_ENABLED
+RERANKER_PROVIDER = os.getenv("RERANKER_PROVIDER", "cross_encoder").strip().lower()
+RERANKER_MODEL = os.getenv("RERANKER_MODEL", "BAAI/bge-reranker-base").strip()
+try:
+    RERANKER_TOP_N = int(os.getenv("RERANKER_TOP_N", "8"))
+except ValueError:
+    RERANKER_TOP_N = 8
+
+# Context packer
+CONTEXT_MAX_CHARS = int(os.getenv("CONTEXT_MAX_CHARS", "32000"))
+INCLUDE_PARENT_CONTEXT = _env_bool("INCLUDE_PARENT_CONTEXT", default=True)
+
+# Caches
+ENABLE_RETRIEVAL_CACHE = _env_bool("ENABLE_RETRIEVAL_CACHE", default=False)
+RETRIEVAL_CACHE_TTL_SECONDS = int(os.getenv("RETRIEVAL_CACHE_TTL_SECONDS", "300"))
+ENABLE_GENERATION_CACHE = _env_bool("ENABLE_GENERATION_CACHE", default=False)
+GENERATION_CACHE_TTL_SECONDS = int(os.getenv("GENERATION_CACHE_TTL_SECONDS", "86400"))
+REDIS_URL = os.getenv("REDIS_URL", "").strip() or None
+PROMPT_VERSION = os.getenv("PROMPT_VERSION", "1").strip()
+
+# Stable hash of cache-relevant settings subset
+CACHE_CONFIG_VERSION = os.getenv(
+    "CACHE_CONFIG_VERSION",
+    "v1",
+).strip()
+
+# App identity (tracing / reports)
+APP_ENV = os.getenv("APP_ENV", "local").strip()
+APP_VERSION = os.getenv("APP_VERSION", "dev").strip()
+
+# LangSmith (optional; requires API key in environment when enabled)
+ENABLE_LANGSMITH = _env_bool("ENABLE_LANGSMITH", default=False)
+LANGSMITH_PROJECT = os.getenv("LANGSMITH_PROJECT", "bookqna-rag").strip()
+LANGSMITH_TRACE_FULL_CONTEXT = _env_bool("LANGSMITH_TRACE_FULL_CONTEXT", default=False)

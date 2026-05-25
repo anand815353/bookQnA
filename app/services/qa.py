@@ -8,16 +8,39 @@ import time
 
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
+from app.db import SessionLocal
 from app.logging_config import log_structured, sanitize_for_debug
 from app.schemas import QueryPlannerPlan
+from app.services.book_metadata import load_planner_book_hints
+from app.services.cache import build_generation_cache_key, get_cache_backend, key_hash_hex
+from app.services.context_packer import pack_context_from_parent_evidence
 from app.services.query_planner import (
     QueryPlannerUsageDecision,
     plan_retrieval_query,
     serialize_query_planner_usage_decision,
     should_use_query_planner,
 )
+from app.services.observability import (
+    generation_invoke_metadata,
+    maybe_traceable,
+    stable_hash,
+    trace_process_inputs_answer_question,
+    trace_process_outputs_answer_question,
+)
+from app.services.gemini_chat_throttle import wait_gemini_chat_slot
 from app.services.retrieval import search_parent_evidence
-from app.settings import LOG_DEBUG_SNIPPET_CHARS, MAX_HISTORY_CHARS, QUERY_DEBUG_CONTEXT_CHARS
+from app.settings import (
+    ENABLE_GENERATION_CACHE,
+    GEMINI_CHAT_MAX_RETRIES,
+    GEMINI_CHAT_MODEL,
+    GENERATION_CACHE_TTL_SECONDS,
+    LOG_DEBUG_SNIPPET_CHARS,
+    MAX_HISTORY_CHARS,
+    PROMPT_VERSION,
+    QUERY_DEBUG_CONTEXT_CHARS,
+    REDIS_URL,
+    RETRIEVAL_MODE,
+)
 # from dotenv import load_dotenv
 #
 # load_dotenv()
@@ -31,8 +54,6 @@ ABSTAIN_MESSAGE = (
     "Please upload/reindex relevant content or ask a more specific question."
 )
 logger = logging.getLogger(__name__)
-CHILD_SNIPPET_CHARS = 850
-PARENT_CONTEXT_CHARS = 2300
 HISTORY_QUESTION_PROMPT_CHARS = 220
 HISTORY_ANSWER_PROMPT_CHARS = 420
 STANDALONE_QUESTION_MAX_CHARS = 320
@@ -43,14 +64,6 @@ def _compact_text(text: str, max_chars: int) -> str:
     if len(compacted) <= max_chars:
         return compacted
     return compacted[: max(0, max_chars - 3)].rstrip() + "..."
-
-
-def _citation_trace_id(citation: dict) -> str:
-    return (
-        f"{citation.get('book_id', '')}:"
-        f"p{citation.get('page_start', 0)}-{citation.get('page_end', 0)}:"
-        f"{citation.get('section_title') or citation.get('chapter_title') or 'unknown'}"
-    )
 
 
 def _planner_is_noop_failure(plan: QueryPlannerPlan | None) -> bool:
@@ -88,9 +101,10 @@ def _resolve_api_key() -> str | None:
 
 def _build_llm(api_key: str) -> ChatGoogleGenerativeAI:
     return ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
+        model=GEMINI_CHAT_MODEL,
         temperature=0,
         google_api_key=api_key,
+        max_retries=GEMINI_CHAT_MAX_RETRIES,
     )
 
 
@@ -152,6 +166,7 @@ def _build_standalone_question(
 
     started = time.perf_counter()
     try:
+        wait_gemini_chat_slot()
         response = chain.invoke(
             {
                 "recent_history": recent_history_text,
@@ -169,6 +184,12 @@ def _build_standalone_question(
     return rewritten, rewritten.strip() != (question or "").strip(), reformulation_ms
 
 
+@maybe_traceable(
+    run_type="chain",
+    name="answer_question",
+    process_inputs=trace_process_inputs_answer_question,
+    process_outputs=trace_process_outputs_answer_question,
+)
 def answer_question(
     question: str,
     book_ids: list[str] | None = None,
@@ -206,10 +227,20 @@ def answer_question(
     )
     if planner_decision is not None and planner_decision.should_use:
         planner_started = time.perf_counter()
+        planner_book_hints: dict = {}
+        if book_ids:
+            db_session = SessionLocal()
+            try:
+                planner_book_hints = load_planner_book_hints(db_session, book_ids)
+            except Exception:
+                logger.exception("planner_book_metadata_load_failed")
+            finally:
+                db_session.close()
         planner_plan = plan_retrieval_query(
             question,
             recent_history=recent_history,
             planner_enabled=True,
+            **planner_book_hints,
         )
         planner_ms = int((time.perf_counter() - planner_started) * 1000)
         planner_used = True
@@ -314,81 +345,32 @@ def answer_question(
                     "retrieval": retrieval_ms,
                     "context_build": 0,
                     "llm_invoke": 0,
+                    "total_generation_latency_ms": 0,
                     "total": int((time.perf_counter() - started) * 1000),
                 },
+                "context_chars_before": 0,
+                "context_chars_after": 0,
+                "generation_cache_hit": False,
+                "generation_cache_key_hash": None,
+                "generation_cache_latency_ms": 0,
                 "grounded": False,
             }
         return response
 
-    citations = []
-    context_parts = []
-    citation_ids: list[str] = []
-
     context_started = time.perf_counter()
-    for parent in parent_evidence:
-        children = parent.get("children", [])
-        if not children:
-            continue
-
-        best_child = children[0]["doc"]
-        best_child_score = float(children[0].get("score", 0.0))
-        book_id = parent.get("book_id", best_child.metadata.get("book_id", ""))
-        book_title = parent.get("book_title", best_child.metadata.get("book_title", "Unknown"))
-        page_start = int(parent.get("page_start", best_child.metadata.get("page_start", 0)) or 0)
-        page_end = int(parent.get("page_end", best_child.metadata.get("page_end", page_start)) or page_start)
-        snippet = _compact_text(best_child.page_content, CHILD_SNIPPET_CHARS)
-
-        citations.append({
-            "book_id": book_id,
-            "book_title": book_title,
-            "page_start": page_start,
-            "page_end": page_end,
-            "snippet": snippet,
-            "chapter_title": parent.get("chapter_title", best_child.metadata.get("chapter_title")),
-            "subchapter_title": parent.get("subchapter_title", best_child.metadata.get("subchapter_title")),
-            "section_title": parent.get("section_title", best_child.metadata.get("section_title")),
-            "page_category": best_child.metadata.get("page_category"),
-            "structure_source": parent.get("structure_source", best_child.metadata.get("structure_source")),
-            "confidence": parent.get("confidence", best_child_score),
-        })
-        citation_ids.append(
-            _citation_trace_id(
-                {
-                    "book_id": book_id,
-                    "page_start": page_start,
-                    "page_end": page_end,
-                    "section_title": parent.get("section_title"),
-                    "chapter_title": parent.get("chapter_title"),
-                }
-            )
-        )
-
-        child_lines = []
-        for child in children:
-            child_doc = child["doc"]
-            child_page_start = int(child_doc.metadata.get("page_start", page_start) or page_start)
-            child_page_end = int(child_doc.metadata.get("page_end", child_page_start) or child_page_start)
-            child_snippet = _compact_text(child_doc.page_content, CHILD_SNIPPET_CHARS)
-            child_lines.append(f"[p{child_page_start}-{child_page_end}] {child_snippet}")
-
-        parent_excerpt = _compact_text(parent.get("parent_excerpt", ""), PARENT_CONTEXT_CHARS)
-        child_block = "\n".join(child_lines)
-        context_parts.append(
-            f"Book: {book_title}\n"
-            f"Chapter: {parent.get('chapter_title') or 'Unknown'}\n"
-            f"Subchapter: {parent.get('subchapter_title') or 'Unknown'}\n"
-            f"Section: {parent.get('section_title') or 'Unknown'}\n"
-            f"Section Pages: {page_start}-{page_end}\n"
-            f"Best Child Snippets:\n{child_block}\n"
-            f"Parent Excerpt: {parent_excerpt}"
-        )
-
-    context = "\n\n".join(context_parts)
+    packed = pack_context_from_parent_evidence(parent_evidence)
+    context = packed["context"]
+    citations = packed["citations"]
+    citation_ids = packed["citation_ids"]
+    context_chars_before = packed["context_chars_before"]
+    context_chars_after = packed["context_chars_after"]
     context_build_ms = int((time.perf_counter() - context_started) * 1000)
     log_structured(
         logger,
         "qa_context_built",
         context_chars=len(context),
+        context_chars_before=context_chars_before,
+        context_chars_after=context_chars_after,
         citations=len(citations),
         chosen_citations=citation_ids,
         context_build_latency_ms=context_build_ms,
@@ -426,13 +408,81 @@ def answer_question(
 
     chain = prompt | llm
     llm_started = time.perf_counter()
+    generation_cache_hit = False
+    generation_cache_latency_ms = 0
+    generation_cache_key_hash: str | None = None
+    answer_text = ""
+    normalized_user_q = re.sub(r"\s+", " ", (question or "").strip()).lower()
+    planner_mode = planner_plan.query_type if planner_plan is not None else "none"
+    gen_cache_key: str | None = None
+    if ENABLE_GENERATION_CACHE and not recent_history_text.strip():
+        context_fp = key_hash_hex({"context": context})
+        gen_cache_key = build_generation_cache_key(
+            normalized_question=normalized_user_q,
+            book_ids=list(book_ids) if book_ids else None,
+            model_name=GEMINI_CHAT_MODEL,
+            prompt_version=PROMPT_VERSION,
+            context_hash=context_fp,
+            planner_mode=planner_mode,
+            retrieval_mode=RETRIEVAL_MODE,
+            top_k=top_k,
+        )
+        generation_cache_key_hash = key_hash_hex({"k": gen_cache_key, "t": "gen_v1"})
+        cache_backend = get_cache_backend(redis_url=REDIS_URL)
+        cache_read_started = time.perf_counter()
+        try:
+            cached_gen = cache_backend.get(gen_cache_key)
+        except Exception:
+            logger.exception("generation_cache_get_failed")
+            cached_gen = None
+        generation_cache_latency_ms = int((time.perf_counter() - cache_read_started) * 1000)
+        if isinstance(cached_gen, dict) and cached_gen.get("answer"):
+            generation_cache_hit = True
+            answer_text = str(cached_gen["answer"]).strip()
+
     try:
-        response = chain.invoke({
-            "question": question,
-            "effective_question": effective_question,
-            "recent_history": recent_history_text or "(none)",
-            "context": context
-        })
+        if not generation_cache_hit:
+            invoke_payload = {
+                "question": question,
+                "effective_question": effective_question,
+                "recent_history": recent_history_text or "(none)",
+                "context": context,
+            }
+            invoke_metadata = generation_invoke_metadata(
+                prompt_version=PROMPT_VERSION,
+                model_name=GEMINI_CHAT_MODEL,
+                retrieval_mode=RETRIEVAL_MODE,
+                planner_mode=planner_mode,
+                context_chars=len(context),
+                context_chars_before=context_chars_before,
+                context_chars_after=context_chars_after,
+                dense_result_count=retrieval_debug.get("dense_result_count"),
+                lexical_result_count=retrieval_debug.get("lexical_result_count"),
+                hybrid_result_count=retrieval_debug.get("hybrid_result_count"),
+                reranker_enabled=retrieval_debug.get("reranker_enabled"),
+                reranker_latency_ms=retrieval_debug.get("reranker_latency_ms"),
+                retrieval_cache_hit=retrieval_debug.get("retrieval_cache_hit"),
+                generation_cache_hit=generation_cache_hit,
+                citations_count=len(citations),
+                question_len=len(question or ""),
+                question_hash=stable_hash(question or ""),
+            )
+            invoke_config: dict = {
+                "tags": ["bookqna", "qa", "generation"],
+                "metadata": invoke_metadata,
+            }
+            wait_gemini_chat_slot()
+            response = chain.invoke(invoke_payload, config=invoke_config)
+            answer_text = response.content.strip()
+            if ENABLE_GENERATION_CACHE and gen_cache_key and not recent_history_text.strip():
+                try:
+                    get_cache_backend(redis_url=REDIS_URL).set(
+                        gen_cache_key,
+                        {"answer": answer_text},
+                        GENERATION_CACHE_TTL_SECONDS,
+                    )
+                except Exception:
+                    logger.exception("generation_cache_set_failed")
     except Exception:
         logger.exception(
             "qa_stage_failed stage=llm_invoke context_chars=%s",
@@ -441,9 +491,12 @@ def answer_question(
         raise
 
     llm_ms = int((time.perf_counter() - llm_started) * 1000)
-    log_structured(logger, "qa_llm_invoke_completed", llm_latency_ms=llm_ms)
-
-    answer_text = response.content.strip()
+    log_structured(
+        logger,
+        "qa_llm_invoke_completed",
+        llm_latency_ms=llm_ms,
+        generation_cache_hit=generation_cache_hit,
+    )
     lowered = answer_text.lower()
     grounded = bool(citations) and "i do not know" not in lowered
 
@@ -454,6 +507,7 @@ def answer_question(
         "retrieval": retrieval_ms,
         "context_build": context_build_ms,
         "llm_invoke": llm_ms,
+        "total_generation_latency_ms": llm_ms,
         "total": total_ms,
     }
     log_structured(
@@ -495,5 +549,10 @@ def answer_question(
             "chosen_citations": citation_ids,
             "stage_latency_ms": stage_latency,
             "grounded": grounded,
+            "context_chars_before": context_chars_before,
+            "context_chars_after": context_chars_after,
+            "generation_cache_hit": generation_cache_hit,
+            "generation_cache_key_hash": generation_cache_key_hash,
+            "generation_cache_latency_ms": generation_cache_latency_ms,
         }
     return result

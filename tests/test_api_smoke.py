@@ -21,6 +21,13 @@ def test_book_lifecycle_and_status(monkeypatch):
     monkeypatch.setattr("app.api.books.ingest_book", lambda _book_id: None)
     monkeypatch.setattr("app.api.books.delete_book_vectors", lambda _book_id: 0)
     monkeypatch.setattr("app.api.books.delete_book_files", lambda _book_id: None)
+    cache_invalidations: list[str] = []
+
+    def _record_invalidate(bid: str) -> tuple[int, int]:
+        cache_invalidations.append(bid)
+        return (0, 0)
+
+    monkeypatch.setattr("app.api.books.invalidate_book", _record_invalidate)
 
     files = {"file": ("sample.pdf", _pdf_bytes(), "application/pdf")}
     data = {"title": "Sample Book", "auto_ingest": "false"}
@@ -49,6 +56,7 @@ def test_book_lifecycle_and_status(monkeypatch):
     delete_response = client.delete(f"/books/{book_id}")
     assert delete_response.status_code == 200
     assert delete_response.json()["ok"] is True
+    assert cache_invalidations == [book_id, book_id]
 
 
 def test_query_endpoint_with_and_without_book_filter(monkeypatch):

@@ -1,4 +1,5 @@
 import inspect
+import time
 from collections import defaultdict
 from typing import Any, Callable
 
@@ -135,7 +136,44 @@ def default_answer_adapter(
         enable_query_reformulation=bool(recent_history),
         enable_query_planner=planner_enabled,
         force_query_planner=force_planner,
+        include_debug=True,
     )
+
+
+def _eval_debug_from_answer_payload(payload: dict[str, Any]) -> dict[str, Any]:
+    """Whitelisted debug fields for eval JSON (no new keys inside metrics)."""
+    debug = payload.get("debug")
+    if not isinstance(debug, dict):
+        return {}
+    retrieval = debug.get("retrieval")
+    if not isinstance(retrieval, dict):
+        retrieval = {}
+    planner = debug.get("planner")
+    planner_query_type = None
+    if isinstance(planner, dict):
+        planner_query_type = planner.get("query_type")
+    if planner_query_type is None:
+        qp = retrieval.get("query_plan")
+        if isinstance(qp, dict):
+            planner_query_type = qp.get("query_type")
+
+    return {
+        "planner_used": debug.get("planner_used"),
+        "planner_applied": debug.get("planner_applied"),
+        "planner_query_type": planner_query_type,
+        "dense_result_count": retrieval.get("dense_result_count"),
+        "lexical_result_count": retrieval.get("lexical_result_count"),
+        "hybrid_result_count": retrieval.get("hybrid_result_count"),
+        "reranker_enabled": retrieval.get("reranker_enabled"),
+        "reranker_latency_ms": retrieval.get("reranker_latency_ms"),
+        "retrieval_cache_hit": retrieval.get("retrieval_cache_hit"),
+        "generation_cache_hit": debug.get("generation_cache_hit"),
+        "context_chars_before": debug.get("context_chars_before"),
+        "context_chars_after": debug.get("context_chars_after"),
+        "stage_latency_ms": debug.get("stage_latency_ms"),
+        "chosen_citations": debug.get("chosen_citations"),
+        "grounded": debug.get("grounded"),
+    }
 
 
 def _invoke_eval_fn(
@@ -198,6 +236,130 @@ def _summarize_metrics(
         summary["by_test_type"][test_type] = by_type
 
     return summary
+
+
+def _metric_trend(delta: float | None) -> str:
+    if delta is None:
+        return "unknown"
+    if delta > 0:
+        return "improved"
+    if delta < 0:
+        return "regressed"
+    return "same"
+
+
+def _apply_trends_to_comparison_summary(summary_comparison: dict[str, Any]) -> None:
+    for payload in summary_comparison.get("metrics", {}).values():
+        if isinstance(payload, dict):
+            payload["trend"] = _metric_trend(payload.get("delta"))
+    for block in summary_comparison.get("by_test_type", {}).values():
+        if not isinstance(block, dict):
+            continue
+        for payload in block.get("metrics", {}).values():
+            if isinstance(payload, dict):
+                payload["trend"] = _metric_trend(payload.get("delta"))
+
+
+def _mean_latency_ms(results: list[dict[str, Any]]) -> float | None:
+    vals = [row["latency_ms"] for row in results if isinstance(row.get("latency_ms"), (int, float))]
+    if not vals:
+        return None
+    return round(sum(vals) / len(vals), 2)
+
+
+def _latency_comparison_block(
+    baseline_results: list[dict[str, Any]],
+    planner_results: list[dict[str, Any]],
+) -> dict[str, Any]:
+    b = _mean_latency_ms(baseline_results)
+    p = _mean_latency_ms(planner_results)
+    delta = None
+    if b is not None and p is not None:
+        delta = round(p - b, 2)
+    trend = "unknown"
+    if delta is not None:
+        if delta < 0:
+            trend = "improved"
+        elif delta > 0:
+            trend = "regressed"
+        else:
+            trend = "same"
+    return {
+        "baseline_mean_ms": b,
+        "planner_mean_ms": p,
+        "delta_planner_minus_baseline_ms": delta,
+        "trend": trend,
+        "note": "negative_delta_ms means planner path was faster on average",
+    }
+
+
+def _top_evidence_slice(row: dict[str, Any], top_k: int) -> list[dict[str, Any]]:
+    if row.get("evidence") is not None:
+        ev = row.get("evidence") or []
+        return [dict(x) for x in ev[:top_k] if isinstance(x, dict)]
+    cit = row.get("citations") or []
+    return [dict(x) for x in cit[:top_k] if isinstance(x, dict)]
+
+
+def _build_per_case_planner_comparison(
+    baseline_results: list[dict[str, Any]],
+    planner_results: list[dict[str, Any]],
+    *,
+    metric_keys: tuple[str, ...],
+    top_k: int,
+    include_answers: bool,
+) -> list[dict[str, Any]]:
+    baseline_by_case = {row["case_id"]: row for row in baseline_results}
+    planner_by_case = {row["case_id"]: row for row in planner_results}
+    out: list[dict[str, Any]] = []
+
+    for case_id in sorted(set(baseline_by_case) | set(planner_by_case)):
+        b_row = baseline_by_case.get(case_id, {})
+        p_row = planner_by_case.get(case_id, {})
+        metrics_out: dict[str, Any] = {}
+        for metric in metric_keys:
+            bv = b_row.get("metrics", {}).get(metric) if b_row else None
+            pv = p_row.get("metrics", {}).get(metric) if p_row else None
+            delta = None
+            if bv is not None and pv is not None:
+                delta = round(float(pv) - float(bv), 4)
+            metrics_out[metric] = {
+                "baseline": bv,
+                "planner": pv,
+                "delta": delta,
+                "trend": _metric_trend(delta),
+            }
+
+        entry: dict[str, Any] = {
+            "case_id": case_id,
+            "question": b_row.get("question") or p_row.get("question"),
+            "test_type": b_row.get("test_type") or p_row.get("test_type"),
+            "answerable": b_row.get("answerable") if b_row.get("answerable") is not None else p_row.get("answerable"),
+            "expected": {
+                "book": b_row.get("expected_book") or p_row.get("expected_book"),
+                "pages": b_row.get("expected_pages") or p_row.get("expected_pages"),
+                "chapter": b_row.get("expected_chapter") or p_row.get("expected_chapter"),
+                "answer_keywords": b_row.get("expected_answer_keywords")
+                or p_row.get("expected_answer_keywords"),
+            },
+            "metrics": metrics_out,
+            "baseline": {
+                "latency_ms": b_row.get("latency_ms"),
+                "evidence_top": _top_evidence_slice(b_row, top_k),
+            },
+            "planner": {
+                "latency_ms": p_row.get("latency_ms"),
+                "evidence_top": _top_evidence_slice(p_row, top_k),
+            },
+        }
+        if include_answers:
+            entry["baseline"]["answer"] = b_row.get("answer")
+            entry["planner"]["answer"] = p_row.get("answer")
+            entry["baseline"]["eval_debug"] = b_row.get("eval_debug")
+            entry["planner"]["eval_debug"] = p_row.get("eval_debug")
+        out.append(entry)
+
+    return out
 
 
 def _compare_metric_payloads(
@@ -353,12 +515,15 @@ def _build_comparison_report(
     planner_report: dict[str, Any],
     *,
     metric_keys: tuple[str, ...],
+    top_k: int = 8,
+    include_answers: bool = False,
 ) -> dict[str, Any]:
     summary_comparison = _compare_summaries(
         baseline_report["summary"],
         planner_report["summary"],
         metric_keys=metric_keys,
     )
+    _apply_trends_to_comparison_summary(summary_comparison)
     regressions, critical_regressions = _collect_regressions(summary_comparison)
     focus_buckets = {
         test_type: summary_comparison["by_test_type"].get(test_type)
@@ -367,6 +532,13 @@ def _build_comparison_report(
 
     return {
         "summary": summary_comparison,
+        "summary_metric_notes": {
+            "top_k_evidence_hit": "Same as evidence_hit in eval docs: intersection of book/page/chapter constraints in top-k.",
+        },
+        "latency_ms": _latency_comparison_block(
+            baseline_report["results"],
+            planner_report["results"],
+        ),
         "focus_buckets": focus_buckets,
         "regressions": regressions,
         "critical_regressions": critical_regressions,
@@ -374,6 +546,13 @@ def _build_comparison_report(
             baseline_report["results"],
             planner_report["results"],
             metric_keys=metric_keys,
+        ),
+        "per_case": _build_per_case_planner_comparison(
+            baseline_report["results"],
+            planner_report["results"],
+            metric_keys=metric_keys,
+            top_k=top_k,
+            include_answers=include_answers,
         ),
     }
 
@@ -390,6 +569,7 @@ def evaluate_retrieval(
     results: list[dict[str, Any]] = []
 
     for case in cases:
+        started = time.perf_counter()
         evidence = _invoke_eval_fn(
             retrieval,
             case=case,
@@ -397,6 +577,7 @@ def evaluate_retrieval(
             planner_enabled=planner_enabled,
             force_planner=force_planner,
         )
+        latency_ms = int((time.perf_counter() - started) * 1000)
         metrics = retrieval_metrics_for_case(case, evidence)
         results.append(
             {
@@ -410,6 +591,7 @@ def evaluate_retrieval(
                 "metrics": metrics,
                 "evidence_count": len(evidence),
                 "evidence": evidence[:top_k],
+                "latency_ms": latency_ms,
             }
         )
 
@@ -431,6 +613,7 @@ def evaluate_answers(
     results: list[dict[str, Any]] = []
 
     for case in cases:
+        started = time.perf_counter()
         payload = _invoke_eval_fn(
             answer,
             case=case,
@@ -438,6 +621,7 @@ def evaluate_answers(
             planner_enabled=planner_enabled,
             force_planner=force_planner,
         ) or {}
+        latency_ms = int((time.perf_counter() - started) * 1000)
         answer_text = str(payload.get("answer", "") or "")
         citations = payload.get("citations", []) or []
         citation_rows = [dict(item) for item in citations if isinstance(item, dict)]
@@ -451,6 +635,8 @@ def evaluate_answers(
             answerable=case.answerable,
         )
         metrics["citation_usefulness_score_manual"] = case.citation_usefulness_score_manual
+
+        eval_debug = _eval_debug_from_answer_payload(payload)
 
         results.append(
             {
@@ -467,6 +653,8 @@ def evaluate_answers(
                 "answer": answer_text,
                 "citation_count": len(citation_rows),
                 "citations": citation_rows[:top_k],
+                "eval_debug": eval_debug,
+                "latency_ms": latency_ms,
             }
         )
 
@@ -504,6 +692,8 @@ def compare_retrieval(
             baseline,
             planner,
             metric_keys=RETRIEVAL_METRIC_KEYS,
+            top_k=top_k,
+            include_answers=False,
         ),
     }
 
@@ -536,5 +726,7 @@ def compare_answers(
             baseline,
             planner,
             metric_keys=ANSWER_METRIC_KEYS,
+            top_k=top_k,
+            include_answers=True,
         ),
     }

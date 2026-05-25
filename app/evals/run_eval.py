@@ -1,8 +1,19 @@
 import argparse
 import json
+import os
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+from dotenv import load_dotenv
+
+_APP_DIR = Path(__file__).resolve().parents[1]
+load_dotenv(_APP_DIR / ".env")
+# Must run before importing app.settings (reranker flags are read at import time).
+if "--no-reranker" in sys.argv:
+    os.environ["RERANKER_ENABLED"] = "false"
+    os.environ["ENABLE_RERANKER"] = "false"
 
 from app.evals.dataset import load_eval_cases
 from app.evals.runner import (
@@ -14,11 +25,14 @@ from app.evals.runner import (
 from app.settings import (
     EMBEDDING_PROVIDER,
     ENABLE_QUERY_PLANNER,
+    GEMINI_CHAT_MODEL,
     HYBRID_RRF_K,
     LEXICAL_MAX_DOCS,
     QUERY_PLANNER_MODEL,
     RETRIEVAL_FETCH_K,
     RETRIEVAL_MODE,
+    RERANKER_ENABLED,
+    RERANKER_PROVIDER,
 )
 
 
@@ -26,8 +40,11 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
 
 
-def _default_output_path() -> Path:
-    return Path("evals") / "reports" / f"eval_report_{_timestamp()}.json"
+def _default_output_path(*, compare_planner: bool = False) -> Path:
+    ts = _timestamp()
+    if compare_planner:
+        return Path("evals") / "reports" / f"planner_comparison_{ts}.json"
+    return Path("evals") / "reports" / f"eval_report_{ts}.json"
 
 
 def _format_metric(value: float | None, count: int) -> str:
@@ -72,11 +89,13 @@ def _print_comparison_block(title: str, comparison_payload: dict[str, Any]) -> N
 
     print("overall:")
     for metric_name, metric in comparison.get("summary", {}).get("metrics", {}).items():
+        trend = metric.get("trend")
+        trend_s = f" trend={trend}" if trend else ""
         print(
             f"- {metric_name}: "
             f"baseline={_format_metric(metric.get('baseline'), metric.get('baseline_count', 0))} "
             f"planner={_format_metric(metric.get('planner'), metric.get('planner_count', 0))} "
-            f"delta={_format_delta(metric.get('delta'))}"
+            f"delta={_format_delta(metric.get('delta'))}{trend_s}"
         )
 
     focus_buckets = comparison.get("focus_buckets", {})
@@ -87,11 +106,13 @@ def _print_comparison_block(title: str, comparison_payload: dict[str, Any]) -> N
                 continue
             print(f"- {test_type}: cases={payload.get('cases_total', 0)}")
             for metric_name, metric in payload.get("metrics", {}).items():
+                tr = metric.get("trend")
+                tr_s = f" trend={tr}" if tr else ""
                 print(
                     f"  {metric_name}: "
                     f"baseline={_format_metric(metric.get('baseline'), metric.get('baseline_count', 0))} "
                     f"planner={_format_metric(metric.get('planner'), metric.get('planner_count', 0))} "
-                    f"delta={_format_delta(metric.get('delta'))}"
+                    f"delta={_format_delta(metric.get('delta'))}{tr_s}"
                 )
 
     critical_regressions = comparison.get("critical_regressions", [])
@@ -145,6 +166,14 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="If set, fail the run when answer eval fails (e.g., missing API key).",
     )
+    parser.add_argument(
+        "--no-reranker",
+        action="store_true",
+        help=(
+            "Disable cross-encoder reranking for this process (overrides .env). "
+            "Avoids downloading ~1GB BGE weights on first run when RERANKER_ENABLED=true."
+        ),
+    )
     return parser
 
 
@@ -166,7 +195,11 @@ def main() -> None:
 
     dataset_path = Path(args.dataset)
     cases = load_eval_cases(dataset_path)
-    output_path = Path(args.output) if args.output else _default_output_path()
+    output_path = (
+        Path(args.output)
+        if args.output
+        else _default_output_path(compare_planner=bool(args.compare_planner))
+    )
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     run_payload: dict[str, Any] = {
@@ -184,9 +217,14 @@ def main() -> None:
                 "hybrid_rrf_k": HYBRID_RRF_K,
                 "planner_default_enabled": ENABLE_QUERY_PLANNER,
                 "planner_model": QUERY_PLANNER_MODEL,
+                "gemini_chat_model": GEMINI_CHAT_MODEL,
+                "reranker_enabled": RERANKER_ENABLED,
+                "reranker_provider": RERANKER_PROVIDER,
+                "reranker_off_cli_override": bool(args.no_reranker),
             },
             "planner_enabled": bool(args.planner_enabled),
             "compare_planner": bool(args.compare_planner),
+            "report_type": "planner_comparison" if args.compare_planner else "single_run",
             "planner_mode": planner_mode,
             "force_planner": bool(args.force_planner),
             "force_planner_effective": force_planner_effective,
@@ -195,6 +233,13 @@ def main() -> None:
     }
 
     print(f"Loaded {len(cases)} eval cases from: {dataset_path}")
+    if args.no_reranker:
+        print("Reranker: disabled for this run (--no-reranker)")
+    elif RERANKER_ENABLED:
+        print(
+            f"Reranker: on ({RERANKER_PROVIDER}); first cross_encoder load may download "
+            f"weights from Hugging Face (can be large / slow)."
+        )
     if args.label:
         print(f"Run label: {args.label}")
     if args.compare_planner:
@@ -205,6 +250,8 @@ def main() -> None:
         print("Planner mode: baseline")
     if force_planner_effective:
         print("Planner gating: forced on planner-enabled path")
+    if args.mode in {"answer", "both"}:
+        print(f"Gemini chat model (answer + reformulation): {GEMINI_CHAT_MODEL}")
 
     if args.mode in {"retrieval", "both"}:
         if args.compare_planner:

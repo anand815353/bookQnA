@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy import text
 from sqlalchemy.orm import sessionmaker
 from app.models import Base
+from app.services.lexical_index import ensure_lexical_fts_schema
 
 DATABASE_URL = "sqlite:///./data/app.db"
 
@@ -68,3 +69,4 @@ def init_db():
     Base.metadata.create_all(bind=engine)
     _ensure_books_columns()
     _ensure_chat_sessions_columns()
+    ensure_lexical_fts_schema(engine)

@@ -6,8 +6,10 @@ from pathlib import Path
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from sqlalchemy.orm.exc import StaleDataError
-from app.db import SessionLocal
+from app.db import SessionLocal, engine
 from app.models import Book, BookSection
+from app.services.lexical_index import index_chunk_rows
+from app.services.cache import invalidate_book
 from app.services.retrieval import get_vectorstore, delete_book_vectors
 from app.services.structure import (
     build_parent_sections,
@@ -274,6 +276,7 @@ def ingest_book(book_id: str):
 
         # Reindex should replace stale vectors for the same book.
         delete_book_vectors(book.id)
+        invalidate_book(book.id)
         db.query(BookSection).filter(BookSection.book_id == book.id).delete(synchronize_session=False)
         db.commit()
 
@@ -402,6 +405,41 @@ def ingest_book(book_id: str):
             chunks=chunks,
             ids=ids,
             vectorstore=vectorstore,
+        )
+
+        def _fts_body_for_chunk(chunk) -> str:
+            contextual = str(chunk.metadata.get("contextual_text", "") or "").strip()
+            if contextual:
+                return f"{contextual}\n{chunk.page_content or ''}"
+            return chunk.page_content or ""
+
+        fts_rows: list[dict] = []
+        for i, chunk in enumerate(chunks):
+            meta = chunk.metadata
+            page_start = int(meta.get("page_start", 0) or 0)
+            raw_pe = meta.get("page_end")
+            if raw_pe is None or str(raw_pe).strip() == "":
+                page_end = page_start
+            else:
+                page_end = int(raw_pe)
+            if page_end <= 0:
+                page_end = page_start
+            fts_rows.append(
+                {
+                    "chunk_id": ids[i],
+                    "book_id": book.id,
+                    "page_start": page_start,
+                    "page_end": page_end,
+                    "section_id": str(meta.get("section_id", "") or ""),
+                    "chapter_title": str(meta.get("chapter_title", "") or ""),
+                    "body": _fts_body_for_chunk(chunk),
+                }
+            )
+        fts_indexed = index_chunk_rows(engine, book.id, fts_rows)
+        logger.info(
+            "ingestion_lexical_fts_indexed book_id=%s chunks_indexed=%s",
+            book.id,
+            fts_indexed,
         )
 
         book = _refresh_ingest_target(db, book_id)

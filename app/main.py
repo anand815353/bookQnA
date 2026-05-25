@@ -1,33 +1,49 @@
 # app/main.py
 from contextlib import asynccontextmanager
 import logging
+import os
 from pathlib import Path
 import time
 import uuid
 
-
-from fastapi import FastAPI
-from app.db import init_db
-from fastapi.staticfiles import StaticFiles
-
-from app.api.books import router as books_router
-from app.api.chats import router as chats_router
-from app.api.query import router as query_router
-from app.web.pages import router as pages_router
-
-from app.logging_config import clear_request_id, set_request_id, setup_logging
 from dotenv import load_dotenv
 
 APP_DIR = Path(__file__).resolve().parent
 load_dotenv(APP_DIR / ".env")
 
+from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
+
+from app.api.books import router as books_router
+from app.api.chats import router as chats_router
+from app.api.query import router as query_router
+from app.db import init_db
+from app.logging_config import clear_request_id, set_request_id, setup_logging
+from app.settings import ENABLE_LANGSMITH, LANGSMITH_PROJECT
+from app.web.pages import router as pages_router
+
 setup_logging()
 logger = logging.getLogger(__name__)
-APP_DIR = Path(__file__).resolve().parent
+
+def _configure_langsmith_env() -> None:
+    """Set LangSmith-related process env when tracing is enabled (no secrets logged)."""
+    if not ENABLE_LANGSMITH:
+        return
+    api_key = (os.getenv("LANGSMITH_API_KEY") or os.getenv("LANGCHAIN_API_KEY") or "").strip()
+    if not api_key:
+        return
+    os.environ["LANGSMITH_TRACING"] = "true"
+    os.environ["LANGSMITH_TRACING_V2"] = "true"
+    os.environ["LANGSMITH_PROJECT"] = LANGSMITH_PROJECT
+    # Backward compatibility for tooling that still reads LANGCHAIN_*.
+    os.environ["LANGCHAIN_TRACING_V2"] = "true"
+    os.environ["LANGCHAIN_PROJECT"] = LANGSMITH_PROJECT
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("app_startup")
+    _configure_langsmith_env()
     init_db()
     yield
     logger.info("app_shutdown")

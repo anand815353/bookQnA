@@ -230,3 +230,47 @@ def test_answer_question_can_force_planner_for_experiments(monkeypatch):
     assert response["debug"]["planner_forced"] is True
     assert response["debug"]["planner_decision"]["reason"] == "forced_query_planner"
     assert response["debug"]["planner_used"] is True
+
+
+def test_answer_question_passes_book_metadata_into_planner(monkeypatch):
+    captured: dict = {}
+
+    def fake_load_planner_book_hints(db, book_ids):
+        captured["hint_book_ids"] = list(book_ids or [])
+        return {
+            "book_title": "Shelf Book",
+            "toc_headings": ["Intro"],
+            "chapter_titles": ["Chapter A"],
+        }
+
+    def fake_plan_retrieval_query(question: str, **kwargs):
+        captured["planner_kwargs"] = kwargs
+        return QueryPlannerPlan(
+            query_type="original",
+            standalone_question=question,
+            search_queries=[],
+            keywords=[],
+            should_expand=False,
+            needs_exact_phrase_bias=False,
+            needs_chapter_lookup=False,
+            reason="planner_applied",
+        )
+
+    def fake_search_parent_evidence(question: str, top_k: int, book_ids=None, *, query_plan=None, debug_info=None):
+        return []
+
+    monkeypatch.setattr("app.services.qa.load_planner_book_hints", fake_load_planner_book_hints)
+    monkeypatch.setattr("app.services.qa.plan_retrieval_query", fake_plan_retrieval_query)
+    monkeypatch.setattr("app.services.qa.search_parent_evidence", fake_search_parent_evidence)
+
+    answer_question(
+        "What is BM25?",
+        book_ids=["bk1"],
+        top_k=2,
+        enable_query_planner=False,
+        force_query_planner=True,
+    )
+
+    assert captured.get("hint_book_ids") == ["bk1"]
+    assert captured.get("planner_kwargs", {}).get("book_title") == "Shelf Book"
+    assert captured.get("planner_kwargs", {}).get("toc_headings") == ["Intro"]

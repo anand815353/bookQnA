@@ -5,6 +5,7 @@ from fastapi import APIRouter, UploadFile, File, Form, BackgroundTasks, HTTPExce
 from app.db import SessionLocal
 from app.models import Book, BookSection
 from app.schemas import BookOut, BookStatusOut
+from app.services.cache import invalidate_book
 from app.services.storage import save_uploaded_pdf, delete_book_files
 from app.services.ingest import ingest_book
 from app.services.retrieval import delete_book_vectors
@@ -144,6 +145,8 @@ def ingest_book_endpoint(book_id: str, background_tasks: BackgroundTasks):
         db.refresh(book)
         logger.info("book_ingest_reset_state book_id=%s", book.id)
 
+        invalidate_book(book.id)
+
         background_tasks.add_task(ingest_book, book.id)
         logger.info("book_ingest_enqueued book_id=%s", book.id)
         return _to_book_status_out(book)
@@ -183,6 +186,7 @@ def delete_book(book_id: str):
 
         deleted_vectors = delete_book_vectors(book_id)
         logger.info("book_delete_vectors_removed book_id=%s vectors=%s", book_id, deleted_vectors)
+        invalidate_book(book_id)
         delete_book_files(book_id)
         db.query(BookSection).filter(BookSection.book_id == book_id).delete(synchronize_session=False)
         db.delete(book)

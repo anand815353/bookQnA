@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Evaluation dashboard</h1>
+<p class="muted">Latest JSON report from <code>evals/reports/</code> (by modification time).</p>
+
+{% if not has_report %}
+<section class="card">
+    <p><strong>No report found.</strong> Run an eval to generate <code>evals/reports/eval_report_*.json</code>, for example:</p>
+    <pre style="overflow:auto;">python -m app.evals.run_eval --mode both --dataset evals/datasets/book_eval_cases.jsonl</pre>
+</section>
+{% else %}
+
+{% set run = report.run or {} %}
+<section class="card">
+    <h2>Run</h2>
+    <table class="data-table">
+        <tbody>
+            <tr><th scope="row">Timestamp (UTC)</th><td>{{ run.timestamp_utc or "—" }}</td></tr>
+            <tr><th scope="row">Label</th><td>{{ run.label or "—" }}</td></tr>
+            <tr><th scope="row">Dataset</th><td>{{ run.dataset_path or "—" }}</td></tr>
+            <tr><th scope="row">Mode</th><td>{{ run.mode or "—" }}</td></tr>
+            <tr><th scope="row">Top-k</th><td>{{ run.top_k or "—" }}</td></tr>
+            <tr><th scope="row">Cases</th><td>{{ run.case_count or "—" }}</td></tr>
+            <tr><th scope="row">Planner mode</th><td>{{ run.planner_mode or "—" }}</td></tr>
+            <tr><th scope="row">Compare planner</th><td>{{ run.compare_planner }}</td></tr>
+        </tbody>
+    </table>
+</section>
+
+{% if run.settings %}
+<section class="card">
+    <h2>Run config (settings snapshot)</h2>
+    <table class="data-table">
+        <tbody>
+            {% for k, v in run.settings.items()|sort %}
+            <tr><th scope="row">{{ k }}</th><td>{{ v }}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endif %}
+
+{% if summary.is_comparison %}
+<section class="stats-grid">
+    <div class="card">
+        <h3>Retrieval (baseline)</h3>
+        <table class="data-table">
+            <thead><tr><th>Metric</th><th>Mean</th><th>n</th></tr></thead>
+            <tbody>
+                {% for name, val, cnt in retrieval_baseline_metric_rows %}
+                <tr><td>{{ name }}</td><td>{{ val if val is not none else "—" }}</td><td>{{ cnt }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="card">
+        <h3>Retrieval (planner)</h3>
+        <table class="data-table">
+            <thead><tr><th>Metric</th><th>Mean</th><th>n</th></tr></thead>
+            <tbody>
+                {% for name, val, cnt in retrieval_planner_metric_rows %}
+                <tr><td>{{ name }}</td><td>{{ val if val is not none else "—" }}</td><td>{{ cnt }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+<section class="stats-grid">
+    <div class="card">
+        <h3>Answer (baseline)</h3>
+        <table class="data-table">
+            <thead><tr><th>Metric</th><th>Mean</th><th>n</th></tr></thead>
+            <tbody>
+                {% for name, val, cnt in answer_baseline_metric_rows %}
+                <tr><td>{{ name }}</td><td>{{ val if val is not none else "—" }}</td><td>{{ cnt }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="card">
+        <h3>Answer (planner)</h3>
+        <table class="data-table">
+            <thead><tr><th>Metric</th><th>Mean</th><th>n</th></tr></thead>
+            <tbody>
+                {% for name, val, cnt in answer_planner_metric_rows %}
+                <tr><td>{{ name }}</td><td>{{ val if val is not none else "—" }}</td><td>{{ cnt }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% else %}
+<section class="stats-grid">
+    <div class="card">
+        <h3>Retrieval metrics</h3>
+        <table class="data-table">
+            <thead><tr><th>Metric</th><th>Mean</th><th>n</th></tr></thead>
+            <tbody>
+                {% for name, val, cnt in retrieval_metric_rows %}
+                <tr><td>{{ name }}</td><td>{{ val if val is not none else "—" }}</td><td>{{ cnt }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="card">
+        <h3>Answer metrics</h3>
+        <table class="data-table">
+            <thead><tr><th>Metric</th><th>Mean</th><th>n</th></tr></thead>
+            <tbody>
+                {% for name, val, cnt in answer_metric_rows %}
+                <tr><td>{{ name }}</td><td>{{ val if val is not none else "—" }}</td><td>{{ cnt }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endif %}
+
+{% if answer_by_type_rows %}
+<section class="card">
+    <h2>Per test type (answer)</h2>
+    {% for test_type, cases_total, mrows in answer_by_type_rows %}
+    <h3>{{ test_type }} <span class="muted">(n={{ cases_total }})</span></h3>
+    <table class="data-table">
+        <thead><tr><th>Metric</th><th>Mean</th><th>n</th></tr></thead>
+        <tbody>
+            {% for name, val, cnt in mrows %}
+            <tr><td>{{ name }}</td><td>{{ val if val is not none else "—" }}</td><td>{{ cnt }}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endfor %}
+</section>
+{% endif %}
+
+<section class="card">
+    <h2>Context and cache (from eval_debug)</h2>
+    {% if summary.is_comparison %}
+    <h3>Baseline</h3>
+    <table class="data-table">
+        <tbody>
+            {% for k, v in summary.eval_debug_stats_baseline.items() %}
+            <tr><th scope="row">{{ k }}</th><td>{% if v is mapping %}<pre style="margin:0;">{{ v }}</pre>{% else %}{{ v }}{% endif %}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h3>Planner</h3>
+    <table class="data-table">
+        <tbody>
+            {% for k, v in summary.eval_debug_stats_planner.items() %}
+            <tr><th scope="row">{{ k }}</th><td>{% if v is mapping %}<pre style="margin:0;">{{ v }}</pre>{% else %}{{ v }}{% endif %}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <table class="data-table">
+        <tbody>
+            {% for k, v in summary.eval_debug_stats.items() %}
+            <tr><th scope="row">{{ k }}</th><td>{% if v is mapping %}<pre style="margin:0;">{{ v }}</pre>{% else %}{{ v }}{% endif %}</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</section>
+
+<section class="card">
+    <h2>Cases (answer path)</h2>
+    {% if summary.is_comparison %}
+    <h3>Baseline</h3>
+    {% endif %}
+    <div style="overflow-x:auto;">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>case_id</th>
+                    <th>test_type</th>
+                    <th>grounded</th>
+                    <th>retrieval_cache</th>
+                    <th>gen_cache</th>
+                    <th>ctx before</th>
+                    <th>ctx after</th>
+                    <th>total ms</th>
+                    <th>question (truncated)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in case_table_rows %}
+                <tr>
+                    <td>{{ row.case_id }}</td>
+                    <td>{{ row.test_type }}</td>
+                    <td>{{ row.grounded }}</td>
+                    <td>{{ row.retrieval_cache_hit }}</td>
+                    <td>{{ row.generation_cache_hit }}</td>
+                    <td>{{ row.context_chars_before }}</td>
+                    <td>{{ row.context_chars_after }}</td>
+                    <td>{{ row.total_ms }}</td>
+                    <td title="{{ row.question_full }}">{{ row.question_trunc }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if summary.is_comparison %}
+    <h3>Planner-enabled</h3>
+    <div style="overflow-x:auto;">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>case_id</th>
+                    <th>test_type</th>
+                    <th>grounded</th>
+                    <th>retrieval_cache</th>
+                    <th>gen_cache</th>
+                    <th>ctx before</th>
+                    <th>ctx after</th>
+                    <th>total ms</th>
+                    <th>question (truncated)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in case_table_rows_planner %}
+                <tr>
+                    <td>{{ row.case_id }}</td>
+                    <td>{{ row.test_type }}</td>
+                    <td>{{ row.grounded }}</td>
+                    <td>{{ row.retrieval_cache_hit }}</td>
+                    <td>{{ row.generation_cache_hit }}</td>
+                    <td>{{ row.context_chars_before }}</td>
+                    <td>{{ row.context_chars_after }}</td>
+                    <td>{{ row.total_ms }}</td>
+                    <td title="{{ row.question_full }}">{{ row.question_trunc }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</section>
+
+{% endif %}
+{% endblock %}

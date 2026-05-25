@@ -8,6 +8,14 @@ from app.db import SessionLocal
 from app.models import Book, ChatSession
 from app.services.ingest import ingest_book
 from app.services.storage import save_uploaded_pdf
+from app.services.eval_reports import (
+    by_test_type_rows,
+    case_table_rows_for_dashboard,
+    case_table_rows_from_results,
+    load_latest_report,
+    metrics_table_rows,
+    summarize_report_for_dashboard,
+)
 from app.settings import QUERY_DEBUG_ENABLED
 
 router = APIRouter()
@@ -106,6 +114,73 @@ def chat_page(request: Request):
         )
     finally:
         db.close()
+
+
+@router.get("/evals", response_class=HTMLResponse)
+def eval_dashboard(request: Request):
+    report = load_latest_report()
+    if report is None:
+        return templates.TemplateResponse(
+            request=request,
+            name="eval_dashboard.html",
+            context={
+                "title": "Evaluations",
+                "has_report": False,
+                "report": None,
+                "summary": None,
+                "case_table_rows": [],
+                "retrieval_metric_rows": [],
+                "answer_metric_rows": [],
+                "answer_by_type_rows": [],
+                "retrieval_baseline_metric_rows": [],
+                "retrieval_planner_metric_rows": [],
+                "answer_baseline_metric_rows": [],
+                "answer_planner_metric_rows": [],
+                "case_table_rows_planner": [],
+            },
+        )
+
+    summary = summarize_report_for_dashboard(report)
+    answer_block = report.get("answer") if isinstance(report.get("answer"), dict) else {}
+    retrieval_block = report.get("retrieval") if isinstance(report.get("retrieval"), dict) else {}
+
+    ctx: dict = {
+        "title": "Evaluations",
+        "has_report": True,
+        "report": report,
+        "summary": summary,
+        "case_table_rows": case_table_rows_for_dashboard(summary),
+        "case_table_rows_planner": [],
+        "retrieval_metric_rows": [],
+        "answer_metric_rows": [],
+        "answer_by_type_rows": [],
+        "retrieval_baseline_metric_rows": [],
+        "retrieval_planner_metric_rows": [],
+        "answer_baseline_metric_rows": [],
+        "answer_planner_metric_rows": [],
+    }
+
+    if summary.get("is_comparison"):
+        rb = retrieval_block.get("baseline") if isinstance(retrieval_block.get("baseline"), dict) else {}
+        rp = retrieval_block.get("planner") if isinstance(retrieval_block.get("planner"), dict) else {}
+        ab = answer_block.get("baseline") if isinstance(answer_block.get("baseline"), dict) else {}
+        ap = answer_block.get("planner") if isinstance(answer_block.get("planner"), dict) else {}
+        ctx["retrieval_baseline_metric_rows"] = metrics_table_rows(rb.get("summary"))
+        ctx["retrieval_planner_metric_rows"] = metrics_table_rows(rp.get("summary"))
+        ctx["answer_baseline_metric_rows"] = metrics_table_rows(ab.get("summary"))
+        ctx["answer_planner_metric_rows"] = metrics_table_rows(ap.get("summary"))
+        ctx["answer_by_type_rows"] = by_test_type_rows(ab.get("summary"))
+        ctx["case_table_rows_planner"] = case_table_rows_from_results(list(summary.get("answer_planner_rows") or []))
+    else:
+        ctx["retrieval_metric_rows"] = metrics_table_rows(retrieval_block.get("summary"))
+        ctx["answer_metric_rows"] = metrics_table_rows(answer_block.get("summary"))
+        ctx["answer_by_type_rows"] = by_test_type_rows(answer_block.get("summary"))
+
+    return templates.TemplateResponse(
+        request=request,
+        name="eval_dashboard.html",
+        context=ctx,
+    )
 
 
 @router.get("/chat/{session_id}", response_class=HTMLResponse)

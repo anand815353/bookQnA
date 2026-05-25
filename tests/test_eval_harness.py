@@ -130,6 +130,63 @@ def test_evaluate_answers_computes_keyword_and_abstention_metrics():
     assert summary["correct_page_hit"]["value"] == 1.0
 
 
+def test_evaluate_answers_includes_eval_debug_without_changing_metric_keys():
+    cases = [
+        EvalCase(
+            case_id="c1",
+            question="What is X?",
+            expected_book="B",
+            test_type="concept_lookup",
+            answerable=True,
+            expected_answer_keywords=["x"],
+        ),
+    ]
+
+    def fake_answer(question: str, top_k: int, book_ids=None):
+        return {
+            "answer": "X is a test.",
+            "grounded": True,
+            "citations": [{"book_id": "b1", "page_start": 1, "page_end": 1}],
+            "debug": {
+                "planner_used": True,
+                "planner_applied": False,
+                "planner": {"query_type": "standalone"},
+                "retrieval": {
+                    "dense_result_count": 5,
+                    "lexical_result_count": 2,
+                    "hybrid_result_count": 10,
+                    "reranker_enabled": False,
+                    "reranker_latency_ms": 0,
+                    "retrieval_cache_hit": False,
+                },
+                "generation_cache_hit": False,
+                "context_chars_before": 100,
+                "context_chars_after": 90,
+                "stage_latency_ms": {"total": 42},
+                "chosen_citations": ["a:1"],
+                "grounded": True,
+            },
+        }
+
+    report = evaluate_answers(cases, top_k=4, answer_fn=fake_answer)
+    row = report["results"][0]
+    expected_metrics_keys = {
+        "correct_book_hit",
+        "correct_page_hit",
+        "chapter_hit",
+        "top_k_evidence_hit",
+        "answer_keyword_coverage",
+        "abstention_correctness",
+        "citation_usefulness_score_manual",
+    }
+    assert set(row["metrics"].keys()) == expected_metrics_keys
+    ed = row.get("eval_debug") or {}
+    assert ed.get("planner_used") is True
+    assert ed.get("dense_result_count") == 5
+    assert ed.get("stage_latency_ms") == {"total": 42}
+    assert ed.get("planner_query_type") == "standalone"
+
+
 def test_retrieval_summary_contains_all_known_question_type_buckets():
     test_types = [
         "follow_up",
@@ -226,6 +283,10 @@ def test_compare_retrieval_surfaces_exact_phrase_regressions_and_follow_up_gains
     report = compare_retrieval(cases, top_k=4, retrieval_fn=fake_retrieval)
     comparison = report["comparison"]
 
+    assert comparison["summary"]["metrics"]["chapter_hit"]["trend"] == "improved"
+    assert len(comparison["per_case"]) == 2
+    assert comparison["latency_ms"]["baseline_mean_ms"] is not None
+
     assert comparison["focus_buckets"]["follow_up"]["metrics"]["chapter_hit"]["delta"] == 1.0
     assert comparison["focus_buckets"]["exact_phrase_lookup"]["metrics"]["correct_page_hit"]["delta"] == -1.0
     assert any(
@@ -284,6 +345,12 @@ def test_compare_answers_surfaces_abstention_regressions():
 
     report = compare_answers(cases, top_k=4, answer_fn=fake_answer)
     comparison = report["comparison"]
+
+    assert comparison["summary"]["metrics"]["abstention_correctness"]["trend"] == "regressed"
+    assert len(comparison["per_case"]) == 2
+    abstain_pc = next(r for r in comparison["per_case"] if r["case_id"] == "abstain_case")
+    assert abstain_pc["baseline"]["answer"] is not None
+    assert abstain_pc["planner"]["answer"] is not None
 
     assert comparison["focus_buckets"]["abstention"]["metrics"]["abstention_correctness"]["delta"] == -1.0
     assert any(

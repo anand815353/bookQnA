@@ -10,8 +10,10 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 from app.logging_config import log_structured, sanitize_for_debug
 from app.schemas import QueryPlannerPlan
+from app.services.gemini_chat_throttle import wait_gemini_chat_slot
 from app.settings import (
     ENABLE_QUERY_PLANNER,
+    GEMINI_CHAT_MAX_RETRIES,
     LOG_DEBUG_SNIPPET_CHARS,
     MAX_HISTORY_CHARS,
     QUERY_PLANNER_ENABLE_GATING,
@@ -453,6 +455,7 @@ def _build_planner_llm(api_key: str) -> ChatGoogleGenerativeAI:
         model=QUERY_PLANNER_MODEL,
         temperature=QUERY_PLANNER_LOW_TEMP,
         google_api_key=api_key,
+        max_retries=GEMINI_CHAT_MAX_RETRIES,
     )
 
 
@@ -682,6 +685,7 @@ def plan_retrieval_query(
 
     started = time.perf_counter()
     try:
+        wait_gemini_chat_slot()
         result = chain.invoke(
             {
                 "question": question,

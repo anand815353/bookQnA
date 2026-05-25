@@ -321,6 +321,25 @@ button:disabled {
     color: var(--muted);
 }
 
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+.data-table th,
+.data-table td {
+    border: 1px solid var(--border);
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.data-table th {
+    background: #0f1829;
+    font-weight: 600;
+}
+
 .empty-state {
     border: 1px dashed var(--border);
     border-radius: 12px;
